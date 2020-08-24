@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState} from 'react';
 import './App.css';
+import './css/style.css'
+import CustomButton from './components/customButton'
+import CustomTextfield from './components/customTextfield'
 
-function App() {
+const App=()=> {
+
+  const click = () => {
+    alert();
+  }
+
+  const [text , setText] = useState('')
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CustomButton customButton__class="btn" handleClick={click} text="demo" icon={<i className="fa fa-print app__fa" aria-hidden="true"></i>}/>
+      <br/>
+      <CustomTextfield customTextfield__input="app__input" type="text" placeholder="enter Text" value={text} handleChange={e=> setText(e.target.value)}/>
     </div>
   );
 }
