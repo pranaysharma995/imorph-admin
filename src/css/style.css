@@ -1,4 +1,4 @@
-.btn{
+.btnn{
     padding : 20px 30px;
     margin-top: 20px;
     border : none ;
@@ -7,7 +7,7 @@
     transition: 0.2s all;
   }
   
-  .btn:hover {
+  .btnn:hover {
     background-color : white;
     border : 1px solid gray;
     color : gray
@@ -37,3 +37,42 @@
   ::placeholder {
     color: #4C4B4B;
   }
+  .app__tableHeader{
+    background-color: #4C4B4B;
+    padding : 9px 10px;
+    border-radius: 10px 10px 0px 0px;
+    color : white;
+    width : 100%;
+    
+  }
+
+  .app__tableClass thead tr th{
+    font-weight: normal;
+    background : #A4B0BD
+  }
+  .app__tableClass {
+    overflow-x: auto;
+  }
+
+  .customTable__edit,.customTable__delete{
+    border : 1px solid #777E8B;
+    outline : none;
+    border-radius: 4px;
+    margin-left: 5px;
+  }
+.customTable__input{
+  padding : 7px;
+  width : 270px;
+  border-radius: 4px;
+  border : none;
+  background: rgba(188, 188, 188, 0.884);
+  color : #4C4B4B;
+}
+
+.customTable__footer{
+  border : none;
+  padding : 10px 40px;
+  background-color: #4C4B4B;
+  color : white;
+  border-radius: 5px;
+}

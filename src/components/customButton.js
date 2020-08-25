@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CustomButton=({customButton__class , handleClick , icon , text}) =>{
+const CustomButton=({customButton__class , handleClick , icon , text , type}) =>{
     return (
         <div className="customButton">
-            <button className={customButton__class} onClick={handleClick}>
+            <button type={type} className={customButton__class} onClick={handleClick}>
                 {icon ? icon : null}
                 {text}</button>
         </div>
