@@ -1,42 +1,130 @@
-.btnn{
-    padding : 20px 30px;
-    margin-top: 20px;
-    border : none ;
-    color : white;
-    background-color : gray;
-    transition: 0.2s all;
-  }
-  
-  .btnn:hover {
-    background-color : white;
-    border : 1px solid gray;
-    color : gray
-  }
-  
-  .app__fa{
-    margin-right: 20px;
-  }
-
-  .app__input{
-    padding: 15px;
-    width : 270px;
+.login__page{
+  position: absolute;
+  left : 50%;
+  top : 50%;
+  transform : translate(-50% , -50%);
+  width : 400px;
+  background : #F6F7F9;
+  padding : 10px 30px;
+  border-radius: 15px;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+}
+.login__input{
+    padding: 20px;
     border-radius: 4px;
     border : none;
     background: rgba(188, 188, 188,0.4);
     color : #4C4B4B;
+    margin-bottom: 20px;
+    font-size : 16px;
+    height: 50px
   }
-
+  .login__input:focus{
+    background: rgba(188, 188, 188,0.4);
+  }
   ::-webkit-input-placeholder { /* Edge */
     color: #4C4B4B;
-  }
-  
+  }  
   :-ms-input-placeholder { /* Internet Explorer */
     color: #4C4B4B;
-  }
-  
+  }  
   ::placeholder {
     color: #4C4B4B;
   }
+  .login__btn{
+    padding : 10px 50px;
+    margin-top: 20px;
+    border : none ;
+    color : white;
+    background-color : #009CB4;
+    margin-bottom: 30px;
+    border-radius: 5px;
+  }
+
+  .forgotPass__page{
+    position: absolute;
+    left : 50%;
+    top : 50%;
+    transform : translate(-50% , -50%);
+    width : 400px;
+    background : #F6F7F9;
+    padding : 10px 20px;
+    border-radius: 15px;
+    box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  }
+  .forgotPass__header{
+    color :#707070;
+    margin-top : 40px;
+    margin-bottom: 40px; 
+  }
+  .forgotPass__footer{
+    margin-bottom: 20px; 
+  }
+  .forgotPass_countryCode{
+    height : 50px;
+    border : none;
+    color : #4C4B4B;
+    background: rgba(188, 188, 188,0.4);
+    width : 80px;
+    border-radius: 4px 0px 0px 4px;
+  }
+  .forgotPass__input{
+    padding: 20px;
+    border-radius: 0px 4px 4px 0px;
+    border : none;
+    background: rgba(188, 188, 188,0.4);
+    color : #4C4B4B;
+    margin-bottom: 20px;
+    font-size : 16px;
+    height: 50px;
+    width : 280px
+  }
+  .forgotPass__input:focus{
+    background: rgba(188, 188, 188,0.4);
+  }
+
+  .verification__input{
+    padding: 10px;
+    border-radius: 4px;
+    border : none;
+    background: rgba(188, 188, 188,0.4);
+    color : #4C4B4B;
+    margin-bottom: 20px;
+    font-size : 16px;
+    height: 40px;
+    width : 40px;
+    margin-left: 20px;
+  }
+  .verification__errorMessage{
+    color : red;
+    margin-left: 50px;
+  }
+
+  .error__message{
+    color : red;
+  }
+
+  .resetSuccess_img{
+    margin-top : 60px;
+  }
+  .resetSuccess__page{
+    position: absolute;
+    left : 50%;
+    top : 50%;
+    transform : translate(-50% , -50%);
+    width : 500px;
+    background : #F6F7F9;
+    padding : 10px 20px;
+    border-radius: 15px;
+    box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  }
+  .resetSuccess__header{
+    color :#707070;
+    margin-top : 40px;
+    margin-bottom: 40px; 
+  }
+
+
   .app__tableHeader{
     background-color: #4C4B4B;
     padding : 9px 10px;
@@ -45,7 +133,6 @@
     width : 100%;
     
   }
-
   .app__tableClass thead tr th{
     font-weight: normal;
     background : #A4B0BD
@@ -53,7 +140,6 @@
   .app__tableClass {
     overflow-x: auto;
   }
-
   .customTable__edit,.customTable__delete{
     border : 1px solid #777E8B;
     outline : none;
@@ -68,7 +154,6 @@
   background: rgba(188, 188, 188, 0.884);
   color : #4C4B4B;
 }
-
 .customTable__footer{
   border : none;
   padding : 10px 40px;
@@ -76,3 +161,6 @@
   color : white;
   border-radius: 5px;
 }
+
+
+

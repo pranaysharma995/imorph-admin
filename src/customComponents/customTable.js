@@ -30,6 +30,9 @@ const CustomTable = ({tableClass , table__header, tableHeaderText , data})=> {
                             </thead>
                             <tbody>
                                     {data.map( (info, i)=> (
+
+                                        
+
                                         <tr key={i}>
                                 
                                         <td><img width="50rem" className= "rounded-circle" src={info.photo} alt="photo"/></td>
@@ -51,6 +54,7 @@ const CustomTable = ({tableClass , table__header, tableHeaderText , data})=> {
                                         </td>
                                     </tr>
                                     ))}
+                    
                             
                             </tbody>
                             

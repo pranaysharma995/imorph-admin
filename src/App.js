@@ -1,10 +1,12 @@
 import React,{useState} from 'react';
 import './App.css';
 import './css/style.css'
-import CustomButton from './components/customButton'
-import CustomTextfield from './components/customTextfield'
-import CustomTable from './components/customTable'
+import CustomButton from './customComponents/customButton'
+import CustomTextfield from './customComponents/customTextfield'
+import CustomTable from './customComponents/customTable'
 import profile from './assets/profile.png'
+import CustomBar from './customComponents/customBar'
+import RouterComponent from './router/routerComponent'
 
 const App=()=> {
 
@@ -45,15 +47,16 @@ const App=()=> {
 
   ]
 
-
+  const graphData = {
+     label : ["Jan" , "Feb" , "Mar" , "Apr" , "May" , "June" , "July" , "Aug","Sep","Oct","Nov","Dec"],
+     dataSetData : [100, 155, 400, 200, 300 , 222 , 121 , 333, 455, 589 ,211 , 131],
+     totalConversion : 121213  
+  }
+  
+  
   return (
     <div className="App">
-      <CustomButton customButton__class="btnn" handleClick={click} text="demo" icon={<i className="fa fa-print app__fa" aria-hidden="true"></i>} type="button"/>
-      <br/>
-      <CustomTextfield customTextfield__input="app__input" type="text" placeholder="enter Text" value={text} handleChange={e=> setText(e.target.value)}/>
-      <br/>
-        <CustomTable tableClass="table table-striped app__tableClass" table__header="app__tableHeader d-flex justify-content-between" tableHeaderText={tableHeaderText} data={data}/>
-   
+        <RouterComponent/>
     </div>
   );
 }
