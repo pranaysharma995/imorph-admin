@@ -1,14 +1,19 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import imoph3d from '../assets/imoph3d.png' 
 import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
 import {Link} from 'react-router-dom'
 import validator from 'validator';
+import { useHistory ,Redirect } from 'react-router-dom'
+import UserDetailsProvider from '../context/auth/userDetailsContext'
 
 const LoginPage = () =>{
 
+    const context = useContext(UserDetailsProvider);
     const [username , setUsername] = useState('');
     const [password , setPassword] = useState('');
+    const [loading , setLoading] = useState(false);
+    const history = useHistory()
 
     const [validation , setValidation] = useState({
         username : false,
@@ -16,6 +21,8 @@ const LoginPage = () =>{
         email : false,
         err_pass : false
     })
+
+
 
 
     const handleSubmit =(e) => {
@@ -56,7 +63,13 @@ const LoginPage = () =>{
     }
 
     const submit = ()=>{
-          alert("Login Successful")
+         setLoading(true);
+         setTimeout(() => (
+             setLoading(false),
+             context.setUser("dfdsf"),
+             localStorage.setItem('user' , "kjsd"),
+             history.push("/dashboard")
+         ), 2000);
     }
 
     return (
@@ -84,7 +97,7 @@ const LoginPage = () =>{
                     </label>
                 </div>
                 <div className="text-center"> 
-                    <CustomButton customButton__class="login__btn" text="Login" type="submit" />
+                    {loading ? (<div class="spinner-border text-primary"></div>) : (<CustomButton customButton__class="login__btn" text="Login" type="submit" />)}
                 </div>
             </form>
 

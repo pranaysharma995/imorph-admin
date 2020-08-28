@@ -1,3 +1,4 @@
+/* loginpage */
 .login__page{
   position: absolute;
   left : 50%;
@@ -41,6 +42,7 @@
     border-radius: 5px;
   }
 
+  /* forgotpass */
   .forgotPass__page{
     position: absolute;
     left : 50%;
@@ -83,6 +85,7 @@
     background: rgba(188, 188, 188,0.4);
   }
 
+  /* verification */
   .verification__input{
     padding: 10px;
     border-radius: 4px;
@@ -104,6 +107,7 @@
     color : red;
   }
 
+  /* resetSuccess */
   .resetSuccess_img{
     margin-top : 60px;
   }
@@ -124,6 +128,181 @@
     margin-bottom: 40px; 
   }
 
+/* sidebar */
+  .sidebar{
+    height: 670px;
+    width: 260px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: gray;
+    overflow-x: hidden;
+    padding-top: 100px;
+  }
+  .sidebar__links{
+    margin-left: 20px;
+  }
+
+  /* navbar */
+  .nav__input{
+    padding: 20px 30px;
+    border-radius: 4px;
+    border : none;
+    background: rgba(188, 188, 188,0.4);
+    color : #4C4B4B;
+    margin-bottom: 20px;
+    font-size : 16px;
+    height: 30px;
+  }
+  .nav__input:focus{
+    background: rgba(188, 188, 188,0.4);
+  }
+  .nav__searchIcon{
+    position: absolute;
+    top : 50%;
+    right : 6px;
+    transform : translateY(-80%);
+    padding : 5px;
+  }
+.nav__dropDownBtn::after { 
+    content: none; 
+}
+.nav__dropDownBtn{
+  border : none;
+  background : transparent;
+}
+.nav__dropDownBtn:focus{
+  border : none;
+  outline : none;
+  background : transparent;
+}
+.nav__dropdownMenu{
+  position: absolute;
+  left : -60px;
+  background: #F6F7F9;
+}
+.nav__dropdown-item:active{
+    background : transparent;
+    color : #707070
+}
+
+/* footer */
+.footer{
+  position: fixed;
+  bottom : 0px;
+  left : 0px;
+  width : 100%;
+  background : gray;
+  text-align: center;
+  padding-top: 10px;
+  color : white;
+}
+
+/* profile */
+.profile__input{
+  padding: 20px 17px;
+  border-radius: 4px;
+  border : none;
+  background: rgba(188, 188, 188,0.4);
+  color : #4C4B4B;
+  margin-bottom: 20px;
+  font-size : 16px;
+  height: 30px
+}
+.profile__locationInput:focus{
+  background: rgba(188, 188, 188,0.4);
+}
+.profile__genderSelct:focus{
+  background: rgba(188, 188, 188,0.4);
+}
+.profile hr{
+  width : 100%;
+}
+.profile__input:focus{
+  background: rgba(188, 188, 188,0.4);
+}
+.profile__backbtn{
+  border : 1px solid #d3d3d3;
+  padding : 9px 50px;
+  color : #4C4B4B;
+  margin-top : 10px
+}
+.profile__head{
+  padding : 2px 20px;
+}
+.profile{
+  margin-bottom: 90px;
+}
+.profile__first{
+  background-color : #F6F7F9;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+}
+.profile__locationInput{
+  padding: 20px 17px;
+  border-radius: 4px;
+  border : none;
+  background: rgba(188, 188, 188,0.4);
+  color : #4C4B4B;
+  margin-bottom: 20px;
+  font-size : 16px;
+  height: 50px
+}
+.profile__select{
+    height : 40px;
+    border : none;
+    color : #4C4B4B;
+    background: rgba(188, 188, 188,0.4);
+    width : 240px;
+    padding : 1px 10px;
+    border-radius:  4px;
+}
+.profile__genderSelct{
+    height : 40px;
+    border : none;
+    color : #4C4B4B;
+    background: rgba(188, 188, 188,0.4);
+
+    padding : 1px 10px;
+    border-radius:  4px;
+}
+.profile__footerBtn{
+    padding : 10px 50px;
+    margin-top: 10px;
+    border : none ;
+    color : white;
+    background-color : #009CB4;
+    border-radius: 5px;
+    margin-right : 40px;
+}
+.profile__footerBtn:hover{
+  color : white;
+}
+.profile__imgAdd{
+  position: absolute;
+  bottom: 50px;
+  right : 60px;
+  color : grayscale;
+  background : white ;
+  border : none;
+  border-radius: 6px 6px 6px 6px;
+  padding : 5px
+}
+.profile__error{
+  color : red;
+  position: absolute;
+  right : 12px;
+}
+
+/* change password */
+.changePass__modal{
+  padding : 20px 50px;
+  border-radius: 20px;
+}
+.changePass__header{
+    color :#707070;
+    margin-bottom: 30px; 
+}
 
   .app__tableHeader{
     background-color: #4C4B4B;
