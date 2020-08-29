@@ -2,9 +2,9 @@ import React,{useState} from 'react'
 import Context from './userDetailsContext'
 
 const UserDetailsProvider =(props)=> {
-    const [user , setUser] = useState(null)
+    const [userDetails , setUserDetails] = useState(null)
     return (
-        <Context.Provider value={{user , setUser}}>
+        <Context.Provider value={{userDetails , setUserDetails}}>
             {props.children}
         </Context.Provider>
     )

@@ -26,7 +26,7 @@ const Navbar =() =>{
                                             <div className="dropdown-menu nav__dropdownMenu">
                                             <Link className="dropdown-item nav__dropdown-item"  style={{height : "30px"}}>
                                                 <h6 style={{lineHeight : "0.4", color :"#707070"}}>James Dean</h6>
-                                                <p style={{ color :"#707070"}}>admin</p>
+                                                <p style={{ color :"#707070"}}>Admin</p>
                                             </Link>
                                             <hr/>
                 

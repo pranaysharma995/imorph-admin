@@ -2,13 +2,14 @@ import React,{useState} from 'react'
 import profile from '../../assets/profile.png'
 import CustomTextfield from '../../customComponents/customTextfield'
 import CustomButton from '../../customComponents/customButton'
-import {Link} from 'react-router-dom'
+import {Link , useHistory} from 'react-router-dom'
 import camera from '../../assets/camera.png'
 import validator from 'validator'
 import ChangePasswordModal from './modal/changePasswordModal'
 
 function ProfilePage() {
 
+    const history = useHistory();
     const [adminDetails , setAdminDetails] = useState({
         fname : '',
         lname : "Dean",
@@ -96,21 +97,27 @@ function ProfilePage() {
        }, 2000);
     }
 
+    const onBack= e=> {
+        e.preventDefault();
+
+        history.push("/dashboard")
+    }
+
     return (
-        <div className=" container-fluid profile" style={{marginTop: "100px"}}>
+        <div className=" container-fluid profile" style={{marginTop: "120px" }}>
                 <form onSubmit={checkSubmit}>
                 <div className="row">
                     <div className="col-md-12 profile__first">
                             <div className="profile__head d-flex justify-content-between">
                                 <h5 style={{marginTop : "20px"}}>Profile</h5>
                                 <div>
-                                   <CustomButton customButton__class="btn profile__backbtn"  text="Back"/>
+                                   <CustomButton customButton__class="btn profile__backbtn"  text="Back" handleClick={onBack}/>
                                 </div>
                             </div>
                             <hr/>
                             <div className="row profile__body" style={{padding : "1px 20px"}}>
                                 <div className="col-md-3" style={{position : "relative"}}>
-                                    <img width="130rem" className= "rounded-circle" src={profile} alt="profile" style={{color: "black"}}/>
+                                    <img width="150rem" className= "rounded-circle" src={profile} alt="profile" style={{color: "black"}}/>
                                     
                                     <button className="profile__imgAdd rounded-circle text-center"><img width="20rem" src={camera} alt="add" style={{marginTop : "-7px" , marginLeft : "2px"}}/></button>
                                 </div>
@@ -158,8 +165,8 @@ function ProfilePage() {
                             <div className="col-md-4">
                                 <div className="row">
                                         <div className="col">
-                                            <label htmlFor="city" style={{lineHeight :"0.4" , color : "#707070"}}>City</label>
-                                            <select name="city" className="profile__select">
+                                            <label htmlFor="city" style={{lineHeight :"0.4" , color : "#707070"}}>City</label><br/>
+                                            <select name="city" className="form-control profile__select">
                                             <option value="San jose">San jose</option>
                                             </select>
                                         </div>
@@ -169,7 +176,7 @@ function ProfilePage() {
                                     <div className="row">
                                             <div className="col">
                                                 <label htmlFor="state" style={{lineHeight :"0.4" , color : "#707070"}}>State</label><br/>
-                                                <select name="state" className="profile__select">
+                                                <select name="state" className="form-control profile__select">
                                                 <option value="california">California</option>
                                                 </select>
                                             </div>
@@ -179,7 +186,7 @@ function ProfilePage() {
                                     <div className="row">
                                         <div className="col">
                                             <label htmlFor="country" style={{lineHeight :"0.4" , color : "#707070"}}>Country</label>
-                                            <select name="country" className="profile__select">
+                                            <select name="country" className="form-control profile__select">
                                             <option value="United States">United States</option>
                                             </select>
                                         </div>
@@ -214,7 +221,7 @@ function ProfilePage() {
                                     </div>
                                 </div>
                             </div>
-                            <h6 type="button" data-toggle="modal" data-target="#myChangePasswordModal" style={{lineHeight :"0.4" , color : "#009CB4" , marginBottom : "60px" , textDecoration : "underline"}}><Link>Change Password</Link></h6>
+                            <h6 data-toggle="modal" data-target="#myChangePasswordModal" style={{lineHeight :"0.4" , color : "#009CB4" , marginBottom : "60px" , textDecoration : "underline"}}><Link>Change Password</Link></h6>
                             <ChangePasswordModal/>
                             <hr/>
                             <div className="d-flex justify-content-center">

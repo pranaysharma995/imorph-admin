@@ -33,7 +33,7 @@
     color: #4C4B4B;
   }
   .login__btn{
-    padding : 10px 50px;
+    padding : 6px 60px;
     margin-top: 20px;
     border : none ;
     color : white;
@@ -130,18 +130,32 @@
 
 /* sidebar */
   .sidebar{
-    height: 670px;
+    height: 570px;
     width: 260px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: gray;
+    background-color: #009CB4;
     overflow-x: hidden;
     padding-top: 100px;
   }
-  .sidebar__links{
-    margin-left: 20px;
+  .sildeBar__active{
+    background-color : white;
+    color : #009CB4;
+    width : fit-content;
+    padding : 3px 10px;
+    padding-right : 40%;
+    border-radius: 7px;    
+  }
+  .sildeBar__inactive{
+    color : white
+  }
+  .sidebar__linkInActive{
+    color : white;
+  }
+  .sidebar__link:hover {
+    text-decoration: none;
   }
 
   /* navbar */
@@ -197,6 +211,7 @@
   text-align: center;
   padding-top: 10px;
   color : white;
+  z-index: 1;
 }
 
 /* profile */
@@ -224,9 +239,10 @@
 }
 .profile__backbtn{
   border : 1px solid #d3d3d3;
-  padding : 9px 50px;
+  padding : 6px 60px;
   color : #4C4B4B;
-  margin-top : 10px
+  margin-top : 10px;
+  /* box-shadow: 1px 1px 3px rgba(0 ,0,0,0.1); */
 }
 .profile__head{
   padding : 2px 20px;
@@ -253,9 +269,12 @@
     border : none;
     color : #4C4B4B;
     background: rgba(188, 188, 188,0.4);
-    width : 240px;
+    width : 270px;
     padding : 1px 10px;
     border-radius:  4px;
+}
+.profile__select:focus{
+  background: rgba(188, 188, 188,0.4);
 }
 .profile__genderSelct{
     height : 40px;
@@ -267,7 +286,7 @@
     border-radius:  4px;
 }
 .profile__footerBtn{
-    padding : 10px 50px;
+    padding : 6px 60px;
     margin-top: 10px;
     border : none ;
     color : white;
@@ -280,13 +299,16 @@
 }
 .profile__imgAdd{
   position: absolute;
-  bottom: 50px;
+  bottom: 30px;
   right : 60px;
   color : grayscale;
   background : white ;
   border : none;
   border-radius: 6px 6px 6px 6px;
   padding : 5px
+}
+.profile__imgAdd:focus{
+  outline : none;
 }
 .profile__error{
   color : red;
@@ -296,29 +318,115 @@
 
 /* change password */
 .changePass__modal{
-  padding : 20px 50px;
+  padding : 20px 100px;
   border-radius: 20px;
 }
 .changePass__header{
     color :#707070;
     margin-bottom: 30px; 
 }
+.changePass__modalDialog{
+  width : 600px;
+}
+.ticBackground{
+  position: absolute;
+  left : 50%;
+  transform : translateX(-50%);
+  background-color:#707070 ;
+  border-radius: 100px;
+  padding : 30px 24px  
+}
+.ticBackground img {
+  margin-top : -2px;
+}
 
-  .app__tableHeader{
+.changePassSucc__modal{
+  padding : 20px 10px;
+  border-radius: 20px;
+}
+.changePassSucc__modalDialog{
+  width : 600px;
+}
+/* users */
+  .users__tableHeader{
     background-color: #4C4B4B;
-    padding : 9px 10px;
+    padding : 6px 1px;
     border-radius: 10px 10px 0px 0px;
     color : white;
     width : 100%;
+    margin-top : 10px
     
   }
-  .app__tableClass thead tr th{
-    font-weight: normal;
-    background : #A4B0BD
+  .users__tableClass thead tr th{
+    font-weight: bold;
+    background : #c7c7c7;
+    padding : 3px 20px
   }
-  .app__tableClass {
+  .users__tableClass tbody tr td{
+      padding : 10px 10px;
+  }
+  .users__tableClass {
     overflow-x: auto;
+    width : 100%;
   }
+.userProfile__imgAdd{
+  position: absolute;
+  bottom: 7px;
+  right : 370px;
+  color : grayscale;
+  background : white ;
+  border : none;
+  border-radius: 6px 6px 6px 6px;
+  padding : 3px 6px
+}
+.userProfile__imgAdd:focus{
+  outline : none;
+}
+.userProfile__first{
+  padding : 20px 40px;
+  margin-left: 50px;
+}
+.userProfile__firstTextField{
+  padding: 20px 17px;
+  border-radius: 4px;
+  border : none;
+  background: rgba(188, 188, 188,0.4);
+  color : #4C4B4B;
+  margin-bottom: 20px;
+  font-size : 16px;
+  height: 30px;
+  width : 300px
+}
+.userProfile__firstTextField:focus {
+  background: rgba(188, 188, 188,0.4)
+}
+.userProfile__subBtn{
+  width : 120px;
+  text-align: center;
+  padding : 3px;
+}
+.userProfile__active:disabled{
+  border : 0.3px solid #4C4B4B;
+  border-radius: 8px;
+  background : white;
+  color : #4C4B4B
+}
+.userProfile__card{
+  background : #bdbaba;
+  border-radius: 30px;
+  height : 200px;
+  width : 160px;
+}
+.userProfile__expired:disabled{
+  border : 0.3px solid #4C4B4B;
+  border-radius: 8px;
+  background : rgb(211, 211, 211);
+  color : #4C4B4B
+}
+
+
+/* table */
+
   .customTable__edit,.customTable__delete{
     border : 1px solid #777E8B;
     outline : none;
@@ -333,13 +441,43 @@
   background: rgba(188, 188, 188, 0.884);
   color : #4C4B4B;
 }
+.customTable__searchIcon{
+  position: absolute;
+  top : 70%;
+  right : 6px;
+  transform : translateY(-80%);
+  padding : 5px;
+  color :#707070;
+}
+.customTable__input:focus{
+  background: rgba(188, 188, 188, 0.884);
+}
 .customTable__footer{
   border : none;
-  padding : 10px 40px;
-  background-color: #4C4B4B;
-  color : white;
-  border-radius: 5px;
+  padding : 30px 40px;
+  background-color: #f6f7f963;
+  color : black;
 }
-
+.customTable{
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  border-radius:10px;
+}
+.customTable__select{
+  padding : 7px;
+  width : 130px;
+  border-radius: 4px;
+  border : none;
+  background: rgba(188, 188, 188, 0.884);
+  color : #4C4B4B;
+  margin-right: 10px;
+}
+.customTable__results{
+  padding : 6px 30px;
+  margin-bottom: -15px;
+}
+.customTable__results p {
+  color :#707070
+}
+  
 
 

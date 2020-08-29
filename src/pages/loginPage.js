@@ -5,11 +5,9 @@ import CustomButton from '../customComponents/customButton'
 import {Link} from 'react-router-dom'
 import validator from 'validator';
 import { useHistory ,Redirect } from 'react-router-dom'
-import UserDetailsProvider from '../context/auth/userDetailsContext'
 
 const LoginPage = () =>{
 
-    const context = useContext(UserDetailsProvider);
     const [username , setUsername] = useState('');
     const [password , setPassword] = useState('');
     const [loading , setLoading] = useState(false);
@@ -66,8 +64,6 @@ const LoginPage = () =>{
          setLoading(true);
          setTimeout(() => (
              setLoading(false),
-             context.setUser("dfdsf"),
-             localStorage.setItem('user' , "kjsd"),
              history.push("/dashboard")
          ), 2000);
     }
