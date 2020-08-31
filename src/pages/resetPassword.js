@@ -63,6 +63,8 @@ const ResetPassword =() => {
    
     return (
         <div className="container forgotPass__page">
+            <style>{'body { background-color: #009CB4; }'}</style>
+            
            <div className="text-center forgotPass__header">
                 <h5 style={{fontSize : "25px"}}>Reset Password</h5>
                 <p style={{fontSize : "12px"}}>Please Enter your new password </p>
@@ -81,7 +83,7 @@ const ResetPassword =() => {
                 <CustomTextfield customTextfield__input="form-control login__input" type="password" placeholder="New password" value={password.newPassword} handleChange={change} name="newPassword"/>
                 <CustomTextfield customTextfield__input="form-control login__input" type="password" placeholder="Confirm password" value={password.confirmPassword} handleChange={change} name="confirmPassword"/>                
                 <div className="text-center forgotPass__footer">
-                    {loading ? (<div className="spinner-border text-primary"></div>) : (<CustomButton customButton__class="login__btn" text="Submit" type="submit"/>)}
+                    {loading ? (<div className="spinner-border text-primary"></div>) : (<CustomButton customButton__class="login__btn1" text="Submit" type="submit"/>)}
                 </div>
            </form>
         </div>

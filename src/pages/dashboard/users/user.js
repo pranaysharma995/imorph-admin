@@ -16,7 +16,6 @@ const UsersPage =()=> {
       email : 'rahul@gmail.com',
       conversions : "300",
       contact : "723732673",
-      subscriptions : "7 days , $1/mo",
       status : "active"
     },
     {

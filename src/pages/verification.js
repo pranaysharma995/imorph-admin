@@ -1,8 +1,9 @@
 import React,{useState} from 'react'
 import CustomButton from '../customComponents/customButton'
-import {useHistory} from "react-router-dom"
+import {useHistory, Redirect} from "react-router-dom"
+import validator from 'validator'
 
-const VerificationPage =() => {
+const VerificationPage =({value}) => {
     const [loading , setLoading] = useState(false);
     const [otp , setOtp] = useState({
         input1 : "",
@@ -36,26 +37,32 @@ const VerificationPage =() => {
         })
     }
 
+    if(!value){
+        return <Redirect to="/forgotpassword"/>
+    }
+
     return (
         <div className="container forgotPass__page">
+            <style>{'body { background-color: #009CB4; }'}</style>
+            
            <div className="text-center forgotPass__header">
                 <h5 style={{fontSize : "25px"}}>Verification</h5>
-                <p style={{fontSize : "12px"}}>Please Enter the OTP we have sent to your mobile number +91-67*******95 </p>
+                <p style={{fontSize : "12px" , padding : "1px 30px"}}>{validator.isInt(value) ? `Please Enter the OTP we have sent to your mobile number +1 ${value.replace(value.substr(2 , 6) , "*******")} ` : `Please Enter the OTP we have sent to your email address ${value.replace(value.substr(4, Math.abs(value.length -12)) , "**********")} `}</p>
            </div>
            <form onSubmit={click_sendButton} >
-                {error && <small className="verification__errorMessage">*Please enter OTP properly</small>}
+                {error && <small className="verification__errorMessage">&#9888;&#160;Please enter OTP properly</small>}
                 <div className="text-center"> 
-                    <input type="text" className="verification__input" maxLength="1" name="input1" value={otp.input1} onChange={handleChange}/>
-                    <input type="text" className="verification__input" maxLength="1" name="input2" value={otp.input2} onChange={handleChange}/>
-                    <input type="text" className="verification__input" maxLength="1" name="input3" value={otp.input3} onChange={handleChange}/>
-                    <input type="text" className="verification__input" maxLength="1" name="input4" value={otp.input4} onChange={handleChange}/>
+                    <input type="text" className={error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input1" value={otp.input1} onChange={handleChange}/>
+                    <input type="text" className={error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input2" value={otp.input2} onChange={handleChange}/>
+                    <input type="text" className={error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input3" value={otp.input3} onChange={handleChange}/>
+                    <input type="text" className={error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input4" value={otp.input4} onChange={handleChange}/>
                 </div>
                 <div className="text-center forgotPass__footer">
-                    {loading ? (<div className="spinner-border text-primary"></div>) : (<CustomButton customButton__class="login__btn" text="Send" type="submit" disabled={loading}/>)}
+                    {loading ? (<div className="spinner-border text-primary"></div>) : (<CustomButton customButton__class="login__btn1" text="Send" type="submit" disabled={loading}/>)}
                 </div>
            </form>
            <div className="text-center" style={{color : '#707070'}}>
-               <p>Didn't received OTP? <strong>Resend now</strong></p>
+               <p>Didn't received OTP? <strong style={{color : '#009CB4 '}}>Resend now</strong></p>
            </div>
         </div>
     )

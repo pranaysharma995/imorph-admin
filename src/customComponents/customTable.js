@@ -28,7 +28,7 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
     }
 
     return (
-        <div className="customTable" style={{width: "1100px" ,marginTop: "120px" , marginLeft : "-90px" , marginBottom : "90px"}}>
+        <div className="customTable" style={{marginTop: "120px" , marginLeft : "60px" , marginBottom : "90px"}}>
                <div className="d-flex justify-content-between users__tableHeader">
                           <div>
                               <h5 style={{marginTop : "10px" , color : "lightgray" , marginLeft : "10px"}}>Users</h5>

@@ -85,7 +85,7 @@ const UserProfileView =()=> {
                     phone : true
                 })
             }
-            else if(!validator.isLength(UserInformation.phone,{min : 10})){
+            else if(!validator.isLength(UserInformation.phone,{min : 10  ,max :10})){
                 setError({
                     phone_length : true
                 })
@@ -254,7 +254,7 @@ const UserProfileView =()=> {
                                         <div className="col">
                                             {error.zip_code && <small className="profile__error">*Phone enter zip code</small>}
                                             <label htmlFor="zip_code" style={{lineHeight :"0.4" , color : "#707070"}}>Zip Code</label>
-                                            <CustomTextfield customTextfield__input="form-control profile__input"  type="password" placeholder="76534" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
+                                            <CustomTextfield customTextfield__input="form-control profile__input"  type="text" placeholder="Enter zip code" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
                                       
                                         </div>
                                     </div>
@@ -271,7 +271,8 @@ const UserProfileView =()=> {
                         <div>
                             <h5 className="text-center mb-4"> Subscription Plans</h5>
                         </div>
-                            <div className="row mb-4" style={{padding : "9px 50px" , marginLeft : "40px"}}>
+                            {context.userDetails.subscriptions ? (
+                                <div className="row mb-4" style={{padding : "9px 50px" , marginLeft : "40px"}}>
                                
                                 <div className="col-md-4">
 
@@ -329,6 +330,9 @@ const UserProfileView =()=> {
                                 </div>
                                 </div>
                             </div>
+                            ) : (<div className="text-center" style={{marginBottom: "120px" , marginTop : "70px"}}>
+                                    <h6 style={{ color : "#707070" , }}>Didn't choose any subscription yet</h6>
+                            </div>)}
                             
                     </div>
         

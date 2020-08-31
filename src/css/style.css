@@ -12,17 +12,21 @@
 }
 .login__input{
     padding: 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     border : none;
-    background: rgba(188, 188, 188,0.4);
     color : #4C4B4B;
     margin-bottom: 20px;
     font-size : 16px;
     height: 50px
   }
   .login__input:focus{
-    background: rgba(188, 188, 188,0.4);
+    box-shadow: none;
+    border: 1px solid #009CB4;
   }
+  .login__errorInput{
+    border : 1px solid red;
+  }
+
   ::-webkit-input-placeholder { /* Edge */
     color: #4C4B4B;
   }  
@@ -41,6 +45,38 @@
     margin-bottom: 30px;
     border-radius: 5px;
   }
+  .login__btn1{
+    padding : 10px 60px;
+    margin-top: 20px;
+    border : none ;
+    color : white;
+    background-color : #009CB4;
+    margin-bottom: 30px;
+    border-radius: 7px;
+  }
+
+  /* fa icons */
+  .fa-envelope-o{
+    position: absolute;
+    top : 50%;
+    right : 20px;
+    transform: translateY(-50%)
+  }
+  .fa-eye{
+    position: absolute;
+    top : 50%;
+    right : 20px;
+    transform: translateY(-50%)
+  }
+  .fa-eye-slash{
+    position: absolute;
+    top : 50%;
+    right : 20px;
+    transform: translateY(-50%)
+  }
+
+
+
 
   /* forgotpass */
   .forgotPass__page{
@@ -66,23 +102,24 @@
     height : 50px;
     border : none;
     color : #4C4B4B;
-    background: rgba(188, 188, 188,0.4);
     width : 80px;
     border-radius: 4px 0px 0px 4px;
   }
   .forgotPass__input{
-    padding: 20px;
-    border-radius: 0px 4px 4px 0px;
+    padding: 20px 30px;
+    border-radius: 8px;
     border : none;
-    background: rgba(188, 188, 188,0.4);
     color : #4C4B4B;
     margin-bottom: 20px;
     font-size : 16px;
     height: 50px;
-    width : 280px
+  }
+  .forgotPass__errorInput{
+    border : 1px solid red;
   }
   .forgotPass__input:focus{
-    background: rgba(188, 188, 188,0.4);
+    box-shadow: none;
+    border: 1px solid #009CB4;
   }
 
   /* verification */
@@ -90,13 +127,19 @@
     padding: 10px;
     border-radius: 4px;
     border : none;
-    background: rgba(188, 188, 188,0.4);
     color : #4C4B4B;
     margin-bottom: 20px;
     font-size : 16px;
     height: 40px;
     width : 40px;
     margin-left: 20px;
+  }
+  .verification__errorInput{
+    border : 1px solid red;
+  }
+  .verification__input:focus{
+    outline: none;
+    border: 1px solid #009CB4;
   }
   .verification__errorMessage{
     color : red;
@@ -117,7 +160,7 @@
     top : 50%;
     transform : translate(-50% , -50%);
     width : 500px;
-    background : #F6F7F9;
+    background : white;
     padding : 10px 20px;
     border-radius: 15px;
     box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
@@ -130,8 +173,8 @@
 
 /* sidebar */
   .sidebar{
-    height: 570px;
-    width: 260px;
+    height: 100%;
+    width: 230px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -143,19 +186,36 @@
   .sildeBar__active{
     background-color : white;
     color : #009CB4;
-    width : fit-content;
-    padding : 3px 10px;
-    padding-right : 40%;
-    border-radius: 7px;    
+    width : 200px;
+    padding : 3px 5px;
+    border-radius: 7px;  
+    margin: auto;  
+    margin-left: -5px;
   }
   .sildeBar__inactive{
-    color : white
+    color : white;
+    margin: auto;
   }
   .sidebar__linkInActive{
     color : white;
   }
+  .sidebar__linkInActive:hover{
+    text-decoration: none;
+  }
   .sidebar__link:hover {
     text-decoration: none;
+  }
+  .sidebar__settingDiv{
+    background-color: gray;
+    height : 70px;
+    border-radius: 8px;
+    margin-left: -5px;
+    margin-top : 10px;
+  }
+  .sidebar__rightIcon{
+    position: absolute;
+    right : 0px;
+    top: 5px;
   }
 
   /* navbar */
@@ -207,7 +267,7 @@
   bottom : 0px;
   left : 0px;
   width : 100%;
-  background : gray;
+  background : #009CB4;
   text-align: center;
   padding-top: 10px;
   color : white;
@@ -478,6 +538,29 @@
 .customTable__results p {
   color :#707070
 }
-  
 
 
+/* dashboard */
+.dashboard{
+  margin-bottom: 90px; 
+  /* width : 170%;
+  margin-left: -95px;
+  margin-right: 40px; */
+}
+.dashboard__firstGraph{
+  background-color : #F6F7F9;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  border-radius: 8px;
+}
+.dashboard__icon{
+  position: absolute;
+  left : 15px;
+ 
+}
+
+/* chart */
+.customeChart__select{
+  height : 26px;
+  font-size: 12px;
+  padding : 2px 25px;
+}

@@ -8,8 +8,8 @@ const Navbar =() =>{
     return (
         <div>
                 <nav className="navbar navbar-expand-sm bg-light navbar-light fixed-top">
-                    <div className="navbar-brand" style={{marginLeft : "70px"}}>
-                        <img className="" width="100rem" src={logo} alt="logo"/>
+                    <div className="navbar-brand" style={{marginLeft : "60px"}}>
+                        <img className="" width="90rem" src={logo} alt="logo"/>
                     </div>
                     <div className="collapse navbar-collapse justify-content-end">
                        <div style={{marginTop : "20px" , marginBottom : "-10px" , marginRight : "30px"}}>
