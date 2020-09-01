@@ -18,7 +18,9 @@ function ChangePasswordModal() {
         confirmPassword : "Abcd@123"
     });
     const [error , setError] = useState({
-        empty_error : false,
+        oldempty_error : false,
+        newempty_error : false,
+        confempty_error : false,
         password_error : false,
         match_error : false
     })
@@ -52,9 +54,20 @@ function ChangePasswordModal() {
                 })
             }
         }else{
+           if(validator.isEmpty(password.oldPassword)){
             setError({
-                empty_error : true
+                oldempty_error : true
             });
+           }else if(validator.isEmpty(password.newPassword)){
+            setError({
+                newempty_error : true
+            });
+           }
+           else if(validator.isEmpty(password.confirmPassword)){
+            setError({
+                confempty_error : true
+            });
+           }
         }
         
     }
@@ -71,8 +84,8 @@ function ChangePasswordModal() {
     }
 
     return (
-        <div>
-                    <div className="modal fade" id="myChangePasswordModal" >
+            <div>
+                <div className="modal fade" id="myChangePasswordModal" >
                 <div className="modal-dialog modal-dialog-centered changePass__modalDialog modal-lg">
                 <div className="modal-content changePass__modal">
 
@@ -88,12 +101,12 @@ function ChangePasswordModal() {
                             <li>Contain at least one special character</li>
                         </ul>
                     </small>}
-                    {error.empty_error && <small className="error__message">*Please fill all fields</small>}
-                    {error.match_error && <small className="error__message">*Passwords do not match</small>}
+                    {(error.oldempty_error || error.oldempty_error || error.newempty_error || error.confempty_error )&& <small className="error__message">&#9888;&#160;Please fill all fields</small>}
+                    {error.match_error && <small className="error__message">&#9888;&#160;Passwords do not match</small>}
                     <form>
-                        <CustomTextfield customTextfield__input="form-control login__input" type="password" placeholder="Old password" value={password.oldPassword} handleChange={change} name="oldPassword"/>
-                        <CustomTextfield customTextfield__input="form-control login__input" type="password" placeholder="New password" value={password.newPassword} handleChange={change} name="newPassword"/>
-                        <CustomTextfield customTextfield__input="form-control login__input" type="password" placeholder="Confirm password" value={password.confirmPassword} handleChange={change} name="confirmPassword"/>                
+                        <CustomTextfield customTextfield__input={error.oldempty_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="Old password" value={password.oldPassword} handleChange={change} name="oldPassword"/>
+                        <CustomTextfield customTextfield__input={error.newempty_error || error.password_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="New password" value={password.newPassword} handleChange={change} name="newPassword"/>
+                        <CustomTextfield customTextfield__input={error.confempty_error || error.match_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="Confirm password" value={password.confirmPassword} handleChange={change} name="confirmPassword"/>                
                         <div className="mt-3">
                             <div className="d-flex justify-content-center">
                                 {loading ? (<div className="spinner-border text-primary"></div>) : (

@@ -12,7 +12,7 @@ import DashboardPage  from './dashboard/dashboardPage'
 function Dashboard() {
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-md-12">
                     <Navbar/>
@@ -20,9 +20,8 @@ function Dashboard() {
                 <div className="col-md-2">
                     <Sidebar/>
                 </div>
-                <div className="col-md-10 ">
+                <div className="col-md-12 " style={{paddingLeft: "250px"}}>
                     <Switch>
-                   
                             <Route exact  path="/dashboard"  component={DashboardPage}/>
                             <Route  path="/dashboard/profile"  component={ProfilePage}/>
                             <Route exact  path="/dashboard/users"  component={UsersPage}/>

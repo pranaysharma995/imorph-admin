@@ -4,7 +4,7 @@
   left : 50%;
   top : 50%;
   transform : translate(-50% , -50%);
-  width : 400px;
+  width : 450px;
   background : #F6F7F9;
   padding : 10px 30px;
   border-radius: 15px;
@@ -16,8 +16,9 @@
     border : none;
     color : #4C4B4B;
     margin-bottom: 20px;
-    font-size : 16px;
-    height: 50px
+    font-size : 17px;
+    height: 50px;
+    box-shadow: 0px 1px 3px rgba(0 ,0,0,0.1);
   }
   .login__input:focus{
     box-shadow: none;
@@ -62,18 +63,13 @@
     right : 20px;
     transform: translateY(-50%)
   }
-  .fa-eye{
+  .login__eye{
     position: absolute;
     top : 50%;
     right : 20px;
     transform: translateY(-50%)
   }
-  .fa-eye-slash{
-    position: absolute;
-    top : 50%;
-    right : 20px;
-    transform: translateY(-50%)
-  }
+ 
 
 
 
@@ -111,7 +107,7 @@
     border : none;
     color : #4C4B4B;
     margin-bottom: 20px;
-    font-size : 16px;
+    font-size : 17px;
     height: 50px;
   }
   .forgotPass__errorInput{
@@ -129,7 +125,7 @@
     border : none;
     color : #4C4B4B;
     margin-bottom: 20px;
-    font-size : 16px;
+    font-size : 17px;
     height: 40px;
     width : 40px;
     margin-left: 20px;
@@ -187,7 +183,8 @@
     background-color : white;
     color : #009CB4;
     width : 200px;
-    padding : 3px 5px;
+    padding : 5px 8px;
+    padding-left : 10px;
     border-radius: 7px;  
     margin: auto;  
     margin-left: -5px;
@@ -201,9 +198,12 @@
   }
   .sidebar__linkInActive:hover{
     text-decoration: none;
+    color : white;
   }
   .sidebar__link:hover {
     text-decoration: none;
+    color : #009CB4
+   
   }
   .sidebar__settingDiv{
     background-color: gray;
@@ -234,7 +234,7 @@
   }
   .nav__searchIcon{
     position: absolute;
-    top : 50%;
+    top : 65%;
     right : 6px;
     transform : translateY(-80%);
     padding : 5px;
@@ -253,12 +253,37 @@
 }
 .nav__dropdownMenu{
   position: absolute;
-  left : -60px;
-  background: #F6F7F9;
+  left : -120px;
+  background: #009CB4;
+}
+.nav__dropdown-item{
+  color : white
+}
+.dropdown__head{
+  padding-left: 10px;
+  padding-top: 6px;
 }
 .nav__dropdown-item:active{
     background : transparent;
-    color : #707070
+}
+.nav__link{
+  color : white;
+  padding-left : 10px;
+  border-radius: 4px;
+}
+.nav__link:hover{
+  color : #707070;
+  background-color : white;
+}
+.nav__notification{
+  position: absolute;
+  left : -300px;
+  width : 350px;
+  border : 1px solid #009CB4;
+  border-radius: 7px;
+}
+.nav__notificationHead{
+  padding : 4px 20px;
 }
 
 /* footer */
@@ -277,32 +302,45 @@
 /* profile */
 .profile__input{
   padding: 20px 17px;
-  border-radius: 4px;
+  border-radius: 8px;
   border : none;
-  background: rgba(188, 188, 188,0.4);
+  background: #F1F5F8;
   color : #4C4B4B;
   margin-bottom: 20px;
   font-size : 16px;
   height: 30px
 }
 .profile__locationInput:focus{
-  background: rgba(188, 188, 188,0.4);
+  background: #F1F5F8;
+  box-shadow: none;
+  border : 1px solid #009CB4;
 }
 .profile__genderSelct:focus{
-  background: rgba(188, 188, 188,0.4);
+  background: #F1F5F8;
+  box-shadow: none;
+  border : 1px solid #009CB4;
 }
 .profile hr{
   width : 100%;
 }
 .profile__input:focus{
-  background: rgba(188, 188, 188,0.4);
+  background: #F1F5F8;
+  box-shadow: none;
+  border : 1px solid #009CB4;
 }
 .profile__backbtn{
-  border : 1px solid #d3d3d3;
+  border : 1px solid #009CB4;
   padding : 6px 60px;
-  color : #4C4B4B;
+  color : #009CB4;
   margin-top : 10px;
   /* box-shadow: 1px 1px 3px rgba(0 ,0,0,0.1); */
+}
+.profile__backbtn:focus{
+  box-shadow: none;
+  color : #009CB4;
+}
+.profile__backbtn:hover{
+  color : #009CB4;
 }
 .profile__head{
   padding : 2px 20px;
@@ -311,14 +349,15 @@
   margin-bottom: 90px;
 }
 .profile__first{
-  background-color : #F6F7F9;
+  background-color : white;
   box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  border-radius: 10px;
 }
 .profile__locationInput{
   padding: 20px 17px;
-  border-radius: 4px;
+  border-radius: 8px;
   border : none;
-  background: rgba(188, 188, 188,0.4);
+  background: #F1F5F8;
   color : #4C4B4B;
   margin-bottom: 20px;
   font-size : 16px;
@@ -328,19 +367,20 @@
     height : 40px;
     border : none;
     color : #4C4B4B;
-    background: rgba(188, 188, 188,0.4);
-    width : 270px;
+    background: #F1F5F8;
     padding : 1px 10px;
-    border-radius:  4px;
+    border-radius:  8px;
 }
 .profile__select:focus{
-  background: rgba(188, 188, 188,0.4);
+  background: #F1F5F8;
+  box-shadow: none;
+  border : 1px solid #009CB4;
 }
 .profile__genderSelct{
     height : 40px;
     border : none;
     color : #4C4B4B;
-    background: rgba(188, 188, 188,0.4);
+    background: #F1F5F8;
 
     padding : 1px 10px;
     border-radius:  4px;
@@ -359,13 +399,14 @@
 }
 .profile__imgAdd{
   position: absolute;
-  bottom: 30px;
-  right : 60px;
+  bottom: 10px;
+  right : 30px;
   color : grayscale;
   background : white ;
   border : none;
   border-radius: 6px 6px 6px 6px;
-  padding : 5px
+  padding : 5px;
+  box-shadow: 1px 2px 30px rgba(0 ,0,0,0.3);
 }
 .profile__imgAdd:focus{
   outline : none;
@@ -374,6 +415,9 @@
   color : red;
   position: absolute;
   right : 12px;
+}
+.profile__errorInput{
+  border : 1px solid red;
 }
 
 /* change password */
@@ -392,7 +436,7 @@
   position: absolute;
   left : 50%;
   transform : translateX(-50%);
-  background-color:#707070 ;
+  background-color:#009CB4 ;
   border-radius: 100px;
   padding : 30px 24px  
 }
@@ -409,7 +453,7 @@
 }
 /* users */
   .users__tableHeader{
-    background-color: #4C4B4B;
+    background-color: white;
     padding : 6px 1px;
     border-radius: 10px 10px 0px 0px;
     color : white;
@@ -429,10 +473,16 @@
     overflow-x: auto;
     width : 100%;
   }
+  .users__tableClass{
+    background-color : white;
+  }
+  .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #F1F5F8;
+ }
 .userProfile__imgAdd{
   position: absolute;
-  bottom: 7px;
-  right : 370px;
+  bottom: 10px;
+  right : 30px;
   color : grayscale;
   background : white ;
   border : none;
@@ -444,21 +494,21 @@
 }
 .userProfile__first{
   padding : 20px 40px;
-  margin-left: 50px;
 }
 .userProfile__firstTextField{
   padding: 20px 17px;
   border-radius: 4px;
   border : none;
-  background: rgba(188, 188, 188,0.4);
+  background: #F1F5F8;
   color : #4C4B4B;
   margin-bottom: 20px;
   font-size : 16px;
   height: 30px;
-  width : 300px
 }
 .userProfile__firstTextField:focus {
-  background: rgba(188, 188, 188,0.4)
+  background: #F1F5F8;
+  box-shadow: none;
+  border : 1px solid #009CB4;
 }
 .userProfile__subBtn{
   width : 120px;
@@ -476,12 +526,16 @@
   border-radius: 30px;
   height : 200px;
   width : 160px;
+  left : 20%;
 }
 .userProfile__expired:disabled{
   border : 0.3px solid #4C4B4B;
   border-radius: 8px;
   background : rgb(211, 211, 211);
   color : #4C4B4B
+}
+.userProfile__errorInput{
+  border : 1px solid red;
 }
 
 
@@ -498,7 +552,7 @@
   width : 270px;
   border-radius: 4px;
   border : none;
-  background: rgba(188, 188, 188, 0.884);
+  background:  #F1F5F8;
   color : #4C4B4B;
 }
 .customTable__searchIcon{
@@ -510,13 +564,14 @@
   color :#707070;
 }
 .customTable__input:focus{
-  background: rgba(188, 188, 188, 0.884);
+  background:  #F1F5F8;
 }
 .customTable__footer{
   border : none;
   padding : 30px 40px;
-  background-color: #f6f7f963;
+  background-color: white;
   color : black;
+  border-radius: 0px 0px 10px 10px;
 }
 .customTable{
   box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
@@ -527,13 +582,15 @@
   width : 130px;
   border-radius: 4px;
   border : none;
-  background: rgba(188, 188, 188, 0.884);
-  color : #4C4B4B;
+  background: #009CB4;
+  color : white;
   margin-right: 10px;
 }
 .customTable__results{
   padding : 6px 30px;
   margin-bottom: -15px;
+  background-color: white;
+  border-top: 1px solid gray;
 }
 .customTable__results p {
   color :#707070
@@ -543,12 +600,9 @@
 /* dashboard */
 .dashboard{
   margin-bottom: 90px; 
-  /* width : 170%;
-  margin-left: -95px;
-  margin-right: 40px; */
 }
 .dashboard__firstGraph{
-  background-color : #F6F7F9;
+  background-color : white;
   box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
   border-radius: 8px;
 }
@@ -562,5 +616,27 @@
 .customeChart__select{
   height : 26px;
   font-size: 12px;
-  padding : 2px 25px;
+  padding : 2px 23px;
+  border-radius: 6px;
+  background-color: white;
+  color : #707070;
+  border : 0.1em solid #707070;
 }
+.customeChart__select:hover{
+  background-color: white;
+  color :#707070;
+  border : 0.1em solid #707070
+}
+
+.customChart__active{
+  color : white;
+  background-color : #009CB4;
+  box-shadow: none;
+  border : none;
+}
+/* .customeChart__select:focus,.customeChart__select:active{
+  color : white;
+  background-color : #009CB4;
+  box-shadow: none;
+  border : none;
+} */

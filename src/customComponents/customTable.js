@@ -28,10 +28,10 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
     }
 
     return (
-        <div className="customTable" style={{marginTop: "120px" , marginLeft : "60px" , marginBottom : "90px"}}>
+        <div className="customTable" style={{marginTop: "120px" , marginBottom : "90px"}}>
                <div className="d-flex justify-content-between users__tableHeader">
                           <div>
-                              <h5 style={{marginTop : "10px" , color : "lightgray" , marginLeft : "10px"}}>Users</h5>
+                              <h5 style={{marginTop : "10px" , color : "black" , marginLeft : "10px"}}>Users</h5>
                           </div> 
                            <div style={{position : "relative" ,marginTop : "2px"}}>
                                  <CustomTextfield customTextfield__input="form-control customTable__input" type="text" placeholder="Search" icon_class="fa fa-search customTable__searchIcon" value={searchValue} handleChange={onHandleChange}/>

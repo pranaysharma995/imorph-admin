@@ -153,10 +153,13 @@ const UserProfileView =()=> {
                                          <h5 className="text-right" style={{lineHeight :"0.7" , color : "#707070"}}>{UserInformation.conversions}</h5>
                                          <p style={{lineHeight :"0.7" , color : "#707070"}}><small>Conversions</small></p>
                                     </div>
-                                    <div className="text-center" style={{position : "relative"}}>
-                                    <img width="100rem" className= "rounded-circle" src={profile} alt="profile" style={{color: "black"}}/>
+                                    <div style={{position : "relative"}}>
+                                        <div className="text-center" style={{position : "relative" , width: "180px" , left:"50%" , transform : "translateX(-50%)"}}>
+                                              <img width="100rem" className= "rounded-circle" src={profile} alt="profile" style={{color: "black"}}/>
+                                              <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="20rem" src={camera} alt="add" style={{marginTop : "-7px" , marginLeft : "2px"}}/></label>
+                                        </div>
                                     
-                                    <button className="userProfile__imgAdd rounded-circle text-center"><img width="17rem" src={camera} alt="add" style={{margin: "auto"}}/></button>
+                                    <input type="file" id="userImage" style={{display : "none"}} accept="image/*"/> 
                                     </div>
                                 </div>
                             </div>
@@ -165,39 +168,40 @@ const UserProfileView =()=> {
                                         
                                         <div className="row">
                                             <div className="col" style={{position : "relative"}}>
-                                            {error.fname && <small className="profile__error">*Please enter first name</small>}
+                                            {error.fname && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter first name</small>}
                                             <label htmlFor="fname" style={{lineHeight :"0.4" , color : "#707070"}}>First Name</label>
-                                                <CustomTextfield customTextfield__input="form-control userProfile__firstTextField"  type="text" placeholder="First Name" name="fname" value={UserInformation.fname} handleChange={textChange}/>
+                                                <CustomTextfield customTextfield__input={error.fname ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"}  type="text" placeholder="First Name" name="fname" value={UserInformation.fname} handleChange={textChange}/>
                                             </div>
                                             <div className="col">
-                                            {error.lname && <small className="profile__error">*Please enter second name</small>}
+                                            {error.lname && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter second name</small>}
                                             <label htmlFor="lname" style={{lineHeight :"0.4" , color : "#707070"}}>Second Name</label>
-                                                <CustomTextfield customTextfield__input="form-control userProfile__firstTextField"  type="text" placeholder="Last Name" name="lname" value={UserInformation.lname} handleChange={textChange}/>
+                                                <CustomTextfield customTextfield__input={error.lname ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"} type="text" placeholder="Last Name" name="lname" value={UserInformation.lname} handleChange={textChange}/>
                                             </div>
                                         </div>
                     
                                      </div>
                             </div>
                     </div>
+
                     <div className="col-md-12 profile__first p-4 mt-3">
                                 <div className="row">
                                             <div className="col">
-                                            {error.email && <small className="profile__error">*Please enter email properly</small>}
+                                            {error.email && <small className="profile__error">&#9888;&#160;Please enter a valid email</small>}
                                             <label htmlFor="email" style={{lineHeight :"0.4" , color : "#707070"}}>Email</label>
-                                                <CustomTextfield customTextfield__input="form-control profile__input"  type="text" placeholder="Email" name="email" value={UserInformation.email} handleChange={textChange}/>
+                                                <CustomTextfield customTextfield__input={error.email ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Email" name="email" value={UserInformation.email} handleChange={textChange}/>
                                             </div>
                                             <div className="col">
-                                            {error.phone && <small className="profile__error">*Please enter a number</small>}
-                                            {error.phone_length && <small className="profile__error">*Enter a valid number</small>}
+                                            {error.phone && <small className="profile__error">&#9888;&#160;Please enter a number</small>}
+                                            {error.phone_length && <small className="profile__error">&#9888;&#160;Enter a valid number</small>}
                                             <label htmlFor="phone" style={{lineHeight :"0.4" , color : "#707070"}}>Phone Number</label>
-                                                <CustomTextfield customTextfield__input="form-control profile__input"  type="text" placeholder="Phone" name="phone" value={UserInformation.phone} handleChange={textChange}/>
+                                                <CustomTextfield customTextfield__input={error.phone || error.phone_length ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Phone" name="phone" value={UserInformation.phone} handleChange={textChange}/>
                                             </div>
                                  </div>
                             <div className="row">
                                 <div className="col">
-                                        {error.address && <small className="profile__error">*Phone enter address</small>}
+                                         {error.address && <small className="profile__error">&#9888;&#160;Phone enter address</small>}
                                         <label htmlFor="address" style={{lineHeight :"0.4" , color : "#707070"}}>Address</label>
-                                        <CustomTextfield customTextfield__input="form-control profile__locationInput"  type="text"  name="address" value={UserInformation.address} handleChange={textChange}/>
+                                        <CustomTextfield customTextfield__input={error.address ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"} type="text"  name="address" value={UserInformation.address} handleChange={textChange}/>
                                 </div>
                             </div>
                             <div className="row mt-2">
@@ -252,25 +256,22 @@ const UserProfileView =()=> {
                                 <div className="col-md-6">
                                 <div className="row">
                                         <div className="col">
-                                            {error.zip_code && <small className="profile__error">*Phone enter zip code</small>}
+                                            {error.zip_code && <small className="profile__error">&#9888;&#160;Phone enter zip code</small>}
                                             <label htmlFor="zip_code" style={{lineHeight :"0.4" , color : "#707070"}}>Zip Code</label>
-                                            <CustomTextfield customTextfield__input="form-control profile__input"  type="text" placeholder="Enter zip code" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
+                                            <CustomTextfield customTextfield__input={error.zip_code ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Enter zip code" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
                                       
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {/* <hr/>
-                            <div className="d-flex justify-content-center">
-                                        {loading ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" />
-                                        <CustomButton customButton__class="btn profile__backbtn"  text="Cancle"/></>)}
-                            </div> */}
+                        
                     </div>
 
                     <div className="col-md-12 profile__first p-4 mt-3">
                         <div>
                             <h5 className="text-center mb-4"> Subscription Plans</h5>
                         </div>
+                        <hr/>
                             {context.userDetails.subscriptions ? (
                                 <div className="row mb-4" style={{padding : "9px 50px" , marginLeft : "40px"}}>
                                
@@ -333,6 +334,11 @@ const UserProfileView =()=> {
                             ) : (<div className="text-center" style={{marginBottom: "120px" , marginTop : "70px"}}>
                                     <h6 style={{ color : "#707070" , }}>Didn't choose any subscription yet</h6>
                             </div>)}
+                            <hr/>
+                            <div className="d-flex justify-content-center">
+                               {loading ? (<div  className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" />
+                                <CustomButton customButton__class="btn profile__backbtn"  text="Cancel"/></>)}
+                            </div>
                             
                     </div>
         

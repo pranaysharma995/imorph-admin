@@ -7,7 +7,7 @@ const ResetSuccessfull =() => {
    
     return (
         <div className="container resetSuccess__page">
-            <style>{'body { background-color: #009CB4; }'}</style>
+            <style>{'body { background-color: #1BC1D8; }'}</style>
             <div className="text-center">
                 <img width="150rems" src={restPage} alt="logo" className="resetSuccess_img" />
             </div>

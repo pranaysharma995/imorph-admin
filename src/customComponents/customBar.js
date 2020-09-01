@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react'
-import {Line} from 'react-chartjs-2'
+import {Bar} from 'react-chartjs-2'
 
- const CustomBar=({labels,dataSet_label ,dataSet_data , totalNumber , headerLabel , chartWidth , chartHeight , backColor}) =>{
+ const CustomBar=({labels,dataSet_label ,dataSet_data , totalNumber , headerLabel , chartWidth , chartHeight , backColor , id1 , id2 ,id3 , barThikness}) =>{
 
    // const [chartData , setChartData] = useState();
 
@@ -13,11 +13,70 @@ import {Line} from 'react-chartjs-2'
                 {
                 label: dataSet_label,
                 data: dataSet_data,
+                barThickness: barThikness,
                 backgroundColor: backColor,
                 borderColor: backColor,
                 borderWidth: 1
             }
         ],
+    }
+
+    const styleAdd = e=> {
+        e.preventDefault();
+        if(e.target.id == "bt1"){
+            document.getElementById("bt1").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt2").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt3").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }else if(e.target.id == "bt2"){
+            document.getElementById("bt2").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt1").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt3").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }
+        else if(e.target.id == "bt3"){
+            document.getElementById("bt3").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt1").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt2").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }
+
+        else if(e.target.id == "bt4"){
+            document.getElementById("bt4").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt5").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt6").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }else if(e.target.id == "bt5"){
+            document.getElementById("bt5").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt4").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt6").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }
+        else if(e.target.id == "bt6"){
+            document.getElementById("bt6").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt4").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt5").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }
+
+
+        else if(e.target.id == "bt7"){
+            document.getElementById("bt7").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt8").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt9").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }else if(e.target.id == "bt8"){
+            document.getElementById("bt8").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt7").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt9").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }
+        else if(e.target.id == "bt9"){
+            document.getElementById("bt9").setAttribute("style" , "background-color: #009CB4; color: white; border: none; box-shadow : none;")
+
+            document.getElementById("bt7").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+            document.getElementById("bt8").setAttribute("style" , "background-color: white; color :#707070;border : 0.1em solid #707070")
+        }
     }
 
     return (
@@ -27,14 +86,14 @@ import {Line} from 'react-chartjs-2'
                     <h5 style={{color : backColor}}>{totalNumber}</h5>
                     <p>{headerLabel}</p>
                </div>
-               <div className="d-flex">
-                   <select className="form-control mr-3 customeChart__select" name="graphSelect" >
-                       <option value="All">All</option>
-                   </select>
+               <div className="d-flex" onClick={styleAdd}>
+                    <button id={id1} className="btn btn-primary mr-2 customeChart__select">Day</button>
+                    <button id={id2} className="btn btn-primary mr-2 customeChart__select">Week</button>
+                    <button id={id3} className="btn btn-primary mr-3 customeChart__select" style={{backgroundColor: '#009CB4' , color : "white" , border : "none"}}>Year</button>
                    <i className="fa fa-download mt-2" aria-hidden="true" style={{color : backColor}}></i>
                </div>
             </div>
-            <Line width={chartWidth} height={chartHeight} data={data} options= {{
+            <Bar width={chartWidth} height={chartHeight} data={data} options= {{
                 responsive : true,
                 maintainAspectRatio: true,
                 legend : {
