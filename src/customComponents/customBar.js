@@ -80,7 +80,7 @@ import {Bar} from 'react-chartjs-2'
     }
 
     return (
-        <div style={{paddingBottom: "10px"}}>
+            <>
             <div className="text-left d-flex justify-content-between" style={{lineHeight: "0.9" , padding:"20px"}}>
                <div>
                     <h5 style={{color : backColor}}>{totalNumber}</h5>
@@ -119,7 +119,7 @@ import {Bar} from 'react-chartjs-2'
                     
                 }
             }}/>
-        </div>
+            </>
     )
 }
 

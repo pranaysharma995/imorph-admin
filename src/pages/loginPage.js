@@ -78,7 +78,7 @@ const LoginPage = () =>{
         <div className="container login__page">
             <style>{'body { background-color: #1BC1D8; }'}</style>
             
-            <div className="text-center mb-4">
+            <div className="text-center mb-4 mt-4">
                 <img width="200rem" src={imoph3d} alt="logo" style={{marginLeft : "30px"}}/>
             </div>
            <div className="text-center" style={{marginBottom : "40px"}}>
@@ -88,19 +88,19 @@ const LoginPage = () =>{
 
            <form  style={{marginTop : "30px"}} onSubmit={handleSubmit}>
                 <div className="form-group">
+                     {validation.err_pass && <small className="error__message">&#9888;&#160;Email or password is incorrect</small> }
                     {validation.username && <small className="error__message">&#9888;&#160; Please enter your email address</small> }
                     {validation.email && <small className="error__message">&#9888;&#160;Please enter your valid email address</small> }
-                    <CustomTextfield customTextfield__input={validation.username || validation.email ? "login__errorInput form-control login__input" : "form-control login__input"}  type="text" placeholder="Email" value={username} icon_class="fa fa-envelope-o" handleChange={e => setUsername(e.target.value)}/>
+                    <CustomTextfield customTextfield__input={validation.username || validation.email || validation.err_pass ? "login__errorInput form-control login__input" : "form-control login__input"}  type="text" placeholder="Email" value={username} icon_class="fa fa-envelope-o" handleChange={e => setUsername(e.target.value)}/>
                 </div>
                 <div className="form-group">
-                    {validation.err_pass && <small className="error__message">&#9888;&#160;Password donot match</small> }
                     {/* {validation.err_pass && <small className="error__message">*Password should be min 8 characters including one uppercase, one lowercase, one number and one special characters</small> } */}
                     {validation.password && <small className="error__message">&#9888;&#160;Please enter password</small> }
                     <CustomTextfield customTextfield__input={validation.err_pass || validation.password ? "login__errorInput form-control login__input" : "form-control login__input"} type={showPassword ? "text" : "password"} placeholder="Password"  value={password} icon_class={showPassword ? "fa fa-eye-slash login__eye" : "fa fa-eye login__eye"} handleIconClick={iconClick} handleChange={e => setPassword(e.target.value)}/>
                 </div>
                 <div className="form-group form-check">
                     <div className="d-flex">
-                    <div style={{marginTop : "4px"}}>
+                    <div>
                     <CustomTextfield customTextfield__input="form-check-input login__checkbox" type="checkbox" />
                     </div>
                     <label className="form-check-label" style={{color : "#707070"}}>
@@ -114,7 +114,7 @@ const LoginPage = () =>{
                 </div>
             </form>
 
-            <p className="text-center" style={{ marginBottom : "30px"}}><Link style={{color :"#009CB4"}} to="/forgotpassword">Forgot Password?</Link></p>
+            <p className="text-center" style={{ marginBottom : "40px"}}><Link style={{color :"#009CB4"}} to="/forgotpassword">Forgot Password?</Link></p>
         </div>
     )
 }
