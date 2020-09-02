@@ -1,7 +1,7 @@
-import React,{useState, useEffect} from 'react'
+import React from 'react'
 import {Bar} from 'react-chartjs-2'
 
- const CustomBar=({labels,dataSet_label ,dataSet_data , totalNumber , headerLabel , chartWidth , chartHeight , backColor , id1 , id2 ,id3 , barThikness}) =>{
+ const CustomBar=({labels,dataSet_label ,dataSet_data , totalNumber , headerLabel , chartHeight , backColor , id1 , id2 ,id3 , barThikness}) =>{
 
    // const [chartData , setChartData] = useState();
 
@@ -83,7 +83,7 @@ import {Bar} from 'react-chartjs-2'
             <>
             <div className="text-left d-flex justify-content-between" style={{lineHeight: "0.9" , padding:"20px"}}>
                <div>
-                    <h5 style={{color : backColor}}>{totalNumber}</h5>
+                    <h5 style={{color : backColor}}><strong>{totalNumber}</strong></h5>
                     <p>{headerLabel}</p>
                </div>
                <div className="d-flex" onClick={styleAdd}>
@@ -93,7 +93,7 @@ import {Bar} from 'react-chartjs-2'
                    <i className="fa fa-download mt-2" aria-hidden="true" style={{color : backColor}}></i>
                </div>
             </div>
-            <Bar width={chartWidth} height={chartHeight} data={data} options= {{
+            <Bar height={chartHeight} data={data} options= {{
                 responsive : true,
                 maintainAspectRatio: true,
                 legend : {

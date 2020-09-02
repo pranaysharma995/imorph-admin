@@ -18,6 +18,7 @@ function ProfilePage() {
         address : "",
         zip_code : ""
     })
+    const [modal , setModal] = useState(false)
     const [error , setError] = useState({
         fname : false,
         lname : false,
@@ -100,6 +101,10 @@ function ProfilePage() {
     const onBack= e=> {
         e.preventDefault();
         history.push("/dashboard")
+    }
+
+    const toggle = () => {
+        setModal(!modal);
     }
 
     return (
@@ -224,11 +229,11 @@ function ProfilePage() {
                                     </div>
                                 </div>
                             </div>
-                            <h6 data-toggle="modal" data-target="#myChangePasswordModal" style={{lineHeight :"0.4" , color : "#009CB4" , marginBottom : "60px" , textDecoration : "underline"}}><Link>Change Password</Link></h6>
-                            <ChangePasswordModal/>
+                            <h6  style={{lineHeight :"0.4" , color : "#009CB4" , marginBottom : "60px" , textDecoration : "underline"}}><Link onClick={() => setModal(!modal)}>Change Password</Link></h6>
+                           
                             <hr/>
                             <div className="d-flex justify-content-center">
-                                        {loading ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" />
+                                        {loading ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn" text="Save" type="submit" />
                                         <CustomButton customButton__class="btn profile__backbtn"  text="Cancel"/></>)}
                             </div>
                     </div>
@@ -236,6 +241,7 @@ function ProfilePage() {
 
                 </div>
                 </form>
+                <ChangePasswordModal modal={modal} toggle={toggle}/>
         </div>
     )
 }

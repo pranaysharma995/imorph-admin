@@ -6,9 +6,11 @@
   transform : translate(-50% , -50%);
   width : 450px;
   background : #F6F7F9;
-  padding : 10px 30px;
+  padding-left : 2vw;
+  padding-right : 2vw;
   border-radius: 15px;
   box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  
 }
 .login__input{
     padding: 20px;
@@ -38,7 +40,7 @@
     color: #4C4B4B;
   }
   .login__btn{
-    padding : 6px 60px;
+    padding : 1vh 3vw;
     margin-top: 20px;
     border : none ;
     color : white;
@@ -46,14 +48,22 @@
     margin-bottom: 30px;
     border-radius: 5px;
   }
+  .login__btn:focus{
+    outline: none;
+    box-shadow: none;
+  }
   .login__btn1{
-    padding : 10px 60px;
+    padding : 1vh 3vw;
     margin-top: 20px;
     border : none ;
     color : white;
     background-color : #009CB4;
     margin-bottom: 30px;
     border-radius: 7px;
+  }
+  .login__btn1:focus{
+    outline: none;
+    box-shadow: none;
   }
 
   /* fa icons */
@@ -80,7 +90,6 @@
     left : 50%;
     top : 50%;
     transform : translate(-50% , -50%);
-    width : 400px;
     background : #F6F7F9;
     padding : 10px 20px;
     border-radius: 15px;
@@ -119,6 +128,17 @@
   }
 
   /* verification */
+  .verification{
+    width: 28em;
+    position: absolute;
+    left : 50%;
+    top : 50%;
+    transform : translate(-50% , -50%);
+    background : #F6F7F9;
+    padding : 10px 20px;
+    border-radius: 15px;
+    box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  }
   .verification__input{
     padding: 10px;
     border-radius: 4px;
@@ -126,8 +146,8 @@
     color : #4C4B4B;
     margin-bottom: 20px;
     font-size : 17px;
-    height: 40px;
-    width : 40px;
+    height: 45px;
+    width : 45px;
     margin-left: 20px;
   }
   .verification__errorInput{
@@ -147,6 +167,17 @@
   }
 
   /* resetSuccess */
+  .resetPassword{
+    width: 27em;
+    position: absolute;
+    left : 50%;
+    top : 50%;
+    transform : translate(-50% , -50%);
+    background : #F6F7F9;
+    padding : 10px 20px;
+    border-radius: 15px;
+    box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  }
   .resetSuccess_img{
     margin-top : 60px;
   }
@@ -178,6 +209,7 @@
     background-color: #009CB4;
     overflow-x: hidden;
     padding-top: 100px;
+    padding-left: 25px;
   }
   .sildeBar__active{
     background-color : white;
@@ -330,9 +362,10 @@
 }
 .profile__backbtn{
   border : 1px solid #009CB4;
-  padding : 6px 60px;
+  padding : 0.7vh 3vw;
   color : #009CB4;
   margin-top : 10px;
+  border-radius: 7px;
   /* box-shadow: 1px 1px 3px rgba(0 ,0,0,0.1); */
 }
 .profile__backbtn:focus{
@@ -386,7 +419,7 @@
     border-radius:  4px;
 }
 .profile__footerBtn{
-    padding : 6px 60px;
+    padding : 1vh 3vw;
     margin-top: 10px;
     border : none ;
     color : white;
@@ -394,8 +427,15 @@
     border-radius: 5px;
     margin-right : 40px;
 }
+.profile__footerBtn:focus{
+ outline : none;
+ box-shadow: none;
+}
 .profile__footerBtn:hover{
   color : white;
+}
+.profile__footerBtn:focus{
+  outline : none;
 }
 .profile__imgAdd{
   position: absolute;
@@ -406,7 +446,7 @@
   border : none;
   border-radius: 6px 6px 6px 6px;
   padding : 5px;
-  box-shadow: 1px 2px 30px rgba(0 ,0,0,0.3);
+  box-shadow: 0px 2px 20px rgba(0 ,0,0,0.2);
 }
 .profile__imgAdd:focus{
   outline : none;
@@ -421,16 +461,16 @@
 }
 
 /* change password */
-.changePass__modal{
-  padding : 20px 100px;
-  border-radius: 20px;
+.modal-content  {
+  border-radius: 15px !important; 
 }
 .changePass__header{
-    color :#707070;
+    color :#595959;
     margin-bottom: 30px; 
 }
 .changePass__modalDialog{
-  width : 600px;
+  padding-left :6.5em;
+  padding-right :6.5em;
 }
 .ticBackground{
   position: absolute;
@@ -445,11 +485,8 @@
 }
 
 .changePassSucc__modal{
-  padding : 20px 10px;
   border-radius: 20px;
-}
-.changePassSucc__modalDialog{
-  width : 600px;
+  width : 30vw;
 }
 /* users */
   .users__tableHeader{
@@ -464,7 +501,7 @@
   .users__tableClass thead tr th{
     font-weight: bold;
     background : #c7c7c7;
-    padding : 3px 20px
+    padding-left : 8px ;
   }
   .users__tableClass tbody tr td{
       padding : 10px 10px;
@@ -481,13 +518,14 @@
  }
 .userProfile__imgAdd{
   position: absolute;
-  bottom: 10px;
+  bottom: 3px;
   right : 30px;
   color : grayscale;
   background : white ;
   border : none;
   border-radius: 6px 6px 6px 6px;
-  padding : 3px 6px
+  padding : 3px 6px;
+  box-shadow: 0px 2px 20px rgba(0 ,0,0,0.2);
 }
 .userProfile__imgAdd:focus{
   outline : none;
@@ -547,9 +585,35 @@
     border-radius: 4px;
     margin-left: 5px;
   }
+ 
+  .customTable__edit{
+      border: 1px solid #26CE96;
+      background-color : #26CE96;
+      color : white;
+  }
+  .customTable__statusActive {
+      color : #009CB4 
+  }
+  .customTable__statusExpired{
+    color : #C00D0D 
+  }
+  .customTable__statusInactive{
+    color : #FA9E03 
+  }
+  .customTable__statusResolved{
+    color : #60DF41 
+  }
+  .customTable__delete{
+    border: 1px solid  #C00D0D;
+    background-color :  #C00D0D;
+    color : white;
+  }
+  .customTable__edit:focus,.customTable__delete:focus{
+      outline : none;
+  }
 .customTable__input{
   padding : 7px;
-  width : 270px;
+  width : 30vw;
   border-radius: 4px;
   border : none;
   background:  #F1F5F8;
@@ -579,12 +643,48 @@
 }
 .customTable__select{
   padding : 7px;
-  width : 130px;
+  width : 8vw;
   border-radius: 4px;
   border : none;
   background: #009CB4;
   color : white;
   margin-right: 10px;
+  padding-right: 36px;
+}
+.customTable__select option:hover,.customTable__select option:focus{
+  background-color : green
+}
+.customTable__select option{
+    background-color : white;
+    color : #595959;
+    border : 2px solid black;
+
+}
+.customTable__select:active{
+  border : 2px solid black;
+}
+.customTable__select:focus ,
+.customTable__select:active {
+  border : none;
+  outline : none;
+} 
+.customTable__select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+.select__label {position:relative}
+.select__label:after {
+    content:"\f107";   
+    font-family: "FontAwesome";
+    font-size: 31px;
+    color:white;
+    right:20px; 
+    top:-4px;
+    padding:0 0 2px;
+    position:absolute;
+    pointer-events:none;
 }
 .customTable__results{
   padding : 6px 30px;
@@ -614,13 +714,14 @@
 
 /* chart */
 .customeChart__select{
-  height : 26px;
-  font-size: 12px;
-  padding : 2px 23px;
-  border-radius: 6px;
+  font-size: 0.8em;
+  padding-left :1.6vw;
+  padding-right :1.6vw;
+  border-radius: 0.7em;
   background-color: white;
   color : #707070;
-  border : 0.1em solid #707070;
+  border : 1px solid #707070;
+  height : 3.3vh;
 }
 .customeChart__select:hover{
   background-color: white;
@@ -634,9 +735,9 @@
   box-shadow: none;
   border : none;
 }
-/* .customeChart__select:focus,.customeChart__select:active{
+.customeChart__select:focus,.customeChart__select:active{
   color : white;
   background-color : #009CB4;
   box-shadow: none;
   border : none;
-} */
+}

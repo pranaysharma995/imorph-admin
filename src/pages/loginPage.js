@@ -1,10 +1,11 @@
-import React,{useState,useContext} from 'react';
+import React,{useState} from 'react';
 import imoph3d from '../assets/imoph3d.png' 
 import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
 import {Link} from 'react-router-dom'
 import validator from 'validator';
-import { useHistory ,Redirect } from 'react-router-dom'
+import { useHistory} from 'react-router-dom'
+import axios from 'axios'
 
 const LoginPage = () =>{
 
@@ -72,18 +73,21 @@ const LoginPage = () =>{
              setLoading(false),
              history.push("/dashboard")
          ), 2000);
+
+         
+
     }
 
     return (
-        <div className="container login__page">
-            <style>{'body { background-color: #1BC1D8; }'}</style>
+        <div className=" login__page">
+            <style>{'body { background-color: #009CB4; }'}</style>
             
             <div className="text-center mb-4 mt-4">
                 <img width="200rem" src={imoph3d} alt="logo" style={{marginLeft : "30px"}}/>
             </div>
            <div className="text-center" style={{marginBottom : "40px"}}>
                 <h5  style={{color :"#595959" , fontSize : "2em"}}>Welcome Back</h5>
-                <p style={{color :"#707070", lineHeight : "0.4" , fontSize : "20px"}}>Please login to your account</p>
+                <p style={{color :"#707070", lineHeight : "0.4" , fontSize : "17px"}}>Please login to your account</p>
            </div>
 
            <form  style={{marginTop : "30px"}} onSubmit={handleSubmit}>

@@ -18,7 +18,6 @@ const RouterComponent =()=> {
     }
 
     return (
-        <div className="route">
              <Router>
                  <Switch>
                      <Route exact path="/" component={LoginPage}/>
@@ -31,7 +30,6 @@ const RouterComponent =()=> {
                  </Switch>
                 
              </Router>   
-        </div>
     )
 }
 

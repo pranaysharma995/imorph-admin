@@ -41,17 +41,17 @@ function DashboardPage() {
            </div>
            <div className="row justify-content-between mt-4">
                <div className="col-md-6 mb-3 " >
-                   <div className="row" style={{margin : "0px" , marginLeft : "0px" , marginRight :"0px" }}>
+                   <div className="row" style={{marginRight :"0px" }}>
                        <div className="col-md-12 dashboard__firstGraph">
-                            <CustomBar barThikness="19" id1="bt4" id2="bt5" id3="bt6" backColor="rgb(64, 230, 242)" labels={graphData.label} dataSet_data={graphData.dataSetData}  totalNumber={graphData.totaluser}  headerLabel="Total Users"/>
+                            <CustomBar barThikness="19" id1="bt4" id2="bt5" id3="bt6" backColor="rgb(64, 230, 242)" labels={graphData.label} dataSet_data={graphData.dataSetData}  totalNumber={graphData.totaluser}  headerLabel="Total Conversions"/>
                        </div>
                    </div>
                      
                </div>
                <div className="col-md-6 mb-3">
-                   <div className="row" style={{margin : "0px" , marginLeft : "0px" , marginRight :"0px" }}>
+                   <div className="row" style={{marginLeft : "0px" }}>
                        <div className="col-md-12 dashboard__firstGraph" >
-                            <CustomBar barThikness="10" id1="bt7" id2="bt8" id3="bt9" backColor="rgb(104, 217, 119)" labels={graphData.label} dataSet_data={graphData.dataSetData}  totalNumber={graphData.totaluser}  headerLabel="Total Users"/>
+                            <CustomBar barThikness="10" id1="bt7" id2="bt8" id3="bt9" backColor="rgb(104, 217, 119)" labels={graphData.label} dataSet_data={graphData.dataSetData}  totalNumber={graphData.totaluser}  headerLabel="Total Subscriptions"/>
                        </div>
                    </div>
                      

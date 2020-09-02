@@ -31,6 +31,7 @@ const UserProfileView =()=> {
             setTimeout(() => {
                 setLoading(false);
 
+
                if(context.userDetails){
                 setUserInformation({
                     ...UserInformation,

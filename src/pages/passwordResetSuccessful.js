@@ -1,13 +1,24 @@
-import React from 'react'
-import {useHistory} from "react-router-dom"
+import React,{useEffect,useState} from 'react'
+import {useHistory , Redirect} from "react-router-dom"
 import restPage from "../assets/restPage.png"
 
 const ResetSuccessfull =() => {
     const history = useHistory()
-   
+    const [loading , setLoading] = useState(false);
+
+    useEffect(() => {
+
+        setTimeout(() => {
+            setLoading(true)
+        }, 2000);
+    }, [])
+
+    if(loading){
+      return <Redirect to="/"/>
+    }
     return (
-        <div className="container resetSuccess__page">
-            <style>{'body { background-color: #1BC1D8; }'}</style>
+        <div className="resetSuccess__page">
+            <style>{'body { background-color: #009CB4; }'}</style>
             <div className="text-center">
                 <img width="150rems" src={restPage} alt="logo" className="resetSuccess_img" />
             </div>

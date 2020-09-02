@@ -5,11 +5,13 @@ import {useHistory} from "react-router-dom"
 import validator from 'validator'
 import ChangepassSuccessful from './changepassSuccessful'
 import $ from 'jquery'
+import {Modal, ModalBody} from 'reactstrap';
 
-function ChangePasswordModal() {
+function ChangePasswordModal({modal , toggle}) {
 
     const [loading , setLoading] = useState(false);
     const history = useHistory();
+    const [secondModal , setSecondModal] = useState(false)
     
 
     const [password , setPassword] = useState({
@@ -41,9 +43,8 @@ function ChangePasswordModal() {
                         password_error : false,
                         match_error : false
                     });
-                    setLoading(true)
-                    setTimeout(() => {
-                       window.$("#myChangePasswordModal").modal('hide')
+                    setLoading(true);
+                    setTimeout(() => {                       
                         save();
                         setLoading(false)
                     }, 2000);
@@ -72,10 +73,9 @@ function ChangePasswordModal() {
         
     }
 
-    const save= ()=> {
-        window.$("#changePassSuccess").modal('show')
+    const tog = () => {
+        setSecondModal(!secondModal)
     }
-
     const change = e =>{
         setPassword({
             ...password,
@@ -83,48 +83,53 @@ function ChangePasswordModal() {
         })
     }
 
+
+    const save= ()=> {
+        setSecondModal(true)
+        toggle();
+    }
+
+   
     return (
-            <div>
-                <div className="modal fade" id="myChangePasswordModal" >
-                <div className="modal-dialog modal-dialog-centered changePass__modalDialog modal-lg">
-                <div className="modal-content changePass__modal">
-
-                    <div className="text-center changePass__header">
-                        <h1 >Change Password</h1>
-                </div>
-
-                    {error.password_error && <small className="error__message">
-                        <ul>
-                            <li>Contain at least one uppercase and one lowercase character</li>
-                            <li>Contain numeric character</li>
-                            <li>At least 8 characters long</li>
-                            <li>Contain at least one special character</li>
-                        </ul>
-                    </small>}
-                    {(error.oldempty_error || error.oldempty_error || error.newempty_error || error.confempty_error )&& <small className="error__message">&#9888;&#160;Please fill all fields</small>}
-                    {error.match_error && <small className="error__message">&#9888;&#160;Passwords do not match</small>}
-                    <form>
-                        <CustomTextfield customTextfield__input={error.oldempty_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="Old password" value={password.oldPassword} handleChange={change} name="oldPassword"/>
-                        <CustomTextfield customTextfield__input={error.newempty_error || error.password_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="New password" value={password.newPassword} handleChange={change} name="newPassword"/>
-                        <CustomTextfield customTextfield__input={error.confempty_error || error.match_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="Confirm password" value={password.confirmPassword} handleChange={change} name="confirmPassword"/>                
-                        <div className="mt-3">
-                            <div className="d-flex justify-content-center">
+      <>
+        <Modal isOpen={modal} toggle={toggle} className="changePass__modal" className="changePass__modalDialog" centered={true} size="lg">
+        <ModalBody className="changePass__modalDialog">
+                 <div className="text-center changePass__header">
+                        <h1 style={{fontWeight:"450"}}>Change Password</h1>
+                 </div>
+                              {error.password_error && <small className="error__message">
+                         <ul>
+                             <li>Contain at least one uppercase and one lowercase character</li>
+                             <li>Contain numeric character</li>
+                             <li>At least 8 characters long</li>
+                             <li>Contain at least one special character</li>
+                         </ul>
+                     </small>}
+                     {(error.oldempty_error || error.oldempty_error || error.newempty_error || error.confempty_error )&& <small className="error__message">&#9888;&#160;Please fill all fields</small>}
+                     {error.match_error && <small className="error__message">&#9888;&#160;Passwords do not match</small>}
+                     <form>
+                         <CustomTextfield customTextfield__input={error.oldempty_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="Old password" value={password.oldPassword} handleChange={change} name="oldPassword"/>
+                         <CustomTextfield customTextfield__input={error.newempty_error || error.password_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="New password" value={password.newPassword} handleChange={change} name="newPassword"/>
+                         <CustomTextfield customTextfield__input={error.confempty_error || error.match_error ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="password" placeholder="Confirm password" value={password.confirmPassword} handleChange={change} name="confirmPassword"/>                
+                     <div className="mt-4" style={{marginTop : "90px"}}>
+                             <div className="d-flex justify-content-center">
                                 {loading ? (<div className="spinner-border text-primary"></div>) : (
                                     <>
-                                    <button className="profile__footerBtn"  text="Submit"  id="clickButton"  data-toggle="modal" onClick={click_sendButton}>Save</button>
-                                    <button className="btn profile__backbtn" data-dismiss="modal" >Close</button>
-                                    
+                                    <button className="profile__footerBtn btn-block ml-2"  text="Submit"   onClick={click_sendButton} >Save</button>
+                                    <button className="btn profile__backbtn btn-block mr-2" data-target="#changePassSuccess"  onClick={toggle}>Close</button>                                   
                                     
                                     </>
                                 )}
                             </div> 
                         </div>                       
-                    </form>            
-                </div>
-                </div>
-            </div>
-            <ChangepassSuccessful/>
-        </div>
+                    </form>
+                   
+        </ModalBody>
+      </Modal>
+
+        <ChangepassSuccessful modall={secondModal} tog={tog}/>
+      </>
+
     )
 }
 

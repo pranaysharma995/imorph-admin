@@ -16,7 +16,7 @@ const UsersPage =()=> {
       email : 'rahul@gmail.com',
       conversions : "300",
       contact : "723732673",
-      status : "active"
+      status : "Active"
     },
     {
       id : 15,
@@ -26,8 +26,8 @@ const UsersPage =()=> {
       email : 'rajat@gmail.com',
       conversions : "600",
       contact : "86465745445",
-      subscriptions : "8 days , $1/mo",
-      status : "pending"
+      subscriptions : "INFINITE 7",
+      status : "Expired"
     },
     {
       id : 18,
@@ -37,8 +37,8 @@ const UsersPage =()=> {
       email : 'rajat@gmail.com',
       conversions : "600",
       contact : "86465745445",
-      subscriptions : "8 days , $1/mo",
-      status : "pending"
+      subscriptions : "INFINITE 365",
+      status : "Inactive"
     },
 
   ]

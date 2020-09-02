@@ -62,12 +62,12 @@ const ResetPassword =() => {
 
    
     return (
-        <div className="container forgotPass__page">
-            <style>{'body { background-color: #1BC1D8; }'}</style>
+        <div className="resetPassword">
+            <style>{'body { background-color: #009CB4; }'}</style>
             
            <div className="text-center forgotPass__header">
-                <h5 style={{fontSize : "25px"}}>Reset Password</h5>
-                <p style={{fontSize : "12px"}}>Please Enter your new password </p>
+                <h5 style={{fontSize : "28px" , fontWeight : "450"}}>Reset Password</h5>
+                <p >Please Enter your new password </p>
            </div>
            {error.password_error && <small className="error__message">
                 <ul>
