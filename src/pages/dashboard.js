@@ -7,6 +7,10 @@ import ProfilePage from './dashboard/profilePage'
 import UsersPage from './dashboard/users/user'
 import UserProfileView from './dashboard/users/userProfileView'
 import DashboardPage  from './dashboard/dashboardPage'
+import AboutUs from './dashboard/cms/aboutUs'
+import Tos from './dashboard/cms/tos'
+import Faq from './dashboard/cms/faq'
+import UserSubscriptionPlanView from './dashboard/users/userSubscriptionPlanView'
 
 
 function Dashboard() {
@@ -25,7 +29,11 @@ function Dashboard() {
                             <Route exact  path="/dashboard"  component={DashboardPage}/>
                             <Route  path="/dashboard/profile"  component={ProfilePage}/>
                             <Route exact  path="/dashboard/users"  component={UsersPage}/>
-                            <Route   path="/dashboard/users/view"  component={UserProfileView}/>
+                            <Route  exact path="/dashboard/users/edit"  component={UserProfileView}/>
+                            <Route   path="/dashboard/users/edit/plan/:id"  component={UserSubscriptionPlanView}/>
+                            <Route   path="/dashboard/aboutus"  component={AboutUs}/>
+                            <Route   path="/dashboard/tos"  component={Tos}/>
+                            <Route   path="/dashboard/faq"  component={Faq}/>
                     </Switch>
                 </div>
                 <div>

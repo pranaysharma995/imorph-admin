@@ -4,13 +4,13 @@ import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
 import {Link} from 'react-router-dom'
 import validator from 'validator';
-import { useHistory} from 'react-router-dom'
+import { useHistory , Redirect} from 'react-router-dom'
 import axios from 'axios'
 
 const LoginPage = () =>{
 
-    const [username , setUsername] = useState('');
-    const [password , setPassword] = useState('');
+    const [username , setUsername] = useState('testadmin@yopmail.com');
+    const [password , setPassword] = useState('Abcd@1234');
     const [loading , setLoading] = useState(false);
     const history = useHistory()
     const [showPassword , setShowPassword] = useState(false);
@@ -21,14 +21,13 @@ const LoginPage = () =>{
         email : false,
         err_pass : false
     })
+    const [check , setCheck] = useState(false)
 
 
 
 
     const handleSubmit =(e) => {
         e.preventDefault();
-
-        const passRejex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g
 
         if(validator.isEmpty(username)){
             setValidation({username : true})
@@ -41,9 +40,6 @@ const LoginPage = () =>{
             if(!validator.isEmpty(username) && !validator.isEmpty(password)){
                 if(!validator.isEmail(username)){
                     setValidation({email : true})
-                }
-                else if(!passRejex.test(password)){
-                    setValidation({err_pass : true})
                 }
                 else{
                     setValidation({err_pass : false});
@@ -69,13 +65,35 @@ const LoginPage = () =>{
 
     const submit = ()=>{
          setLoading(true);
-         setTimeout(() => (
-             setLoading(false),
-             history.push("/dashboard")
-         ), 2000);
 
-         
+         axios.post("http://34.209.115.216:8000/api/admin/sign-in" , {
+            email:username,
+            password:password
+         })
+         .then( ({data}) => {
+            setLoading(false)
+                console.log(data);
+               if(check){
+                   localStorage.setItem("uid" , data.user?._id)
+               }else {
+                   sessionStorage.setItem("uid" , data.user?._id)
+               }
 
+               history.push("/dashboard")
+           
+         }).catch(error => {
+            
+            console.log("Login Error" , error.response);
+            setValidation({ 
+                err_pass : true
+            })
+            setLoading(false)
+        })
+
+    }
+
+    if(localStorage.getItem('uid') || sessionStorage.getItem('uid')){
+        return <Redirect to="/dashboard"/>
     }
 
     return (
@@ -105,7 +123,7 @@ const LoginPage = () =>{
                 <div className="form-group form-check">
                     <div className="d-flex">
                     <div>
-                    <CustomTextfield customTextfield__input="form-check-input login__checkbox" type="checkbox" />
+                         <CustomTextfield customTextfield__input="form-check-input login__checkbox" type="checkbox"  handleChange={() => setCheck(!check)}/>
                     </div>
                     <label className="form-check-label" style={{color : "#707070"}}>
                        Remember me
@@ -114,7 +132,7 @@ const LoginPage = () =>{
                     </div>
                 </div>
                 <div className="text-center"> 
-                    {loading ? (<div class="spinner-border text-primary"></div>) : (<CustomButton customButton__class="login__btn1" text="Login" type="submit" />)}
+                    {loading ? (<div className="spinner-border text-primary"></div>) : (<CustomButton customButton__class="login__btn1" text="Login" type="submit" />)}
                 </div>
             </form>
 

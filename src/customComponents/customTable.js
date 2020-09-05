@@ -12,8 +12,10 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
     const [data , setData] = useState([]);
 
     useEffect(() => {
-       setData(userData)
-    }, [])
+       if(userData){
+        setData(userData)
+       }
+    }, [userData])
 
     const viewBtnClick = (e , info) => {
         e.preventDefault();        

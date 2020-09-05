@@ -1,10 +1,11 @@
 import React,{useState} from 'react'
 import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
-import {useHistory} from "react-router-dom"
+import {useHistory, Redirect} from "react-router-dom"
 import validator from 'validator'
+import axios from 'axios'
 
-const ResetPassword =() => {
+const ResetPassword =({value}) => {
     const [loading , setLoading] = useState(false);
     const history = useHistory();
 
@@ -29,16 +30,7 @@ const ResetPassword =() => {
                         match_error : true
                     })
                 }else{
-                    setError({
-                        empty_error : false,
-                        password_error : false,
-                        match_error : false
-                    });
-                    setLoading(true)
-                    setTimeout(() => (
-                        setLoading(false),
-                        history.push('/resetsuccessfull')
-                    ), 2000);
+                    submit();
                 }
             }else{
                 setError({
@@ -58,6 +50,30 @@ const ResetPassword =() => {
             ...password,
             [e.target.name] : e.target.value
         })
+    }
+
+    const submit = ()=> {
+        setLoading(true)
+        axios.post("http://34.209.115.216:8000/api/admin/reset-password",{
+            email : value,
+            password : password.confirmPassword
+        }).then(() => {
+            setError({
+                empty_error : false,
+                password_error : false,
+                match_error : false
+            });
+            
+                setLoading(false)
+                history.push('/resetsuccessfull')
+            
+        }).catch(err => {
+            console.log("Error in ResetPassword" , err);
+        })
+    }
+
+    if(!value){
+        return <Redirect to="/"/>
     }
 
    

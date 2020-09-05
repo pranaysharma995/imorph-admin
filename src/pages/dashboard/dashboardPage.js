@@ -36,7 +36,7 @@ function DashboardPage() {
             </div>
            <div className="row mt-4 dashboard__firstGraph">
                <div className="col-md-12">
-                   <CustomBar barThikness="30" id1="bt1" id2="bt2" id3="bt3" backColor="rgba(96, 177, 255)"  chartHeight="80px" labels={graphData.label} dataSet_data={graphData.dataSetData}  totalNumber={graphData.totaluser}  headerLabel="Total Users"/>
+                   <CustomBar barThikness="30" id1="bt1" id2="bt2" id3="bt3" backColor="rgba(96, 177, 255)"  chartHeight={80} labels={graphData.label} dataSet_data={graphData.dataSetData}  totalNumber={graphData.totaluser}  headerLabel="Total Users"/>
                </div>
            </div>
            <div className="row justify-content-between mt-4">

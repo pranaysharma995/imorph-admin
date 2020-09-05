@@ -2,9 +2,26 @@ import React from 'react'
 import logo from '../assets/imoph3d.png'
 import profile from '../assets/profile.png'
 import CustomTextfield from '../customComponents/customTextfield'
-import {Link} from 'react-router-dom'
+import {Link , useHistory} from 'react-router-dom'
+import LogoutPromtModal from '../pages/dashboard/modal/logoutPromtModal'
 
 const Navbar =() =>{
+
+    const history = useHistory();
+
+    const logout= e => {
+        e.preventDefault();
+
+        if(localStorage.getItem('uid')){
+            localStorage.removeItem("uid")
+        }
+        if(sessionStorage.getItem("uid")){
+            sessionStorage.removeItem("uid")
+        }
+
+        history.push("/")
+    }
+
     return (
         <div>
                 <nav className="navbar navbar-expand-sm bg-white navbar-light fixed-top">
@@ -93,12 +110,13 @@ const Navbar =() =>{
                                                                 <p>Profile</p>
                                                             </div>
                                                         </Link>
-                                                        <Link className="nav-link" to="/" style={{marginTop : "-10px"}}>
+                                                        <Link className="nav-link" to="/" style={{marginTop : "-10px"}} type="button" data-toggle="modal" data-target="#myModal"> 
                                                         <div className="d-flex nav__link" style={{height : "30px"}}>
                                                                 <i style={{marginTop : "4px" , marginRight : "10px" }} className="fa fa-power-off" aria-hidden="true"></i>
                                                                 <p >Logout</p>
                                                             </div>
-                                                        </Link>                                            
+                                                        </Link>   
+                                                                                                
                             
                                                     </div>
                                         </div>
@@ -107,6 +125,7 @@ const Navbar =() =>{
                        </div>
                     </div>
                 </nav>
+                <LogoutPromtModal handleClick={logout}/> 
         </div>
     )
 }

@@ -3,15 +3,14 @@ import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
 import {useHistory} from "react-router-dom"
 import validator from 'validator'
+import axios from 'axios'
 
 const ForgotPassword =({value}) => {
     const [text , setText] = useState('');
     const [loading , setLoading] = useState(false);
     const [error , setError] = useState({
         emptyError : false,
-        digitError : false,
-        digit_lenght : false,
-        error_email : false
+        emailError : false,
     });
     const history = useHistory();
 
@@ -27,13 +26,13 @@ const ForgotPassword =({value}) => {
         else{
             if(!validator.isEmail(text)){
                 setError({
-                    digitError : true,
+                    emailError : true,
                 })
             }
             else{
                 setError({
                     emptyError : false,
-                    digitError : false,
+                    emailError : false,
                     digit_lenght : false,
                     error_email : false
                 });
@@ -44,11 +43,23 @@ const ForgotPassword =({value}) => {
 
     const submit = () => {
         setLoading(true);         
-                setTimeout(() => (
-                    setLoading(false),
-                    value(text),
-                    history.push('/verification')
-                ), 2000);
+    
+
+        axios.post("http://34.209.115.216:8000/api/admin/forget-password" , {
+            email : text
+        }).then(() => {
+
+                setLoading(false);
+                value(text);
+                history.push('/verification')
+                
+        }).catch(err => {
+            console.log("Forgot Password Error", err);
+            setLoading(false);
+            setError({
+                emailError : true
+            })
+        })
     }
 
 
@@ -62,11 +73,11 @@ const ForgotPassword =({value}) => {
            </div>
            <form onSubmit={click_sendButton}>
 
-               {error.digitError && <small className="error__message">&#9888;&#160;Please provide valid email address</small>}
+               {error.emailError && <small className="error__message">&#9888;&#160;Please provide valid email address</small>}
                {error.emptyError && <small className="error__message">&#9888;&#160;Please provide valid email address</small>}
 
                
-                    <CustomTextfield customTextfield__input={error.digitError || error.digit_lenght || error.emptyError ? "form-control forgotPass__input forgotPass__errorInput" : "form-control forgotPass__input "} type="text" placeholder="Enter your email address" value={text} handleChange={ e=> setText(e.target.value)}/>
+                    <CustomTextfield customTextfield__input={error.emailError || error.digit_lenght || error.emptyError ? "form-control forgotPass__input forgotPass__errorInput" : "form-control forgotPass__input "} type="text" placeholder="Enter your email address" value={text} handleChange={ e=> setText(e.target.value)}/>
                 
                 
                 <div className="text-center forgotPass__footer">

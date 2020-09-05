@@ -42,9 +42,14 @@ const UsersPage =()=> {
     },
 
   ]
+
+  const filterSearch = data.filter(user => (
+    user.email.toLocaleLowerCase().includes(search.toLowerCase())
+  ))
+
     return (
        
-            <CustomTable tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={data} results="23456" searchValue={search}  onHandleChange={e => setSearch(e.target.value)} uri="/dashboard/users/view"/>
+            <CustomTable tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={filterSearch} results="23456" searchValue={search}  onHandleChange={e => setSearch(e.target.value)} uri="/dashboard/users/edit"/>
        
     )
 }

@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import profile from '../../assets/profile.png'
 import CustomTextfield from '../../customComponents/customTextfield'
 import CustomButton from '../../customComponents/customButton'
@@ -7,14 +7,15 @@ import camera from '../../assets/camera.png'
 import validator from 'validator'
 import ChangePasswordModal from './modal/changePasswordModal'
 
+
 function ProfilePage() {
 
     const history = useHistory();
     const [adminDetails , setAdminDetails] = useState({
         fname : '',
-        lname : "Dean",
-        email : "jamesdean@gmail.com",
-        phone : "83403280982",
+        lname : "",
+        email : "",
+        phone : "",
         address : "",
         zip_code : ""
     })

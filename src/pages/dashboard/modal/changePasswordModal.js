@@ -1,10 +1,8 @@
 import React,{useState} from 'react'
 import CustomTextfield from '../../../customComponents/customTextfield'
-import CustomButton from '../../../customComponents/customButton'
 import {useHistory} from "react-router-dom"
 import validator from 'validator'
 import ChangepassSuccessful from './changepassSuccessful'
-import $ from 'jquery'
 import {Modal, ModalBody} from 'reactstrap';
 
 function ChangePasswordModal({modal , toggle}) {
@@ -95,7 +93,7 @@ function ChangePasswordModal({modal , toggle}) {
         <Modal isOpen={modal} toggle={toggle} className="changePass__modal" className="changePass__modalDialog" centered={true} size="lg">
         <ModalBody className="changePass__modalDialog">
                  <div className="text-center changePass__header">
-                        <h1 style={{fontWeight:"450"}}>Change Password</h1>
+                        <h1 style={{fontWeight:"450" }}>Change Password</h1>
                  </div>
                               {error.password_error && <small className="error__message">
                          <ul>

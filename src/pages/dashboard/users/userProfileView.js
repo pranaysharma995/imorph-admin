@@ -151,7 +151,7 @@ const UserProfileView =()=> {
                             <div className="row profile__body" style={{padding : "1px 20px"}}>
                                 <div className="col-md-12" >
                                     <div style={{position: "absolute" ,right : "0px"}}>
-                                         <h5 className="text-right" style={{lineHeight :"0.7" , color : "#707070"}}>{UserInformation.conversions}</h5>
+                                         <h5 className="text-right" style={{lineHeight :"0.7" , color : "#009CB4"}}>{UserInformation.conversions}</h5>
                                          <p style={{lineHeight :"0.7" , color : "#707070"}}><small>Conversions</small></p>
                                     </div>
                                     <div style={{position : "relative"}}>
@@ -270,68 +270,48 @@ const UserProfileView =()=> {
 
                     <div className="col-md-12 profile__first p-4 mt-3">
                         <div>
-                            <h5 className="text-center mb-4"> Subscription Plans</h5>
+                            <h5 className="text-lefy\t mb-4"> Subscription Plans</h5>
                         </div>
                         <hr/>
                             {context.userDetails.subscriptions ? (
-                                <div className="row mb-4" style={{padding : "9px 50px" , marginLeft : "40px"}}>
-                               
-                                <div className="col-md-4">
+                                <div className="d-flex justify-content-left mb-4" style={{overflowX : "auto"}}>                               
+                              
 
-                                <div className="card text-center userProfile__card">
-                                    <div className="card-body">
-                                        <img className="mb-3" width="70rem" src={days7} alt="7"/>
-                                        <p style={{ color : "#707070" , marginBottom : "30px"}}><strong>$ 10 </strong> / mo</p>
-                                        <div>
-                                            <p style={{lineHeight :"0.4" , color : "#707070"}}><small>Active 21-07-2020</small></p>
-                                            <p style={{lineHeight :"0.4" , color : "#707070"}}><small>Expire 21-08-2020</small></p>
-                                        </div>
-                                        <div style={{margin: "auto"}}>
-                                            <button className="userProfile__subBtn userProfile__active" disabled>Active</button>
-                                        </div>
-                                    </div>
-                                                                       
-                                </div>
-                                </div>
-                                                   
-                                <div className="col-md-4">
-
-                                <div className="card text-center userProfile__card">
-                                    <div className="card-body">
-                                        <img className="mb-3" width="76rem" src={days30} alt="7"/>
-                                        <p style={{ color : "#707070" , marginBottom : "30px"}}><strong>$ 10 </strong> / mo</p>
-                                        <div>
-                                            <p style={{lineHeight :"0.4" , color : "#707070"}}><small>Active 21-07-2020</small></p>
-                                            <p style={{lineHeight :"0.4" , color : "#707070"}}><small>Expire 21-08-2020</small></p>
-                                        </div>
+                                        <div className="card text-center userProfile__card">
+                                            <div className="card-body user__card-body">
                                         
-                                        <div style={{margin: "auto"}}>
-                                            <button className="userProfile__subBtn userProfile__expired" disabled>Expired</button>
-                                        </div>
-                                    
-                                    </div>
-                                                                       
-                                </div>
-                                </div>
-                    
-                                <div className="col-md-4">
+                                                    <img className="mb-3 mt-4" width="60%" src={days7} alt="7"/>
+                                                    <p style={{ color : "#707070" , marginBottom : "10%"}}><strong style={{fontSize : "1.4em", color : "#009CB4"}}> $1 </strong> per month</p>
+                                                    <div style={{marginTop : "1em"}}>
+                                                        <button className="userProfile__subBtn userProfile__active" disabled>Active</button>
+                                                    </div>                                                   
+                                            
+                                            </div>
+                                            <div style={{marginTop: "-0.4em"}}>
+                                                        <button className="userProfile__subBtn  userProfile__view-details" onClick={() => history.push("/dashboard/users/edit/plan/1")}>View Details</button>
+                                            </div>
+                                                                            
+                                        </div>                                       
+                                        
 
-                                <div className="card text-center userProfile__card">
-                                    <div className="card-body">
-                                        <img className="mb-3" width="90rem" src={days365} alt="7"/>
-                                        <p style={{ color : "#707070" , marginBottom : "30px"}}><strong>$ 10 </strong> / mo</p>
-                                        <div>
-                                            <p style={{lineHeight :"0.4" , color : "#707070"}}><small>Active 21-07-2020</small></p>
-                                            <p style={{lineHeight :"0.4" , color : "#707070"}}><small>Expire 21-08-2020</small></p>
+                                        <div className="card text-center userProfile__card">
+                                            <div className="card-body user__card-body">
+                                        
+                                                    <img className="mb-3 mt-4" width="67%" src={days30} alt="7"/>
+                                                    <p style={{ color : "#707070" , marginBottom : "10%"}}><strong style={{fontSize : "1.4em", color : "#C00D0D"}}> $10 </strong> per month</p>
+                                                    <div style={{marginTop : "1em"}}>
+                                                        <button className="userProfile__subBtn userProfile__expired" disabled>Expired</button>
+                                                    </div>                                                   
+                                            
+                                            </div>
+                                            <div style={{marginTop: "-0.4em"}}>
+                                                        <button className="userProfile__subBtn  userProfile__view-details">View Details</button>
+                                            </div>
+                                                                            
+                                        </div>        
+
                                         </div>
-                                        <div style={{margin: "auto"}}>
-                                            <button className="userProfile__subBtn userProfile__active" disabled>Active</button>
-                                        </div>
-                                    </div>
-                                                                     
-                                </div>
-                                </div>
-                            </div>
+                           
                             ) : (<div className="text-center" style={{marginBottom: "120px" , marginTop : "70px"}}>
                                     <h6 style={{ color : "#707070" , }}>Didn't choose any subscription yet</h6>
                             </div>)}
