@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import CustomButton from '../customComponents/customButton'
 import {useHistory, Redirect} from "react-router-dom"
 import validator from 'validator'
-import axios from 'axios'
+import axiosInstance from '../axios'
 
 const VerificationPage =({value}) => {
     const [loading , setLoading] = useState(false);
@@ -74,7 +74,7 @@ const VerificationPage =({value}) => {
         setLoading(true);
         let otpText = `${otp.input1}${otp.input2}${otp.input3}${otp.input4}`;
 
-        axios.post("http://34.209.115.216:8000/api/admin/verify-otp",{
+        axiosInstance.post("http://34.209.115.216:8000/api/admin/verify-otp",{
             email: value,
             otp : otpText
         }).then(()=> {
@@ -96,7 +96,7 @@ const VerificationPage =({value}) => {
     }
 
     const resendOTP = ()=> {
-        axios.post("http://34.209.115.216:8000/api/admin/forget-password" , {
+        axiosInstance.post("http://34.209.115.216:8000/api/admin/forget-password" , {
             email : value
         }).then(() => {
                 

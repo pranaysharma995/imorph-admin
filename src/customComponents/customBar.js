@@ -1,7 +1,7 @@
 import React from 'react'
 import {Bar} from 'react-chartjs-2'
 
- const CustomBar=({labels,dataSet_label ,dataSet_data , totalNumber , headerLabel , chartHeight , backColor , id1 , id2 ,id3 , barThikness}) =>{
+ const CustomBar=({labels,dataSet_label ,dataSet_data , totalNumber , headerLabel , chartHeight , backColor , id1 , id2 ,id3 , barThikness , handleClickYear , handleClickWeek , handleClickDay }) =>{
 
    // const [chartData , setChartData] = useState();
 
@@ -87,9 +87,9 @@ import {Bar} from 'react-chartjs-2'
                     <p>{headerLabel}</p>
                </div>
                <div className="d-flex" onClick={styleAdd}>
-                    <button id={id1} className="btn btn-primary mr-2 customeChart__select">Day</button>
-                    <button id={id2} className="btn btn-primary mr-2 customeChart__select">Week</button>
-                    <button id={id3} className="btn btn-primary mr-3 customeChart__select" style={{backgroundColor: '#009CB4' , color : "white" , border : "none"}}>Year</button>
+                    <button id={id1} className="btn btn-primary mr-2 customeChart__select" onClick={handleClickDay}>Day</button>
+                    <button id={id2} className="btn btn-primary mr-2 customeChart__select" onClick={handleClickWeek}>Week</button>
+                    <button id={id3} className="btn btn-primary mr-3 customeChart__select" style={{backgroundColor: '#009CB4' , color : "white" , border : "none"}} onClick={handleClickYear}>Year</button>
                    <i className="fa fa-download mt-2" aria-hidden="true" style={{color : backColor}}></i>
                </div>
             </div>

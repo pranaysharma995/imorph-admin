@@ -3,7 +3,7 @@ import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
 import {useHistory} from "react-router-dom"
 import validator from 'validator'
-import axios from 'axios'
+import axiosInstance from '../axios'
 
 const ForgotPassword =({value}) => {
     const [text , setText] = useState('');
@@ -45,7 +45,7 @@ const ForgotPassword =({value}) => {
         setLoading(true);         
     
 
-        axios.post("http://34.209.115.216:8000/api/admin/forget-password" , {
+        axiosInstance.post("http://34.209.115.216:8000/api/admin/forget-password" , {
             email : text
         }).then(() => {
 

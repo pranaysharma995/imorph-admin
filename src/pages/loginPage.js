@@ -5,7 +5,7 @@ import CustomButton from '../customComponents/customButton'
 import {Link} from 'react-router-dom'
 import validator from 'validator';
 import { useHistory , Redirect} from 'react-router-dom'
-import axios from 'axios'
+import axiosInstance from '../axios'
 
 const LoginPage = () =>{
 
@@ -66,7 +66,7 @@ const LoginPage = () =>{
     const submit = ()=>{
          setLoading(true);
 
-         axios.post("http://34.209.115.216:8000/api/admin/sign-in" , {
+         axiosInstance.post("/admin/sign-in" , {
             email:username,
             password:password
          })

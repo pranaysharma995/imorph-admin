@@ -24,7 +24,7 @@ const Navbar =() =>{
 
     return (
         <div>
-                <nav className="navbar navbar-expand-sm bg-white navbar-light fixed-top">
+                <nav className="navbar navbar-expand-sm bg-white navbar-light fixed-top navbar__component">
                     <div className="navbar-brand" style={{marginLeft : "60px"}}>
                         <img className="" width="90rem" src={logo} alt="logo"/>
                     </div>

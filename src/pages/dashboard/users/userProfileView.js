@@ -133,9 +133,9 @@ const UserProfileView =()=> {
     }
 
     return (
-        <div>
-            {loading ? (<div className="container text-center" style={{marginTop: "400px"}}>   
-                <div  className="spinner-border text-primary"></div>
+        <>
+            {loading ? (<div className="container text-center" style={{marginTop: "400px" , marginBottom : "50%"}}>   
+                <div   className="spinner-border text-primary"></div>
             </div>) : (
                 <div className=" container-fluid profile" style={{marginTop: "120px"}}>
                 <form onSubmit={checkSubmit}>
@@ -328,7 +328,7 @@ const UserProfileView =()=> {
                 </form>
         </div>
             )}
-        </div>
+        </>
     )
 }
 

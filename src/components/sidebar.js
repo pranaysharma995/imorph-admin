@@ -68,10 +68,10 @@ function Sidebar(props) {
                     <Link className="text-white sidebar__link" >Subscription Plans</Link>
                 </div>
 
-                <div id="c" className= {/^\/dashboard\/aboutus$/.test(window.location.pathname) ? " row mb-4 sildeBar__active" : "row  mb-4 sildeBar__inactive"}  style={{position: 'relative'}} onClick={changeCmsAttribute} >
+                <div id="c" className= {/^\/dashboard\/aboutus$/.test(window.location.pathname) || /^\/dashboard\/tos$/.test(window.location.pathname) || /^\/dashboard\/faq$/.test(window.location.pathname) ? " row mb-4 sildeBar__active" : "row  mb-4 sildeBar__inactive "}  style={{position: 'relative'}} onClick={changeCmsAttribute} >
                 {activeCms ? (<i className=  "fa fa-chevron-down sidebar__rightIcon"  aria-hidden="true"></i>) : (<i className="fa fa-chevron-right sidebar__rightIcon" aria-hidden="true"></i>)}
                     <i className="fa fa-home fa-lg mr-3 mt-1" aria-hidden="true"></i>
-                    <Link className={/^\/dashboard\/aboutus$/.test(window.location.pathname) ? "sidebar__link" : "sidebar__linkInActive"} >CMS Settings</Link>
+                    <Link className={/^\/dashboard\/aboutus$/.test(window.location.pathname) || /^\/dashboard\/tos$/.test(window.location.pathname) || /^\/dashboard\/faq$/.test(window.location.pathname) ? "sidebar__link" : "sidebar__linkInActive"} >CMS Settings</Link>
                 </div>
                 <div className="sidebar__settingDiv1" id="cms" style={{display : "none" , fontSize : "0.3em"}}>
                     <div style={{paddingTop : " 10px"}}>

@@ -9,6 +9,7 @@
     "axios": "^0.20.0",
     "chart.js": "^2.9.3",
     "ckeditor4-react": "^1.1.1",
+    "dotenv": "^8.2.0",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",

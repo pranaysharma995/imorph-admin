@@ -36,7 +36,7 @@ function Dashboard() {
                             <Route   path="/dashboard/faq"  component={Faq}/>
                     </Switch>
                 </div>
-                <div>
+                <div  className="col-md-12" style={{paddingLeft : "12%" , paddingRight : "0"}}>
                     <Footer/>
                 </div>
             </div>
