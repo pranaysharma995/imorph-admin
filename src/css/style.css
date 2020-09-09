@@ -236,6 +236,9 @@
     text-decoration: none;
     color : #009CB4   
   }
+  .sidebar__link{
+    color : #009CB4;
+  }
 
   .sidebarCms__linkActive{
     color : white  
@@ -447,7 +450,7 @@
     color : white;
     background-color : #009CB4;
     border-radius: 5px;
-    margin-right : 40px;
+    margin-right : 5vw;
 }
 .profile__footerBtn:focus{
  outline : none;
@@ -522,7 +525,7 @@
   }
   .users__tableClass thead tr th{
     font-weight: bold;
-    background : #c7c7c7;
+    background : #D8E1E3;
     padding-left : 8px ;
   }
   .users__tableClass tbody tr td{
@@ -531,8 +534,6 @@
   .users__tableClass {
     overflow-x: auto;
     width : 100%;
-  }
-  .users__tableClass{
     background-color : white;
   }
   .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
@@ -616,17 +617,18 @@
 
 /* table */
 
-  .customTable__edit,.customTable__delete{
+  .subscription__edit-btn,.customTable__delete{
     border : 1px solid #777E8B;
     outline : none;
     border-radius: 4px;
-    margin-left: 5px;
+    margin-right: 5px;
   }
  
   .customTable__edit{
       border: 1px solid #26CE96;
       background-color : #26CE96;
       color : white;
+      border-radius: 4px;
   }
   .customTable__statusActive {
       color : #009CB4 
@@ -802,7 +804,6 @@
 }
 
 /* faq */
-
 .faq{
   margin-top: 120px;
   margin-bottom: 25%;
@@ -996,4 +997,116 @@
 .loader .spinner-border{
   position: absolute;
   top: 50%
+}
+
+/* Subscription Page */
+.subscription{
+  margin-top: 120px;
+  position: relative;
+  margin-bottom: 8%;
+}
+.subscription__add-btn{
+  color : white ;
+  background-color : #009CB4;
+  border : none;
+  border-radius: 5px;
+  width: 7vw;
+  height: 3.9vh;
+  margin-bottom: 1%;
+}
+.subscription__add-btn:focus,.subscription__add-btn:active{
+    outline: none;
+    box-shadow: none;
+}
+
+.subscription__table{
+  width: 100%;
+  background-color:white;
+}
+.subscription__table thead{
+  font-weight: bold;
+  background : #D8E1E3;
+}
+.subscription__table thead tr th{
+  padding : 0.5%;
+  padding-left: 1%;
+}
+.subscription__table tbody tr td{
+  padding : 1%;
+}
+.subscription__edit-btn{
+    border : none;
+    outline : none;
+    border-radius: 4px;
+    margin-right: 8px;
+    background-color : #009CB4;
+    color : white;
+}
+.subscription__edit-btn:focus{
+  outline : none;
+} 
+.subscription__footer{
+  background-color: white;
+  padding: 6px 1px;
+  border-radius: 0px 0px 10px 10px;
+  color: white;
+  width: 100%;
+}
+
+/* CreateSubscription */
+.createSubscription{
+  margin-top: 120px;
+  position: relative;
+  margin-bottom: 5%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  padding-bottom: 2%;
+}
+.createSubscription__body{
+  padding-left : 10%;
+  padding-right: 10%;
+  padding-top: 2%;
+  padding-bottom: 50px;
+}
+.createSubscription__body textarea{
+  resize: none !important;
+  height: 20vh;
+  border :none;
+  background-color: #F1F5F8;
+  border-radius: 8px!important;
+}
+
+.createSubscription__body img{
+  width: 16vw;
+    height: 12vh;
+    border: 1px solid rgba(0 ,0,0,0.4);
+    border-radius: 5px;
+}
+.createSubscription input[type="file"]{
+  border: 1px solid rgba(0 ,0,0,0.4);
+  width : 100%;
+  padding:1% 3%;
+  border-radius: 5px;
+  background : white;
+}
+
+.createSubscription input{
+  border :none;
+  background-color: #F1F5F8;
+  border-radius: 8px!important;
+}
+
+.createSubscription input:focus , .createSubscription input:active{
+  box-shadow: none;
+  border : 1px solid #009CB4;
+  background: #F1F5F8;
+}
+.createSubscription__body textarea:focus ,.createSubscription__body textarea:active{
+  box-shadow: none;
+  border : 1px solid #009CB4;
+  background: #F1F5F8;
+}
+.createSubscription__errorInput{
+  border : 1px solid red !important;
 }

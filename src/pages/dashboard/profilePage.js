@@ -6,6 +6,8 @@ import {Link , useHistory} from 'react-router-dom'
 import camera from '../../assets/camera.png'
 import validator from 'validator'
 import ChangePasswordModal from './modal/changePasswordModal'
+import axiosInstance from '../../axios'
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 
 function ProfilePage() {
@@ -17,7 +19,13 @@ function ProfilePage() {
         email : "",
         phone : "",
         address : "",
-        zip_code : ""
+        zip_code : "",
+        conversions : "",
+        city : '',
+        country : '',
+        region : '',
+        gender : '',
+        subscription : []
     })
     const [modal , setModal] = useState(false)
     const [error , setError] = useState({
@@ -27,8 +35,24 @@ function ProfilePage() {
         phone : false,
         phone_length : false,
         address : false,
+        city : false,
+        region : false,
+        country : false,
         zip_code : false
     })
+
+    useEffect(() => {
+        let uid = localStorage.getItem('uid') ?  localStorage.getItem('uid')  : sessionStorage.getItem('uid');
+        if(uid){
+            axiosInstance.get("/admin/profile",{
+                params : {
+                    id :  uid
+                }
+            }).then( result => {
+                console.log("Fetch admin" , result);
+            }).catch(err => console.log("Error in admin fetch" , err))
+        }
+    }, [])
 
     const [loading ,  setLoading] = useState(false)
     const textChange = e=> {
@@ -72,6 +96,19 @@ function ProfilePage() {
                 setError({
                     address : true
                 })
+            }else if(validator.isEmpty(adminDetails.city)){
+                setError({
+                    city : true
+                })
+            }
+            else if(validator.isEmpty(adminDetails.country)){
+                setError({
+                    country : true
+                })
+            }else if(validator.isEmpty(adminDetails.region)){
+                setError({
+                    region : true
+                })
             }
             else if(validator.isEmpty(adminDetails.zip_code)){
                 setError({
@@ -91,6 +128,9 @@ function ProfilePage() {
         phone : false,
         phone_length : false,
         address : false,
+        city : false,
+        region : false,
+        country : false,
         zip_code : false
          })
 
@@ -109,6 +149,10 @@ function ProfilePage() {
     }
 
     return (
+        <>
+        {loading ? (<div className="container text-center" style={{marginTop: "400px" , marginBottom : "50%"}}>   
+                <div   className="spinner-border text-primary"></div>
+            </div>) : 
         <div className=" container-fluid profile" style={{marginTop: "120px" }}>
                 <form onSubmit={checkSubmit}>
                 <div className="row">
@@ -174,30 +218,28 @@ function ProfilePage() {
                             <div className="col-lg-4">
                                 <div className="row">
                                         <div className="col">
+                                            {error.city && <small className="profile__error">&#9888;&#160;Please enter city</small>}
                                             <label htmlFor="city" style={{lineHeight :"0.4" , color : "#707070"}}>City</label><br/>
-                                            <select name="city" className="form-control profile__select">
-                                            <option value="San jose">San jose</option>
-                                            </select>
+                                            <CustomTextfield customTextfield__input={error.city ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="text"  name="city" value={adminDetails.city} handleChange={textChange}/>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-4">
                                     <div className="row">
                                             <div className="col">
+                                        
+                                                {error.region && <small className="profile__error">&#9888;&#160;please select your state</small>}
                                                 <label htmlFor="state" style={{lineHeight :"0.4" , color : "#707070"}}>State</label><br/>
-                                                <select name="state" className="form-control profile__select">
-                                                <option value="california">California</option>
-                                                </select>
+                                                <RegionDropdown className="form-control profile__select" country={adminDetails.country}  value={adminDetails.region}  onChange={(val) => setAdminDetails({...adminDetails , region: val})} />
                                             </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-4">
                                     <div className="row">
                                         <div className="col">
+                                            {error.country && <small className="profile__error">&#9888;&#160;please select your country</small>}
                                             <label htmlFor="country" style={{lineHeight :"0.4" , color : "#707070"}}>Country</label>
-                                            <select name="country" className="form-control profile__select">
-                                            <option value="United States">United States</option>
-                                            </select>
+                                            <CountryDropdown className="form-control profile__select" value={adminDetails.country}   onChange={(val) => setAdminDetails({...adminDetails , country: val})} />
                                         </div>
                                     </div>
                                 </div>                                
@@ -243,7 +285,8 @@ function ProfilePage() {
                 </div>
                 </form>
                 <ChangePasswordModal modal={modal} toggle={toggle}/>
-        </div>
+        </div>}
+        </>
     )
 }
 

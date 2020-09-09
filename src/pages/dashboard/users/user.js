@@ -1,56 +1,40 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import CustomTable from '../../../customComponents/customTable'
 import profile from '../../../assets/profile.png'
+import axiosInstance from '../../../axios'
 
 const UsersPage =()=> {
 
-    const [search , setSearch] = useState('')
+    
+    const [loading , setLoading] = useState(false)
+    const [userData , setUserData] = useState([])
+
+   useEffect(() => {
+     setLoading(true);
+
+    axiosInstance.get("/user/list").then(({data})=> {
+      setLoading(false);
+      let temp=[]
+      Object.entries(data.data).map(user => {
+        temp.push(user[1])
+      })
+      setUserData(temp)
+    }).catch( error => {
+      console.log("Error in user List" , error);
+    })
+   }, [])
 
     const tableHeaderText = ["Photo","Name & Email","Conversions","Contact","Subscriptions","Status","Action"];
-      const data = [
-    {
-      id : 12,
-      photo : profile,
-      fname : 'Rahul',
-      lname : "roy",
-      email : 'rahul@gmail.com',
-      conversions : "300",
-      contact : "723732673",
-      status : "Active"
-    },
-    {
-      id : 15,
-      photo : profile,
-      fname : 'Rajat',
-      lname : "das",
-      email : 'rajat@gmail.com',
-      conversions : "600",
-      contact : "86465745445",
-      subscriptions : "INFINITE 7",
-      status : "Expired"
-    },
-    {
-      id : 18,
-      photo : profile,
-      fname : 'Rajat',
-      lname : "ghosh",
-      email : 'rajat@gmail.com',
-      conversions : "600",
-      contact : "86465745445",
-      subscriptions : "INFINITE 365",
-      status : "Inactive"
-    },
 
-  ]
-
-  const filterSearch = data.filter(user => (
-    user.email.toLocaleLowerCase().includes(search.toLowerCase())
-  ))
 
     return (
-       
-            <CustomTable tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={filterSearch} results="23456" searchValue={search}  onHandleChange={e => setSearch(e.target.value)} uri="/dashboard/users/edit"/>
-       
+      <>
+      {loading ? (<div className="container text-center" style={{marginTop: "400px" , marginBottom : "50%"}}>   
+      <div   className="spinner-border text-primary"></div>
+      </div>) : 
+            <CustomTable tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={userData} results="23456"  uri="/dashboard/users/edit"/>
+          }
+        </>
     )
 }
 

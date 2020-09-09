@@ -9,7 +9,7 @@ import axiosInstance from '../axios'
 
 const LoginPage = () =>{
 
-    const [username , setUsername] = useState('testadmin@yopmail.com');
+    const [username , setUsername] = useState('diptahome@yopmail.com');
     const [password , setPassword] = useState('Abcd@1234');
     const [loading , setLoading] = useState(false);
     const history = useHistory()
@@ -74,9 +74,9 @@ const LoginPage = () =>{
             setLoading(false)
                 console.log(data);
                if(check){
-                   localStorage.setItem("uid" , data.user?._id)
+                   localStorage.setItem("uid" , JSON.stringify(data.user?._id))
                }else {
-                   sessionStorage.setItem("uid" , data.user?._id)
+                   sessionStorage.setItem("uid" , JSON.stringify(data.user?._id))
                }
 
                history.push("/dashboard")

@@ -2,7 +2,7 @@ import React,{useState,useEffect,useContext} from 'react'
 import profile from '../../../assets/profile.png'
 import CustomTextfield from '../../../customComponents/customTextfield'
 import CustomButton from '../../../customComponents/customButton'
-import {Link , useHistory, Redirect} from 'react-router-dom'
+import {useHistory, Redirect} from 'react-router-dom'
 import camera from '../../../assets/camera.png'
 import validator from 'validator'
 import UserDetailsContext from '../../../context/user/userDetailsContext'
@@ -10,19 +10,27 @@ import days7 from '../../../assets/7.png'
 import days30 from '../../../assets/30.png'
 import days365 from '../../../assets/365.png'
 
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+
 const UserProfileView =()=> {
 
     const history = useHistory();
     const context = useContext(UserDetailsContext)
     
     const [UserInformation , setUserInformation] = useState({
+        image : '',
         fname : '',
         lname : "",
         email : "",
         phone : "",
         address : "",
         zip_code : "",
-        conversions : ""
+        conversions : "",
+        city : '',
+        country : '',
+        region : '',
+        gender : '',
+        subscription : []
     })
     const [loading , setLoading] = useState(false)
 
@@ -31,16 +39,21 @@ const UserProfileView =()=> {
             setTimeout(() => {
                 setLoading(false);
 
-
+                console.log();
                if(context.userDetails){
                 setUserInformation({
                     ...UserInformation,
-                    fname : context.userDetails.fname,
-                    lname : context.userDetails.lname,
+                    fname : context.userDetails.firstName,
+                    lname : context.userDetails.lastName,
                     email : context.userDetails.email,
-                    fname : context.userDetails.fname,
-                    conversions : context.userDetails.conversions,
-                    phone : context.userDetails.contact,
+                    conversions : context.userDetails.conversion.length,
+                    phone : context.userDetails.phoneNumber,
+                    country : context.userDetails.country,
+                    region : context.userDetails.state,
+                    city : context.userDetails.city,
+                    zip_code : context.userDetails.zipcode,
+                    gender : context.userDetails.gender,
+                    subscription : context.userDetails.subscription
 
                 })
                }
@@ -55,7 +68,12 @@ const UserProfileView =()=> {
         phone : false,
         phone_length : false,
         address : false,
-        zip_code : false
+        city : false,
+        region : false,
+        country : false,
+        zip_code : false,
+       
+
     })
     const textChange = e=> {
         e.preventDefault();
@@ -95,8 +113,20 @@ const UserProfileView =()=> {
                 setError({
                     address : true
                 })
+            }else if(validator.isEmpty(UserInformation.city)){
+                setError({
+                    city : true
+                })
             }
-            else if(validator.isEmpty(UserInformation.zip_code)){
+            else if(validator.isEmpty(UserInformation.country)){
+                setError({
+                    country : true
+                })
+            }else if(validator.isEmpty(UserInformation.region)){
+                setError({
+                    region : true
+                })
+            }else if(validator.isEmpty(UserInformation.zip_code)){
                 setError({
                     zip_code : true
                 })
@@ -108,13 +138,16 @@ const UserProfileView =()=> {
     const submit = ()=> {
         setLoading(true);
         setError({
-         fname : false,
-         lname : false,
-         email : false,
-         phone : false,
-         phone_length : false,
-         address : false,
-         zip_code : false
+            fname : false,
+            lname : false,
+            email : false,
+            phone : false,
+            phone_length : false,
+            address : false,
+            city : false,
+            region : false,
+            country : false,
+            zip_code : false,
           })
  
         setTimeout(() => {
@@ -200,7 +233,7 @@ const UserProfileView =()=> {
                                  </div>
                             <div className="row">
                                 <div className="col">
-                                         {error.address && <small className="profile__error">&#9888;&#160;Phone enter address</small>}
+                                         {error.address && <small className="profile__error">&#9888;&#160;Please enter address</small>}
                                         <label htmlFor="address" style={{lineHeight :"0.4" , color : "#707070"}}>Address</label>
                                         <CustomTextfield customTextfield__input={error.address ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"} type="text"  name="address" value={UserInformation.address} handleChange={textChange}/>
                                 </div>
@@ -209,30 +242,27 @@ const UserProfileView =()=> {
                             <div className="col-md-4">
                                 <div className="row">
                                         <div className="col">
+                                            {error.city && <small className="profile__error">&#9888;&#160;Please enter city</small>}
                                             <label htmlFor="city" style={{lineHeight :"0.4" , color : "#707070"}}>City</label>
-                                            <select name="city" className="form-control profile__select">
-                                            <option value="San jose">San jose</option>
-                                            </select>
+                                            <CustomTextfield customTextfield__input={error.city ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="text"  name="city" value={UserInformation.city} handleChange={textChange}/>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div className="row">
                                             <div className="col">
+                                                {error.region && <small className="profile__error">&#9888;&#160;please select your state</small>}
                                                 <label htmlFor="state" style={{lineHeight :"0.4" , color : "#707070"}}>State</label><br/>
-                                                <select name="state" className=" form-control profile__select">
-                                                <option value="california">California</option>
-                                                </select>
+                                                <RegionDropdown className="form-control profile__select" country={UserInformation.country}  value={UserInformation.region}  onChange={(val) => setUserInformation({...UserInformation , region: val})} />
                                             </div>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div className="row">
                                         <div className="col">
+                                            {error.country && <small className="profile__error">&#9888;&#160;please select your country</small>}
                                             <label htmlFor="country" style={{lineHeight :"0.4" , color : "#707070"}}>Country</label>
-                                            <select name="country" className="form-control profile__select">
-                                            <option value="United States">United States</option>
-                                            </select>
+                                            <CountryDropdown className="form-control profile__select" value={UserInformation.country}   onChange={(val) => setUserInformation({...UserInformation , country: val})} />
                                         </div>
                                     </div>
                                 </div>                                
@@ -273,7 +303,8 @@ const UserProfileView =()=> {
                             <h5 className="text-lefy\t mb-4"> Subscription Plans</h5>
                         </div>
                         <hr/>
-                            {context.userDetails.subscriptions ? (
+                        {console.log("Subscription" ,UserInformation.subscrption )}
+                            {UserInformation.subscription ? (
                                 <div className="d-flex justify-content-left mb-4" style={{overflowX : "auto"}}>                               
                               
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Navbar from '../components/nav'
 import Sidebar from '../components/sidebar'
 import {Switch , Route} from 'react-router-dom'
@@ -11,9 +11,18 @@ import AboutUs from './dashboard/cms/aboutUs'
 import Tos from './dashboard/cms/tos'
 import Faq from './dashboard/cms/faq'
 import UserSubscriptionPlanView from './dashboard/users/userSubscriptionPlanView'
+import Subscription from './dashboard/subscription/subscription'
+import CreateSubscription from './dashboard/subscription/createSubscription'
+import EditSubscription from './dashboard/subscription/editSubscription'
 
 
 function Dashboard() {
+
+    const [subPlan , setSubPlan] = useState(null)
+
+    const getPlan=(plan)=> {
+        setSubPlan(plan)
+    }
 
     return (
         <div className="container-fluid">
@@ -34,6 +43,9 @@ function Dashboard() {
                             <Route   path="/dashboard/aboutus"  component={AboutUs}/>
                             <Route   path="/dashboard/tos"  component={Tos}/>
                             <Route   path="/dashboard/faq"  component={Faq}/>
+                            <Route  exact path="/dashboard/subscription"  component={()=> <Subscription plan={getPlan}/>}/>
+                            <Route   path="/dashboard/subscription/create"  component={CreateSubscription}/>
+                            <Route   path="/dashboard/subscription/edit"  component={()=> <EditSubscription plan={subPlan}/>}/>
                     </Switch>
                 </div>
                 <div  className="col-md-12" style={{paddingLeft : "12%" , paddingRight : "0"}}>

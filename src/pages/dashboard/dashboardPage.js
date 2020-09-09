@@ -128,7 +128,7 @@ function DashboardPage() {
             </div>
            <div className="row mt-4 dashboard__firstGraph" style={{position : "relative"}}>
               {loading && <div className="loader ">
-                     <div class="spinner-border text-primary"></div>
+                     <div className="spinner-border text-primary"></div>
                 </div>}                  
                <div className="col-md-12 " >
                    <CustomBar barThikness="30" id1="bt1" id2="bt2" id3="bt3" backColor="rgba(96, 177, 255)"  chartHeight={80} 
@@ -143,7 +143,7 @@ function DashboardPage() {
                
                    <div className="row" style={{marginRight :"0px" , position : "relative"}}>
                    {loading && <div className="loader mr-3">
-                     <div class="spinner-border text-primary"></div>
+                     <div className="spinner-border text-primary"></div>
                     </div> }
                        <div className="col-md-12 dashboard__firstGraph">
                             <CustomBar barThikness="19" id1="bt4" id2="bt5" id3="bt6" backColor="rgb(64, 230, 242)" 
@@ -158,7 +158,7 @@ function DashboardPage() {
                <div className="col-md-6 mb-3">
                    <div className="row" style={{marginLeft : "0px" ,position : "relative"}}>
                     {loading && <div className="loader mr-3">
-                        <div class="spinner-border text-primary"></div>
+                        <div className="spinner-border text-primary"></div>
                         </div>} 
                        <div className="col-md-12 dashboard__firstGraph" >
                             <CustomBar barThikness="10" id1="bt7" id2="bt8" id3="bt9" backColor="rgb(104, 217, 119)" 

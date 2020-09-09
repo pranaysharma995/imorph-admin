@@ -12,24 +12,52 @@ function Faq() {
     const [editableId , setEditableId ] = useState(-1);
     const [editQuestion , setEditQuestion] = useState('');
     const [editAnswer , setEditAnswer] = useState('')
+    const [error , setError] = useState(false)
 
 
     const handleSave =(e)=> {
 
-        setLoading(true);
-        if(question!=='' && answer!=='') {
-            let data = {
-                id : Math.floor(Math.random() * 101),
-                question,
-                answer
+        
+        setError(false)      
+
+        if(editable){
+            if(editQuestion!=='' && editAnswer!=='') {
+                setLoading(true);
+               
+                setTimeout(() => {
+    
+                    setLoading(false);
+                    setVisible(false)
+                    setEditQuestion('');
+                    setEditAnswer('');
+                    setEditableId(false)
+                }, 2000);
+            }else {
+                if(editQuestion === '' || editAnswer === ''){
+                    setError(true)
+                }
             }
-            setTimeout(() => {
-                setQA([...qa , data]);
-                setQuestion('');
-                setAnswer('');
-                setLoading(false);
-                setVisible(false)
-            }, 2000);
+
+        }else{
+            if(question!=='' && answer!=='') {
+                setLoading(true);
+                let data = {
+                    id : Math.floor(Math.random() * 101),
+                    question,
+                    answer
+                }
+                setTimeout(() => {
+                    setQA([...qa , data]);
+                    setQuestion('');
+                    setAnswer('');
+                    setLoading(false);
+                    setVisible(false)
+                }, 2000);
+            }else {
+                if(question === '' || answer === ''){
+                    setError(true)
+                }
+            }
         }
     }
 
@@ -81,7 +109,7 @@ function Faq() {
                     <h3 style={{color : "#707070"}}>FAQ</h3>
                 </div>
                 <hr/>
-
+                {error && <p className="error__message" style={{paddingLeft: "1%"}}>*Please fill all details</p>}
                 {visible && <div className="faq__qa" style={{ padding:"0% 2%"}}>
                     <h3><input type="text" placeholder="Write question here" value={question} onChange={e => setQuestion(e.target.value)} /></h3>
                     <textarea style={{height : "20vh" , padding : ""}} type="text" placeholder="Answer" value={answer} onChange={e => setAnswer(e.target.value)} />

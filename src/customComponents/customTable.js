@@ -9,16 +9,11 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
 
     const context = useContext(UserDetailsContext);
     const history = useHistory();
-    const [data , setData] = useState([]);
-
-    useEffect(() => {
-       if(userData){
-        setData(userData)
-       }
-    }, [userData])
+    const [search , setSearch] = useState('')
 
     const viewBtnClick = (e , info) => {
-        e.preventDefault();        
+        e.preventDefault(); 
+        console.log("View Button" , info);       
          context.setUserDetails(info)
          history.push(uri)
     }
@@ -26,43 +21,53 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
     const deleteUser = (e, info)=> {
         e.preventDefault();
         
-       setData(data.filter(user => user.id != info.id));
+    //    setData(userData.filter(user => user.id != info.id));
        
     }
 
+    const filerData = userData.filter(user => (
+          user.email.toLocaleLowerCase().includes(search.toLowerCase())
+        ))
+      
+
     const filterUser = e=> {
         
-        if(e.target.name === "device"){
-            console.log(e.target.value);
-        }
-        else  if(e.target.name === "subscription"){
-            if(e.target.value === "All User"){
-                setData(userData);
-            }
-            else if(e.target.value === "Subscription"){
-                setData(data.filter(user => user.subscriptions !=undefined))
-            }
-            else if(e.target.value === "Non Subscription"){
-                setData(data.filter(user => user.subscriptions === undefined))
-            }
-        }
-        else if(e.target.name === "days"){
-            if(e.target.value === "All Plan"){
-                setData(userData);
-            }
-            else if(e.target.value === "7 Days"){
-                setData(data.filter(user => user.subscriptions === "INFINITE 7"))
+        // if(e.target.name === "device"){
+        //     console.log(e.target.value);
+        // }
+        // else  if(e.target.name === "subscription"){
+        //     if(e.target.value === "All User"){
+        //         setData(userData);
+        //     }
+        //     else if(e.target.value === "Subscription"){
+        //         setData(userData);
+        //         setData(userData.filter(user => user.subscriptions !== undefined))
+        //     }
+        //     else if(e.target.value === "Non Subscription"){
+        //         setData(userData);
+        //         setData(userData.filter(user => user.subscriptions === undefined))
+        //     }
+        // }
+        // else if(e.target.name === "days"){
+        //     if(e.target.value === "All Plan"){
+        //         setData(userData);
+        //     }
+        //     else if(e.target.value === "7 Days"){
+        //         setData(userData);
+        //         setData(userData.filter(user => user.subscriptions === "INFINITE 7"))
              
-            }
-            else if(e.target.value === "1 Month"){
-                setData(data.filter(user => user.subscriptions === "INFINITE 30"))
+        //     }
+        //     else if(e.target.value === "1 Month"){
+        //         setData(userData);
+        //         setData(userData.filter(user => user.subscriptions === "INFINITE 30"))
              
-            }
-            else if(e.target.value === "12 Month"){
-                setData(data.filter(user => user.subscriptions === "INFINITE 365"))
+        //     }
+        //     else if(e.target.value === "12 Month"){
+        //         setData(userData);
+        //         setData(userData.filter(user => user.subscriptions === "INFINITE 365"))
              
-            }
-        }
+        //     }
+        // }
         
     }
 
@@ -75,7 +80,7 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
                               <h5 style={{marginTop : "10px" , color : "black" , marginLeft : "10px" , paddingLeft : "10px"}}>Users</h5>
                           </div> 
                            <div style={{position : "relative" ,marginTop : "2px"}}>
-                                 <CustomTextfield customTextfield__input="form-control customTable__input" type="text" placeholder="Search" icon_class="fa fa-search customTable__searchIcon" value={searchValue} handleChange={onHandleChange}/>
+                                 <CustomTextfield customTextfield__input="form-control customTable__input" type="text" placeholder="Search" icon_class="fa fa-search customTable__searchIcon" value={search} handleChange={e=> setSearch(e.target.value)}/>
                            </div>        
                            <div className="styleWrape" style={{marginTop : "3px"}}  onClick={filterUser}>
 
@@ -118,7 +123,7 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
                             </tr>
                             </thead>
                             <tbody>
-                                    {data.map( (info, i)=> (
+                                    {filerData.map( (info, i)=> (
 
                                         
 
@@ -127,12 +132,12 @@ const CustomTable = ({tableClass , tableHeaderText , userData , results,searchVa
                                         <td><img width="70rem" className= "rounded-circle p-2" src={info.photo} alt="photo"/></td>
                                         <td >
                                             <div className="text-left">
-                                                <h6 style={{marginTop : "8px"}}>{info.fname}&#x20;{info.lname}</h6>
+                                                <h6 style={{marginTop : "8px"}}>{info.firstName}&#x20;{info.lastName}</h6>
                                                 <p>{info.email}</p>
                                             </div>
                                         </td>
-                                        <td>{info.conversions}</td>
-                                        <td>{info.contact}</td>
+                                        <td>{info.conversion.length}</td>
+                                        <td>{info.phoneNumber}</td>
                                         <td>{info.subscriptions}</td>
                                         <td className={info.status== "Active" ? "customTable__statusActive" : (info.status == "Expired" ? "customTable__statusExpired" : (info.status == "Inactive" ? "customTable__statusInactive" : (info.status == "Resolved" &&"customTable__statusResolved"))) }>{info.status}</td>
                                         <td>
