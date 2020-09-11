@@ -8,6 +8,7 @@ const UsersPage =()=> {
     
     const [loading , setLoading] = useState(false)
     const [userData , setUserData] = useState([])
+    const [toggle , setToggle] = useState(false)
 
    useEffect(() => {
      setLoading(true);
@@ -22,7 +23,8 @@ const UsersPage =()=> {
     }).catch( error => {
       console.log("Error in user List" , error);
     })
-   }, [])
+    console.log("Toggle");
+   }, [toggle])
 
     const tableHeaderText = ["Photo","Name & Email","Conversions","Contact","Subscriptions","Status","Action"];
 
@@ -32,7 +34,7 @@ const UsersPage =()=> {
       {loading ? (<div className="container text-center" style={{marginTop: "400px" , marginBottom : "50%"}}>   
       <div   className="spinner-border text-primary"></div>
       </div>) : 
-            <CustomTable tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={userData} results="23456"  uri="/dashboard/users/edit"/>
+            <CustomTable toggle={setToggle} tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={userData} results="23456"  uri="/dashboard/users/edit"/>
           }
         </>
     )

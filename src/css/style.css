@@ -630,6 +630,13 @@
       color : white;
       border-radius: 4px;
   }
+  .customTable__block{
+    border: 1px solid  #009CB4 ;
+    background-color:  #009CB4 ;
+    color: white;
+    margin-right: 5px;
+    border-radius: 4px;
+  }
   .customTable__statusActive {
       color : #009CB4 
   }
@@ -736,6 +743,12 @@
 }
 .customTable__results p {
   color :#707070
+}
+.blockbtn__icon{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 
 
@@ -1109,4 +1122,35 @@
 }
 .createSubscription__errorInput{
   border : 1px solid red !important;
+}
+
+/* modal */
+.modal__yes
+{
+border : 1px solid #009CB4;
+color : #009CB4;
+margin-top : 10px;
+border-radius : 7px;
+background-color: white;
+width: 10vw;
+height: 47px;
+}
+.modal__yes:focus, .modal__yes:active {
+  box-shadow: none;
+  outline: none;
+}
+.modal__no
+{
+margin-top:10px;
+border : none;
+color : white;
+background-color : #009CB4;
+border-radius : 5px;
+width: 10vw;
+height: 47px;
+border : 1px solid #009CB4;
+}
+.modal__no:focus, .modal__no:active {
+  box-shadow: none;
+  outline :none;
 }

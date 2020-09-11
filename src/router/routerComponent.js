@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import '../css/style.css'
-import {BrowserRouter as Router , Switch , Route, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router , Switch , Route} from 'react-router-dom'
 
 import LoginPage from '../pages/loginPage'
 import ForgotPassword from '../pages/forgotPassword'

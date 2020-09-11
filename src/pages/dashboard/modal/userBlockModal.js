@@ -1,9 +1,39 @@
 import React from 'react'
 import danger from '../../../assets/danger.png'
+import axiosInstance from '../../../axios'
 
-function LogoutPromtModal({handleClick}) {
+
+const UserBlockModal = ({blockvalue ,unblockvalue ,toggle}) => { 
+
+    const onYes = e=> {
+        e.preventDefault();       
+        
+        
+        if(blockvalue !=null){
+            axiosInstance.post("/user/change-status" ,{
+                id : blockvalue._id,
+                block : true
+            }).then((result) =>{
+                console.log("Block Value" , result.data);
+                toggle(!blockvalue.block)   
+            }).catch(error => {
+                console.log("Error in userBlock Modal" , error);
+            })
+        }else if(unblockvalue !=null){
+            axiosInstance.post("/user/change-status" ,{
+                id : unblockvalue._id,
+                block : false
+            }).then((result) =>{
+                console.log("Block Value" , result.data);
+                toggle(!unblockvalue.block)
+            }).catch(error => {
+                console.log("Error in userBlock Modal" , error);
+            })
+        }
+    }
+
     return (
-        <div className="modal fade text-center" id="myModal">
+        <div className="modal fade text-center" id="blockModal" >
             <div className="modal-dialog modal-dialog-centered modal-lg">
                 <div className="modal-content">
 
@@ -31,12 +61,12 @@ function LogoutPromtModal({handleClick}) {
                         <div style={
                             {marginBottom: "6%"}
                         }>
-                            <h1 style={
+                            <h3 style={
                                 {
-                                    fontWeight: "450",
+                                    fontWeight: "400",
                                     color: "#707070"
                                 }
-                            }>Are you sure you want to logout?</h1>
+                            }>{blockvalue ? `Are you sure you want to block ${blockvalue && blockvalue.firstName} ${blockvalue && blockvalue.lastName}?` : `Are you sure you want to unblock ${unblockvalue && unblockvalue.firstName} ${unblockvalue && unblockvalue.lastName}?`} </h3>
                         </div>
 
                         <div className="d-flex justify-content-between"
@@ -45,7 +75,7 @@ function LogoutPromtModal({handleClick}) {
                         }>
                             <div>
                                 <button className=" modal__yes  " data-dismiss="modal"
-                                    onClick={handleClick}>Yes</button>
+                                   onClick={onYes}>Yes</button>
                             </div>
                             <div>
                                 <button className="modal__no btn-block " data-dismiss="modal">No</button>
@@ -59,4 +89,4 @@ function LogoutPromtModal({handleClick}) {
     )
 }
 
-export default LogoutPromtModal
+export default UserBlockModal

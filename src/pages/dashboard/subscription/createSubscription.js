@@ -76,7 +76,7 @@ const CreateSubscription = () => {
 
 
     const submit = ()=> {
-        //setLoading(true)
+        setLoading(true)
         setError({
             plan_name : false,
             cost : false,
@@ -89,7 +89,6 @@ const CreateSubscription = () => {
         data.set("status" , checked)
         data.set("description" , description)
         data.append("image" , imageFile)
-
         axiosInstance.post("/admin/subscription/create" , data
         ).then(() => (
            setLoading(false),
@@ -113,7 +112,7 @@ const CreateSubscription = () => {
           </div>
           <hr style={{lineHeight: "0.4", marginTop: "-5px"}}/>
           <div className = "createSubscription__body">
-              <form method="POST" enctype="multipart/form-data"  action="#" onSubmit={handleValidation}>
+              <form method="POST" encType="multipart/form-data"  action="#" onSubmit={handleValidation}>
                 <div className="row justify-content-center">
                         <div className="col-md-6 ">
                         {error.plan_name && <small className="profile__error">&#9888;&#160;Please enter plan name</small>}

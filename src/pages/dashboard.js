@@ -39,7 +39,7 @@ function Dashboard() {
                             <Route  path="/dashboard/profile"  component={ProfilePage}/>
                             <Route exact  path="/dashboard/users"  component={UsersPage}/>
                             <Route  exact path="/dashboard/users/edit"  component={UserProfileView}/>
-                            <Route   path="/dashboard/users/edit/plan/:id"  component={UserSubscriptionPlanView}/>
+                            <Route   path="/dashboard/users/edit/plan/view"  component={UserSubscriptionPlanView}/>
                             <Route   path="/dashboard/aboutus"  component={AboutUs}/>
                             <Route   path="/dashboard/tos"  component={Tos}/>
                             <Route   path="/dashboard/faq"  component={Faq}/>
