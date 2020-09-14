@@ -14,6 +14,10 @@ import UserSubscriptionPlanView from './dashboard/users/userSubscriptionPlanView
 import Subscription from './dashboard/subscription/subscription'
 import CreateSubscription from './dashboard/subscription/createSubscription'
 import EditSubscription from './dashboard/subscription/editSubscription'
+import Inquiries from './dashboard/inquiries/inquiries'
+import SocialLinks from './dashboard/settings/socialLinks'
+import ImageSettings from './dashboard/settings/imageSettings'
+import InquiriesView from './dashboard/inquiries/inquiriesView'
 
 
 function Dashboard() {
@@ -46,6 +50,10 @@ function Dashboard() {
                             <Route  exact path="/dashboard/subscription"  component={()=> <Subscription plan={getPlan}/>}/>
                             <Route   path="/dashboard/subscription/create"  component={CreateSubscription}/>
                             <Route   path="/dashboard/subscription/edit"  component={()=> <EditSubscription plan={subPlan}/>}/>
+                            <Route   exact path="/dashboard/inquiries"  component={Inquiries}/>
+                            <Route   path="/dashboard/inquiries/view"  component={InquiriesView}/>
+                            <Route   path="/dashboard/settings/sociallinks"  component={SocialLinks}/>
+                            <Route   path="/dashboard/settings/imagesettings"  component={ImageSettings}/>
                     </Switch>
                 </div>
                 <div  className="col-md-12" style={{paddingLeft : "12%" , paddingRight : "0"}}>

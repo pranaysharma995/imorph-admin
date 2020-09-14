@@ -157,7 +157,7 @@ const LoginPage = () => {
                 </div>
                 <div className="form-group form-check">
                     <div className="d-flex">
-                        <div>
+                        <div style={{marginTop : "0.15rem"}}>
                             <CustomTextfield customTextfield__input="form-check-input login__checkbox" type="checkbox"
                                 handleChange={
                                     () => setCheck(!check)

@@ -220,11 +220,25 @@
     border-radius: 7px;  
     margin: auto;  
     margin-left: -5px;
+    display: inline-block;
   }
   .sildeBar__inactive{
     color : white;
     margin: auto;
   }
+  .sildeBar__active-dropdown{
+    color: white;
+    margin: auto;
+    display: inline-block;
+    width: 100%;
+  }
+  .sildeBar__inactive-dropdown{
+    color: white;
+    margin: auto;
+    display: inline-block;
+    width: 100%;
+  }
+  
   .sidebar__linkInActive{
     color : white;
   }
@@ -252,7 +266,8 @@
   }
   .sidebarCms__linkInActive:hover{
     text-decoration: none;
-    color : rgba(255, 255, 255, 0.6); 
+    color : rgba(255, 255, 255, 0.6);
+    color : white; 
   }
   .sidebar__settingDiv{
     background-color: #1BC1D8;
@@ -386,19 +401,19 @@
   border : 1px solid #009CB4;
 }
 .profile__backbtn{
-  border : 1px solid #009CB4;
+  border : 1px solid #707070;
   padding : 3% 3vw;
-  color : #009CB4;
+  color : #707070;
   margin-top : 10px;
   border-radius: 7px;
   /* box-shadow: 1px 1px 3px rgba(0 ,0,0,0.1); */
 }
 .profile__backbtn:focus{
   box-shadow: none;
-  color : #009CB4;
+  color : #707070;
 }
 .profile__backbtn:hover{
-  color : #009CB4;
+  color : #707070;
 }
 .profile__head{
   padding : 2px 20px;
@@ -470,7 +485,7 @@
   background : white ;
   border : none;
   border-radius: 6px 6px 6px 6px;
-  padding : 5px;
+  padding : 1% 4%;
   box-shadow: 0px 2px 20px rgba(0 ,0,0,0.2);
 }
 .profile__imgAdd:focus{
@@ -547,7 +562,7 @@
   background : white ;
   border : none;
   border-radius: 6px 6px 6px 6px;
-  padding : 3px 6px;
+  padding : 2% 4%;
   box-shadow: 0px 2px 20px rgba(0 ,0,0,0.2);
 }
 .userProfile__imgAdd:focus{
@@ -685,6 +700,12 @@
   background-color: white;
   color : black;
   border-radius: 0px 0px 10px 10px;
+}
+.customTable__no-element{
+  border : none;
+  padding : 10px 30px;
+  background:  #F1F5F8;
+  color : black;
 }
 .customTable{
   box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
@@ -1153,4 +1174,144 @@ border : 1px solid #009CB4;
 .modal__no:focus, .modal__no:active {
   box-shadow: none;
   outline :none;
+}
+
+/* Inquiries */
+.inquiries{
+  margin-top: 120px;
+  position: relative;
+  margin-bottom: 8%;
+}
+
+
+/* Social Links */
+.social-links{
+  margin-top: 120px;
+  position: relative;
+  margin-bottom: 5%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  padding-bottom: 2%;
+}
+.social-links__body{
+  padding-left : 10%;
+  padding-right: 10%;
+  padding-top: 1%;
+  padding-bottom: 50px;
+}
+.social-links input{
+  border :none;
+  background-color: #F1F5F8;
+  border-radius: 8px!important;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.social-links input:focus , .social-links input:active{
+  box-shadow: none;
+  border : 1px solid #009CB4;
+  background: #F1F5F8;
+}
+
+.social-links input::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  opacity: 0.6;
+}
+.social-links input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  opacity: 0.6;
+}
+.social-links input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  opacity: 0.6;
+}
+.social-links input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  opacity: 0.6;
+}
+
+
+
+
+
+/* Image Settings */
+.image-settings{
+  margin-top: 120px;
+  position: relative;
+  margin-bottom: 5%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  padding-bottom: 2%;
+}
+.image-settings__body{
+  padding-left : 10%;
+  padding-right: 10%;
+  padding-top: 2%;
+  padding-bottom: 50px;
+}
+.image-settings input{
+  border :none;
+  background-color: #F1F5F8;
+  border-radius: 8px!important;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 80%;
+}
+
+.image-settings input:focus , .image-settings input:active{
+  box-shadow: none;
+  border : 1px solid #009CB4;
+  background: #F1F5F8;
+  outline : none
+}
+.image-settings__logo {
+  width: 16vw;
+  border: 1px solid rgba(0 ,0,0,0.4);
+  border-radius: 5px;
+}
+.image-settings__imgAdd{
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  color: grayscale;
+  background: white;
+  border: none;
+  border-radius: 6px 6px 6px 6px;
+  padding: 1% 2.4%;
+  box-shadow: 0px 0px 20px rgba(0 ,0,0,0.2);
+}
+.image-settings__profile{
+  width: 7vw;
+  border: 1px solid rgba(0 ,0,0,0.4);
+  border-radius: 5px;
+}
+.image-settings__imgAdd-profile{
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  color: grayscale;
+  background: white;
+  border: none;
+  border-radius: 6px 6px 6px 6px;
+  padding: 1% 5%;
+  box-shadow: 0px 0px 20px rgba(0 ,0,0,0.2);
+}
+
+
+/* Inquuries view */
+
+.inquiries-view{
+  margin-top: 120px;
+  position: relative;
+  margin-bottom: 5%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
+  padding-bottom: 2%;
 }

@@ -18,7 +18,7 @@ const EditSubscription = ({plan}) => {
     const [checked, setChecked] = useState(false);
     const [subscriptionID, setSubscriptionID] = useState('')
     const [error, setError] = useState({plan_name: false, cost: false, description: false, image: false})
-
+    const [reload, setReload] = useState(false)
     useEffect(() => {
         if (plan) {
             setName(plan.name);
@@ -42,7 +42,7 @@ const EditSubscription = ({plan}) => {
                 console.log('Base64', fileReader.result);
             };
         }
-    }, [])
+    }, [reload])
 
     const handleValidation = e => {
         e.preventDefault();
@@ -109,7 +109,10 @@ const EditSubscription = ({plan}) => {
 
     }
 
-    const oncancel = e => {}
+    const oncancel = e => {
+        e.preventDefault();
+        setReload(!reload);
+    }
 
 
     if (!plan) {
@@ -243,9 +246,9 @@ const EditSubscription = ({plan}) => {
                                         }>
                                             Subscription Active/Inactive</label>
                                     </div>
-                                    <div className="mt-1"><input id="radio" type="radio" class="form-check-input"
+                                    <div style={{marginTop : "3px"}}><input id="radio" type="checkbox" class="form-check-input"
                                             checked={checked}
-                                            onClick={
+                                            onChange={
                                                 () => setChecked(!checked)
                                             }/></div>
                                 </div>
@@ -271,7 +274,7 @@ const EditSubscription = ({plan}) => {
                             <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit"
                                 handleClick={handleValidation}/>
                             <CustomButton customButton__class="btn profile__backbtn" text="Cancel"
-                                onClick={oncancel}/></>
+                                handleClick={oncancel}/></>
                     )
                 } </div>
 

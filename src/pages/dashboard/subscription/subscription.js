@@ -84,7 +84,7 @@ const Subscription = ({plan}) => {
                         <tbody> {
                             list && Object.entries(list).map((item, i) => (
                                 <tr key={i}>
-                                    <td>#{
+                                    <td>{
                                         i + 1
                                     }</td>
 

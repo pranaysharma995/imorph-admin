@@ -1,13 +1,31 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import logo from '../assets/imoph3d.png'
 import profile from '../assets/profile.png'
 import CustomTextfield from '../customComponents/customTextfield'
 import {Link , useHistory} from 'react-router-dom'
 import LogoutPromtModal from '../pages/dashboard/modal/logoutPromtModal'
 
+import axiosInstance from '../axios'
+
 const Navbar =() =>{
 
     const history = useHistory();
+    const [name ,setName] = useState('')
+
+    useEffect(() => {
+        let uid = localStorage.getItem('uid') ? localStorage.getItem('uid') : sessionStorage.getItem('uid');
+        if (uid) {
+            axiosInstance.get("/admin/profile", {
+                params: {
+                    id: uid
+                }
+            }).then(({data}) => {
+                let adminData = data.data
+                console.log("Fetch admin", data);
+                setName(`${adminData.firstName} ${adminData.lastName}`)
+                }).catch(err => console.log("Error in admin fetch", err))
+        }
+    }, [])
 
     const logout= e => {
         e.preventDefault();
@@ -49,7 +67,7 @@ const Navbar =() =>{
                                                 <div>
                                                     <div className="d-flex">
                                                         <div style={{padding : "1px 20px"}}>
-                                                            <img width="40rem" className= "rounded-circle" src={profile} alt="profile"/>
+                                                            <img width="40rem" height="40rem" className= "rounded-circle" src={profile} alt="profile"/>
                                                         </div>
                                                         <div className="text-left">
                                                             <p style={{lineHeight : "0.5", color :"black"}}>Ldsbfjbsdjfbjsdbjsdbjfsdjfsj</p>
@@ -99,7 +117,7 @@ const Navbar =() =>{
                                             </button>
                                                     <div className="dropdown-menu nav__dropdownMenu">
                                                         <div className="dropdown__head"  style={{height : "30px"}}>
-                                                            <h6 style={{lineHeight : "0.4", color :"white"}}>James Dean</h6>
+                                                            <h6 style={{lineHeight : "0.4", color :"white"}}>{name}</h6>
                                                             <p style={{ color :"white" , fontSize : "12px"}}>Admin</p>
                                                         </div>
                                                         <hr style={{ backgroundColor : "white"}}/>

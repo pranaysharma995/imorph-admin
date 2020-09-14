@@ -10,6 +10,7 @@ import SubscriptionContext from '../../../context/user-subscription/userSubcript
 import days7 from '../../../assets/7.png'
 import days30 from '../../../assets/30.png'
 import days365 from '../../../assets/365.png'
+import noSubscriptionImg from "../../../assets/no-subscription.png"
 
 import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 
@@ -178,7 +179,7 @@ const UserProfileView = () => {
                                                     <div style={{position : "relative"}}>
                                 <div className="text-center" style={{position : "relative" , width: "180px" , left:"50%" , transform : "translateX(-50%)"}}>
                                         <img width="100rem" className= "rounded-circle" src={profile} alt="profile" style={{color: "black"}}/>
-                                        <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="20rem" src={camera} alt="add" style={{marginTop : "-7px" , marginLeft : "2px"}}/></label>
+                                        <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="15rem" src={camera} alt="add" style={{marginTop : "-5px" }}/></label>
                                 </div>
                                 
                                 <input type="file" id="userImage" style={{display : "none"}} accept="image/*"/> 
@@ -336,6 +337,7 @@ const UserProfileView = () => {
                                                      </div>
                                         
                                          ) : (<div className="text-center" style={{marginBottom: "120px" , marginTop : "70px"}}>
+                                             <img width="180px" style={{marginBottom : "40px"}} src={noSubscriptionImg} alt="nosubscription"/>
                                                  <h6 style={{ color : "#707070" , }}>Didn't choose any subscription yet</h6>
                                          </div>)}
                                          <hr/>

@@ -264,13 +264,13 @@ function ProfilePage() {
                                                         maxHeight: "150px"
                                                     }
                                                 }/>
-                                            <label htmlFor="userImage" className="profile__imgAdd rounded-circle text-center"><img width="20rem"
+                                            <label htmlFor="userImage" className="profile__imgAdd rounded-circle text-center"><img width="15rem"
                                                     src={camera}
                                                     alt="add"
                                                     style={
                                                         {
-                                                            marginTop: "-7px",
-                                                            marginLeft: "2px"
+                                                            marginTop: "-5px",
+                                                        
                                                         }
                                                     }/></label>
                                         </div>
@@ -559,7 +559,7 @@ function ProfilePage() {
                                         textDecoration: "underline"
                                     }
                                 }>
-                                    <Link onClick={
+                                    <Link style={{color : "#009CB4"}} onClick={
                                         () => setModal(!modal)
                                     }>Change Password</Link>
                                 </h6>
