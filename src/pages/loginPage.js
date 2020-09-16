@@ -61,8 +61,10 @@ const LoginPage = () => {
             console.log(data);
             if (check) {
                 localStorage.setItem("uid", data.user?._id)
+                localStorage.setItem("token", data.token)
             } else {
                 sessionStorage.setItem("uid", data.user?._id)
+                sessionStorage.setItem("token", data.token)
             } history.push("/dashboard")
 
         }).catch(error => {

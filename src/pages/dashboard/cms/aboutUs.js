@@ -1,14 +1,32 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import CKEditor from 'ckeditor4-react';
 import CustomButton from '../../../customComponents/customButton'
+import axiosInstance from '../../../axios'
+import validator from 'validator'
 
 function AboutUs() {
 
   const [text , setText] = useState('')
   const [loading , setLoading] = useState(false)
+  const [loadingBtn , setLoadingBtn] = useState(false)
+  const [error ,setError] = useState(false)
+  const [reload , setReload] = useState(false)
 
-  const editorConfig = {
-    
+
+  useEffect(() => {
+    setLoading(true)
+    axiosInstance.get("/admin/cms-setting/about-us",{
+      headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+    }).then(({data}) => {
+      console.log("About us" , data.data[0]);
+      setText(data.data[0]?.aboutUs);
+      setLoading(false)
+    }).catch(error => {
+      console.log("Error in cmsSettings aboutus.js" , error);
+    })
+  },[reload])
+
+  const editorConfig = {    
     toolbar: [ 
       { name: 'document', items: [  'Print' ] },
       { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
@@ -25,24 +43,62 @@ function AboutUs() {
      extraPlugins :['font' , 'print' , 'colorbutton' , 'justify' , 'copyformatting'],
     
 };
+const submit =e=> {
+  e.preventDefault();
+  if(!validator.isEmpty(text)){
+    setLoadingBtn(true)
+    axiosInstance.post("/admin/cms-setting/about-us/update", {
+        aboutUs : text
+    },{
+      headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+    }).then((result) => {
+      console.log("After update" , result);
+      setError(false)
+      setLoadingBtn(false)
+      setReload(!reload)
+    }).catch(error => {
+      console.log("Error in About us update aboutus.js" , error);
+    })
+  }else {
+    setError(true)
+  }
+}
+
+const onCancle=e=> {
+  setReload(!reload);
+  setError(false);
+}
 
     return (
-        <div className ="aboutus">
+      <>
+      {loading ? (
+        <div className="container text-center"
+            style={
+                {
+                    marginTop: "400px",
+                    marginBottom: "50%"
+                }
+        }>
+            <div className="spinner-border text-primary"></div>
+        </div>
+    ) :<div className ="aboutus">
           <div style={{padding : "0.7% 1.6%"}}>
              <h3 style={{color : "#707070"}}>About Us</h3>
           </div>
 
-          <div>
+        
+            {error && <small style={{color : "red"}}>&#9888;&#160;Please insert some value</small>}
               <CKEditor config={editorConfig} data={text} onChange={(e) => {
                 setText(e.editor.getData())}} />
-          </div>
+          
           <hr/>
           <div className="d-flex justify-content-center" style={{paddingBottom: "2%"}}>
-                 {loading ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn aboutus__btn-margin" text="Save" />
-                  <CustomButton customButton__class="btn profile__backbtn"  text="Cancel"/></>)}
+                 {loadingBtn ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn aboutus__btn-margin" text="Save" handleClick={submit} />
+                  <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={onCancle}/></>)}
            </div>
             
-        </div>
+        </div>}
+      </>
     )
 }
 

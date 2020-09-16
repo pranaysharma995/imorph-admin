@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,useContext} from 'react'
 import profile from '../../assets/profile.png'
 import CustomTextfield from '../../customComponents/customTextfield'
 import CustomButton from '../../customComponents/customButton'
@@ -8,11 +8,13 @@ import validator from 'validator'
 import ChangePasswordModal from './modal/changePasswordModal'
 import axiosInstance from '../../axios'
 import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+import AdminContext from '../../context/admin/adminDetailsContext'
 
 
-function ProfilePage() {
+function ProfilePage({refresh , refreshValue}) {
 
     const history = useHistory();
+    const {adminData} = useContext(AdminContext);
     const [adminDetails, setAdminDetails] = useState({
         fname: '',
         lname: "",
@@ -24,9 +26,10 @@ function ProfilePage() {
         country: '',
         region: '',
         gender: '',
-        image: null
+        image: null,
     })
     const [modal, setModal] = useState(false)
+    const [imageFile , setImageFile] = useState(null)
     const [error, setError] = useState({
         image: false,
         fname: false,
@@ -47,41 +50,52 @@ function ProfilePage() {
 
     useEffect(() => {
         setLoading(true)
-        let uid = localStorage.getItem('uid') ? localStorage.getItem('uid') : sessionStorage.getItem('uid');
-        if (uid) {
-            axiosInstance.get("/admin/profile", {
-                params: {
-                    id: uid
-                }
-            }).then(({data}) => {
-                let adminData = data.data
-                console.log("Fetch admin", data);
-                setAdminDetails({
-                    ...adminDetails,
-                    fname: adminData ?. firstName,
-                    lname: adminData ?. lastName,
-                    email: adminData ?. email,
-                    phone: adminData ?. phoneNumber,
-                    zip_code: adminData ?. zipcode,
-                    address: adminData ?. location,
-                    city: adminData ?. city[0].toUpperCase() + adminData ?. city.slice(1),
-                    country: adminData ?. country[0].toUpperCase() + adminData ?. country.slice(1),
-                    region: adminData ?. state[0].toUpperCase() + adminData ?. state.slice(1),
-                    image: adminData ?. profileImage,
-                    gender: adminData ?. gender[0].toUpperCase() + adminData ?. gender.slice(1)
-                })
-                setLoading(false)
-            }).catch(err => console.log("Error in admin fetch", err))
+       setTimeout(() => {
+        setLoading(false)
+        if (adminData) {
+            setAdminDetails({
+                ...adminDetails,
+                fname: adminData?.firstName,
+                lname: adminData?.lastName,
+                email: adminData?.email,
+                phone: adminData?.phoneNumber,
+                zip_code: adminData?.zipcode,
+                address: adminData?.location,
+                city: adminData?.city[0].toUpperCase() + adminData?.city.slice(1),
+                country: adminData?.country[0].toUpperCase() + adminData?.country.slice(1),
+                region: adminData?.state[0].toUpperCase() + adminData?.state.slice(1),
+                image: adminData?.profileImage,
+                gender: adminData?.gender[0].toUpperCase() + adminData?.gender.slice(1)
+            })
         }
+       }, 1000);
+            // axiosInstance.get("/admin/profile", {
+            //     params: {
+            //         id: uid
+            //     }
+            // }).then(({data}) => {
+            //     let adminData = data.data
+                
+            //     setLoading(false)
+            // }).catch(err => console.log("Error in admin fetch", err))
     }, [reload])
 
 
     const textChange = e => {
         e.preventDefault();
+        if(e.target.name === "phone"){
+            if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
+                setAdminDetails({
+                    ...adminDetails,
+                    [e.target.name]: e.target.value
+                })
+            }
+        }else {
         setAdminDetails({
             ...adminDetails,
             [e.target.name]: e.target.value
         })
+    }
     }
 
     const checkSubmit = e => {
@@ -133,15 +147,16 @@ function ProfilePage() {
             region: false,
             country: false,
             zip_code: false,
-            image: false
+            image: false, 
+            imageFile : false
         })
         let data = new FormData();
         data.set("id", localStorage.getItem('uid') ? localStorage.getItem('uid') : sessionStorage.getItem('uid'));
         data.set("firstName", adminDetails.fname)
         data.set("lastName", adminDetails.lname)
         data.set("email", adminDetails.email)
-        // data.set("phoneNumber", adminDetails.phone)
-        data.append("profileImage", adminDetails.image)
+        data.set("phoneNumber", adminDetails.phone)
+        data.append("profileImage", imageFile!==null ? imageFile : adminDetails.image)
         data.set("country", adminDetails.country)
         data.set("state", adminDetails.region)
         data.set("city", adminDetails.city)
@@ -149,17 +164,16 @@ function ProfilePage() {
         data.set("zipcode", adminDetails.zip_code)
         data.set("gender", adminDetails.gender)
 
-        axiosInstance.post("/admin/update-profile", data).then(({data}) => {
+        axiosInstance.post("/admin/update-profile", data ,{
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(({data}) => {
             console.log("Updated Admin Details", data);
             setLoadingBtn(false);
             setReload(!reload)
+            refresh(!refreshValue)
         }).catch(error => {
             console.log("Error in Admin Update", error);
         })
-
-        setTimeout(() => {
-            setLoadingBtn(false)
-        }, 2000);
     }
 
     const onBack = e => {
@@ -175,7 +189,8 @@ function ProfilePage() {
         e.preventDefault();
         let file = e.target.files[0];
         console.log("Admin Image", file)
-        if (file) {
+        setImageFile(file)
+        if (file) {            
             let base64Image = await new Promise((resolve, reject) => {
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(file);
@@ -189,13 +204,18 @@ function ProfilePage() {
             })
 
             if (base64Image !== undefined) {
-                console.log("Baaase64", base64Image);
+                console.log("Baaase64", base64Image);  
                 setAdminDetails({
                     ...adminDetails,
                     image: base64Image
-                })
+                })             
             }
-        } else {
+        }
+         else {
+            setError({
+                ...error,
+                image : true
+            })
             setAdminDetails({
                 ...adminDetails,
                 image: null
@@ -255,7 +275,7 @@ function ProfilePage() {
                                         }>
                                             <img width="150rem" className="rounded-circle"
                                                 src={
-                                                    adminDetails.image != null ? adminDetails.image : profile
+                                                    adminDetails.image != null ? imageFile!=null ?adminDetails.image : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/"+adminDetails.image : profile
                                                 }
                                                 alt="profile"
                                                 style={
@@ -559,13 +579,13 @@ function ProfilePage() {
                                         textDecoration: "underline"
                                     }
                                 }>
-                                    <Link style={{color : "#009CB4"}} onClick={
+                                    <label style={{color : "#009CB4",textDecoration: "underline"}} onClick={
                                         () => setModal(!modal)
-                                    }>Change Password</Link>
+                                    }>Change Password</label>
                                 </h6>
 
                                 <hr/>
-                                <div className="d-flex justify-content-center">
+                                <div className="d-flex justify-content-center " style={{display : "inline-block"}}>
                                     {
                                     loadingBtn ? (
                                         <div class="spinner-border text-primary"></div>

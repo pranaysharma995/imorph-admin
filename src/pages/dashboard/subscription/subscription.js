@@ -12,7 +12,9 @@ const Subscription = ({plan}) => {
     useEffect(() => {
         setLoading(true);
 
-        axiosInstance.get("/admin/subscription/list").then(({data}) => {
+        axiosInstance.get("/admin/subscription/list",{
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(({data}) => {
 
             setLoading(false);
             setList(data.data)

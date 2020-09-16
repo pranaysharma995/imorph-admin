@@ -14,25 +14,28 @@ const SocialLinks = () => {
     })
     const [loading , setLoading] = useState(false)
     const [loadingBtn , setLoadingBtn] = useState(false)
+    const [reload,setReload] = useState(false)
 
     useEffect(()=> {
         setLoading(true)
-        axiosInstance.get('/admin/setting/social-media/view').then(({data})=> {
+        axiosInstance.get('/admin/setting/social-media/view',{
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(({data})=> {
             setUrls({
                 ...urls,
-                company : data.companyWebsite,
-                facebook : data.facebook,
-                twitter : data.twitter,
-                instagram : data.instagram,
-                linkedin : data.linkedin,
-                youtube : data.youtube,
+                company : data.data[0]?.companyWebsite,
+                facebook : data.data[0]?.facebook,
+                twitter : data.data[0]?.twitter,
+                instagram : data.data[0]?.instagram,
+                linkedin : data.data[0]?.linkedin,
+                youtube : data.data[0]?.youtube,
             });
 
             setLoading(false)
         }).catch(error => {
             console.log("Error in Social Link Fetch sociallinks.js",error);
         })
-    },[])
+    },[reload])
 
     const handleChange= (e)=>{
         setUrls({
@@ -42,6 +45,27 @@ const SocialLinks = () => {
 
     const handleValidation=e=> {
         e.preventDefault();
+        setLoadingBtn(true)
+        axiosInstance.post("/admin/setting/social-media/edit", {
+                facebook : urls.facebook,
+                twitter : urls.twitter,
+                instagram : urls.instagram,
+                companyWebsite : urls.company,
+                youtube : urls.youtube,
+                linkedin : urls.linkedin
+        },{
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(() => {
+            setReload(!reload);
+            setLoadingBtn(false)
+        }).catch(error => {
+            console.log("Error in social media links socialLinks.js" , error);
+        })
+    }
+
+    const onCancle=e=> {
+        e.preventDefault();
+        setReload(!reload)
     }
 
     return (
@@ -55,7 +79,7 @@ const SocialLinks = () => {
             </div>
             <hr style={{lineHeight: "0.4", marginTop: "-5px"}}/>
             <div className = "social-links__body">
-                <form method="POST" encType="multipart/form-data"  action="#" onSubmit={handleValidation}>
+                <form onSubmit={handleValidation}>
                     <div className="row justify-content-center">
                             <div className="col-md-12 ">
                             {/* {error.plan_name && <small className="profile__error">&#9888;&#160;Please enter plan name</small>} */}
@@ -108,7 +132,7 @@ const SocialLinks = () => {
             <hr/>
             <div className="d-flex justify-content-center">
                     {loadingBtn ? (<div  className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" handleClick={handleValidation} />
-                            <CustomButton customButton__class="btn profile__backbtn"  text="Cancel"/></>)}
+                            <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={onCancle}/></>)}
                         </div>
             </div>)}
        </>

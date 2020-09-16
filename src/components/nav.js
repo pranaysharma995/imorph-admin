@@ -1,48 +1,51 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useContext} from 'react'
 import logo from '../assets/imoph3d.png'
 import profile from '../assets/profile.png'
 import CustomTextfield from '../customComponents/customTextfield'
 import {Link , useHistory} from 'react-router-dom'
 import LogoutPromtModal from '../pages/dashboard/modal/logoutPromtModal'
+import AdminContext from '.././context/admin/adminDetailsContext'
 
-import axiosInstance from '../axios'
 
 const Navbar =() =>{
 
     const history = useHistory();
-    const [name ,setName] = useState('')
-
-    useEffect(() => {
-        let uid = localStorage.getItem('uid') ? localStorage.getItem('uid') : sessionStorage.getItem('uid');
-        if (uid) {
-            axiosInstance.get("/admin/profile", {
-                params: {
-                    id: uid
-                }
-            }).then(({data}) => {
-                let adminData = data.data
-                console.log("Fetch admin", data);
-                setName(`${adminData.firstName} ${adminData.lastName}`)
-                }).catch(err => console.log("Error in admin fetch", err))
-        }
-    }, [])
-
+    const {adminData} = useContext(AdminContext)
+    const [rotate , setRotate] = useState(false)
+    
     const logout= e => {
         e.preventDefault();
 
         if(localStorage.getItem('uid')){
             localStorage.removeItem("uid")
+            localStorage.removeItem("token")
         }
         if(sessionStorage.getItem("uid")){
             sessionStorage.removeItem("uid")
+            sessionStorage.removeItem("token")
         }
 
         history.push("/")
     }
 
+    const toggleSideBar=e=> {
+        e.preventDefault();
+        
+        
+        console.log(document.getElementById("sidebar").style.getPropertyValue('visibility'));
+        if(document.getElementById("sidebar").style.getPropertyValue('margin-left')== '0px'){
+            document.getElementById("sidebar").style.marginLeft="-240px"
+            setRotate(false)
+        }else{
+            document.getElementById("sidebar").style.marginLeft="0px"
+            setRotate(true)
+        }
+    }
+
     return (
         <div>
                 <nav className="navbar navbar-expand-sm bg-white navbar-light fixed-top navbar__component">
+                    <button id="rotatebutton" className="navbar__togglebtn" style={{transform:rotate && "rotate(90deg)"}} onClick={toggleSideBar}><i className="fa fa-bars fa-2x" aria-hidden="true"></i></button>
                     <div className="navbar-brand" style={{marginLeft : "60px"}}>
                         <img className="" width="90rem" src={logo} alt="logo"/>
                     </div>
@@ -113,11 +116,11 @@ const Navbar =() =>{
                                 <li className="nav-item">              
                                    <div className="dropdown ">
                                             <button type="button" className="dropdown-toggle nav__dropDownBtn nav-link" data-toggle="dropdown">
-                                                <img width="30rem" className= "rounded-circle" src={profile} alt="profile"/>
+                                                <img width="30rem" className= "rounded-circle" src={adminData ? "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/"+adminData.profileImage :profile} alt="profile"/>
                                             </button>
                                                     <div className="dropdown-menu nav__dropdownMenu">
                                                         <div className="dropdown__head"  style={{height : "30px"}}>
-                                                            <h6 style={{lineHeight : "0.4", color :"white"}}>{name}</h6>
+                                                            <h6 style={{lineHeight : "0.4", color :"white"}}>{adminData && `${adminData.firstName} ${adminData.lastName}`}</h6>
                                                             <p style={{ color :"white" , fontSize : "12px"}}>Admin</p>
                                                         </div>
                                                         <hr style={{ backgroundColor : "white"}}/>

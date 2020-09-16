@@ -81,7 +81,7 @@ import {Bar} from 'react-chartjs-2'
 
     return (
             <>
-            <div className="text-left d-flex justify-content-between" style={{lineHeight: "0.9" , padding:"20px"}}>
+            <div className="custom-bar text-left d-flex justify-content-between" style={{lineHeight: "0.9" , padding:"20px"}}>
                <div>
                     <h5 style={{color : backColor}}><strong>{totalNumber}</strong></h5>
                     <p>{headerLabel}</p>

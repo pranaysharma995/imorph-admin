@@ -97,6 +97,7 @@ function Faq() {
 
     return (
         <div className ="faq">
+            <form action="#">
             <div className="d-flex justify-content-end">                    
                     <button className="faq__add-btn" style={{position : 'relative'}} onClick={() => {  setEditableId(false); setVisible(true)}}>
                         <i className="fa fa-plus faq__plus-icon" aria-hidden="true"></i>
@@ -140,7 +141,8 @@ function Faq() {
                                 <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={handleCancel}/></>)}
                         </div>
 
-           </div>
+                </div>
+           </form>
         </div>
     )
 }

@@ -16,7 +16,8 @@ const CustomTable = ({
     onHandleChange,
     uri,
     toggle,
-    list
+    list,
+    toggleValue
 }) => {
 
     const context = useContext(UserDetailsContext);
@@ -51,33 +52,174 @@ const CustomTable = ({
         setFilterData(userData)
     }, [userData])
 
-    const getShortedData = (subscription) => {
-        let shortedData = subscription.sort((var1, var2) => {
-            let a = new Date(var1?.createdAt),
-                b = new Date(var2?.createdAt);
-            if (a < b) 
-                return 1;
+    // const getShortedData = (subscription) => {
+    //     let shortedData = subscription.sort((var1, var2) => {
+    //         let a = new Date(var1?.createdAt),
+    //             b = new Date(var2?.createdAt);
+    //         if (a < b) 
+    //             return 1;
             
-            if (a > b) 
-                return -1;
+    //         if (a > b) 
+    //             return -1;
           
-            return 0;
-        })
-        return shortedData[0]?.name;
-    }
+    //         return 0;
+    //     })
+    //     return shortedData[0]?.name;
+    // }
 
     useEffect(() => {
 
-        if (filterValue.subscription === "" && filterValue.bySubscriptionName === '') {
+        if (filterValue.subscription === "" && filterValue.bySubscriptionName === '' && filterValue.device === '') {
             setFilterData(userData);
             setNotFound(false)
-        } else if (filterValue.subscription === "Subscription" && filterValue.bySubscriptionName === '') {
-            setFilterData(userData.filter(user => user.subscription.length > 0));
-            setNotFound(false)
-        } else if (filterValue.subscription === "Non Subscription" && filterValue.bySubscriptionName === '') {
-            setFilterData(userData.filter(user => user.subscription.length === 0))
+        }else if(filterValue.device === 'Android User' && filterValue.subscription === "" && filterValue.bySubscriptionName === ''){
+            setFilterData(userData.filter(user => user.userType == 'android'));
+        }else if(filterValue.device === 'iOS User' && filterValue.subscription === "" && filterValue.bySubscriptionName === ''){
+            setFilterData(userData.filter(user => user.userType == 'ios') );
         }
-        else if(filterValue.subscription === 'Non Subscription' && filterValue.bySubscriptionName !== ''){
+        else if(filterValue.device === 'Android User' && filterValue.subscription === "Subscription"){
+            let tt=[];
+            // let value= userData.filter(user => user.subscription.length > 0);
+            // setFilterData(value.filter(user => user.userType == 'android'))
+            userData.forEach(user => {
+                if (user.userType == 'android') {
+                        if(user.lastSubscriptionStatus){
+                            if(user.lastSubscription?.name == filterValue.bySubscriptionName){
+                                tt.push(user)
+                            }
+                            else if(filterValue.bySubscriptionName === ''){
+                                tt.push(user)
+                            }
+                        }
+                    } else { // No Subscribe user
+                    }
+
+                })
+
+                if (tt.length > 0) {
+                    setFilterData(tt);
+                    setNotFound(false)
+                }else{
+                    setNotFound(true);
+                    setFilterData([]);
+                }
+        }
+        else if(filterValue.device === 'iOS User' && filterValue.subscription === "Subscription"){
+            let tt=[];
+            userData.forEach(user => {
+                if (user.userType == 'ios') {
+                    if(user.lastSubscriptionStatus){
+                        if(user.lastSubscription?.name == filterValue.bySubscriptionName){
+                            tt.push(user)
+                        }
+                        else if(filterValue.bySubscriptionName === ''){
+                            tt.push(user)
+                        }
+                     }
+                    } else { // No Subscribe user
+                  }
+
+                })
+
+                if (tt.length > 0) {
+                    setFilterData(tt);
+                    setNotFound(false)
+                }else{
+                    setNotFound(true);
+                    setFilterData([]);
+                }
+        }
+        else if(filterValue.device === 'Android User' && filterValue.subscription === "Non Subscription" && filterValue.bySubscriptionName === ''){
+            let tt=[];
+            userData.forEach(user => {
+                if (user.userType == 'android') {
+                    if(!user.lastSubscriptionStatus ){
+                            tt.push(user)                      
+                       
+                     }
+                    } else { // No Subscribe user
+                  }
+
+                })
+
+                if (tt.length > 0) {
+                    setFilterData(tt);
+                    setNotFound(false)
+                }else{
+                    setNotFound(true);
+                    setFilterData([]);
+                }
+        }
+        else if(filterValue.device === 'iOS User' && filterValue.subscription === "Non Subscription" && filterValue.bySubscriptionName === ''){
+            let tt=[];
+            userData.forEach(user => {
+                if (user.userType == 'ios') {
+                    if(!user.lastSubscriptionStatus){
+                            tt.push(user)
+                     }
+                    } else { // No Subscribe user
+                  }
+
+                })
+
+                if (tt.length > 0) {
+                    setFilterData(tt);
+                    setNotFound(false)
+                }else{
+                    setNotFound(true);
+                    setFilterData([]);
+                }
+        }
+        else if(filterValue.device === 'Android User'  && filterValue.bySubscriptionName !== ''){
+            let tt=[];
+            userData.forEach(user => {
+                if (user.userType == 'android') {
+                    if(user.lastSubscriptionStatus && user.lastSubscription?.name == filterValue.bySubscriptionName ){
+                            tt.push(user)                      
+                       
+                     }
+                    } else { // No Subscribe user
+                  }
+
+                })
+
+                if (tt.length > 0) {
+                    setFilterData(tt);
+                    setNotFound(false)
+                }else{
+                    setNotFound(true);
+                    setFilterData([]);
+                }
+        }
+        else if(filterValue.device === 'iOS User'  && filterValue.bySubscriptionName !== ''){
+            let tt=[];
+            userData.forEach(user => {
+                if (user.userType == 'ios') {
+                    if(user.lastSubscriptionStatus && user.lastSubscription?.name == filterValue.bySubscriptionName ){
+                            tt.push(user)                      
+                       
+                     }
+                    } else { // No Subscribe user
+                  }
+
+                })
+
+                if (tt.length > 0) {
+                    setFilterData(tt);
+                    setNotFound(false)
+                }else{
+                    setNotFound(true);
+                    setFilterData([]);
+                }
+        }
+         else if (filterValue.subscription === "Subscription" && filterValue.bySubscriptionName === '' && filterValue.device === '' ) {
+            setFilterData(userData.filter(user => user.lastSubscriptionStatus));
+            setNotFound(false)
+        } else if (filterValue.subscription === "Non Subscription" && filterValue.bySubscriptionName === '' && filterValue.device === '') {
+            setFilterData(userData.filter(user => user.lastSubscriptionStatus == null))
+            setNotFound(false)
+        }
+        else if(filterValue.subscription === 'Non Subscription' && filterValue.bySubscriptionName !== '' ){
             setNotFound(true);
             setFilterData([]);
         }
@@ -87,9 +229,8 @@ const CustomTable = ({
                 if (filterValue.bySubscriptionName === value?.name) {
                     console.log("Filter value", value);
                     userData.forEach(user => {
-                        if (user.subscription.length > 0) {
-                            let planName = getShortedData(user.subscription)
-                            if (planName === value.name) {
+                        if (user.lastSubscriptionStatus) {
+                            if (user?.lastSubscription?.name === value.name) {
                                 tt.push(user)
                             } else { // No Subscribe user
                             }
@@ -104,15 +245,62 @@ const CustomTable = ({
                 setNotFound(true);
                 setFilterData([]);
             }
-        } else if (filterValue.subscription === 'Subscription' && filterValue.bySubscriptionName !== '') {
+
+        } 
+        else if (filterValue.subscription === 'Subscription' && filterValue.bySubscriptionName !== '') {
             let tt = []
             list.forEach(value => {
                 if (filterValue.bySubscriptionName === value?.name) {
                     console.log("Filter value", value);
                     userData.forEach(user => {
-                        if (user.subscription.length > 0) {
-                            let planName = getShortedData(user.subscription)
-                            if (planName === value.name) {
+                        if (user.lastSubscriptionStatus) {
+                            if (user?.lastSubscription?.name === value.name) {
+                                tt.push(user)
+                            } else { // No Subscribe user
+                            }
+                        }
+                    })
+                }
+            })
+            if (tt.length > 0) {
+                setFilterData(tt);
+                setNotFound(false)
+            }else{
+                setNotFound(true)
+                setFilterData([]);
+            }
+        }
+        else if (filterValue.subscription === 'Android User' && filterValue.bySubscriptionName !== '') {
+            let tt = []
+            list.forEach(value => {
+                if (filterValue.bySubscriptionName === value?.name) {
+                    
+                    userData.forEach(user => {
+                        if (user.lastSubscriptionStatus && user.userType == 'android') {
+                            if (user?.lastSubscription?.name === value.name) {
+                                tt.push(user)
+                            } else { // No Subscribe user
+                            }
+                        }
+                    })
+                }
+            })
+            if (tt.length > 0) {
+                setFilterData(tt);
+                setNotFound(false)
+            }else{
+                setNotFound(true)
+                setFilterData([]);
+            }
+        }
+        else if (filterValue.subscription === 'iOS User' && filterValue.bySubscriptionName !== '') {
+            let tt = []
+            list.forEach(value => {
+                if (filterValue.bySubscriptionName === value?.name) {
+                    
+                    userData.forEach(user => {
+                        if (user.lastSubscriptionStatus && user.userType == 'ios') {
+                            if (user?.lastSubscription?.name === value.name) {
                                 tt.push(user)
                             } else { // No Subscribe user
                             }
@@ -133,7 +321,7 @@ const CustomTable = ({
 
     const filterUser = e => {
 
-        console.log("OnChnaginggin");
+
         if (e.target.name === 'subscription') { // setFilterData(userData.filter(user => user.subscription.length > 0))
             if (e.target.value === "All User") {
                 setFilterValue({
@@ -158,6 +346,19 @@ const CustomTable = ({
                 setFilterValue({
                     ...filterValue,
                     bySubscriptionName: e.target.value
+                })
+            }
+        }
+        if (e.target.name === "device") {
+            if (e.target.value === "All User") {
+                setFilterValue({
+                    ...filterValue,
+                    device: ''
+                })
+            } else {
+                setFilterValue({
+                    ...filterValue,
+                    device: e.target.value
                 })
             }
         }
@@ -260,7 +461,7 @@ const CustomTable = ({
                             <td><img width="70rem" height="70rem" className="rounded-circle p-2"
                                     alt={i}
                                     src={
-                                        info.photo
+                                        "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+info.profileImage
                                     }/></td>
                             <td>
                                 <div className="text-left">
@@ -283,19 +484,17 @@ const CustomTable = ({
                             <td>{
                                 info.phoneNumber
                             }</td>
-                            <td> {
-                                info.subscription.length > 0 ? (
-                                    <>{
-                                        getShortedData(info.subscription)
-                                    }</>
+                                <td>{
+                                info.lastSubscriptionStatus ? (
+                                   <>{info?.lastSubscription?.name}</>
                                 ) : "No Subscription"
-                            } </td>
+                            }</td>
                             {}
                             <td className={
-                                info.subscriptionStatus === true ? "customTable__statusActive" : "customTable__statusExpired"
+                                info.lastSubscription?.userStatus === true ? "customTable__statusActive" : "customTable__statusExpired"
                             }>
                                 {
-                                info.subscriptionStatus === true ? "Active" : "Expired"
+                                info.lastSubscription?.userStatus === true ? "Active" : "Expired"
                             }</td>
                             <td>
                                 <div className="d-flex">
@@ -351,7 +550,8 @@ const CustomTable = ({
         </div>
         <UserBlockModal blockvalue={blockValue}
             unblockvalue={unBlockValue}
-            toggle={toggle}/>
+            toggle={toggle}
+            toggleValue={toggleValue}/>
     </div>
     )
 }

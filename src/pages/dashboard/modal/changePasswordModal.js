@@ -77,13 +77,17 @@ function ChangePasswordModal({modal, toggle}) {
 
         axiosInstance.get(`/admin/check-old-password?id=${uid}&password=${
             password.oldPassword
-        }`).then(({data}) => {
+        }`,{
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(({data}) => {
             console.log("Old Passs Match Result", data);
             if (data.valid == true) {
                 axiosInstance.post("/admin/update-password", {
                     id: uid,
                     oldPassword: password.oldPassword,
                     password: password.confirmPassword
+                },{
+                    headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
                 }).then(({data}) => {
                     setSecondModal(true)
                     toggle();

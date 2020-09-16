@@ -1,3 +1,6 @@
+
+
+
 /* loginpage */
 .login__page{
   position: absolute;
@@ -203,13 +206,14 @@
     height: 100%;
     width: 230px;
     position: fixed;
-    z-index: 1;
+    z-index: 4;
     top: 0;
     left: 0;
     background-color: #009CB4;
     overflow-x: hidden;
     padding-top: 100px;
     padding-left: 25px;
+    transition: 0.5s ease-in-out all;
   }
   .sildeBar__active{
     background-color : white;
@@ -221,6 +225,7 @@
     margin: auto;  
     margin-left: -5px;
     display: inline-block;
+   
   }
   .sildeBar__inactive{
     color : white;
@@ -286,6 +291,22 @@
     right : 0px;
     top: 9px;
     padding-right: 5px;
+  }
+  /* *{
+    transition: 0.5s ease-in-out ;
+  } */
+
+  @media screen and (max-width: 1150px){
+    .sidebar {
+        margin-left: -240px;
+        /*rest of the styles*/
+    }
+  }
+  @media screen and (min-width: 1150px){
+    .sidebar {
+        margin-left: 0px !important;
+        /*rest of the styles*/
+    }
   }
 
   /* navbar */
@@ -358,6 +379,21 @@
 .nav__notificationHead{
   padding : 4px 20px;
 }
+.navbar__togglebtn{
+  background : transparent;
+  border : none;
+  color :  rgba(188, 188, 188,0.9);
+  transition : 0.2s ease-in-out all
+}
+.navbar__togglebtn:focus{
+  outline: none;  
+}
+@media screen and (min-width: 1150px){
+  .navbar__togglebtn {
+      display : none
+      /*rest of the styles*/
+  }
+}
 
 /* footer */
 .footer{
@@ -369,6 +405,15 @@
   color : white;
   z-index: 1;
   color : #151515;
+}
+.dashboard__footer{
+  padding-left: 12%;
+  padding-right: 0px;
+}
+@media screen and (max-width: 1150px){
+  .dashboard__footer {
+    padding-left: 0px;
+  }
 }
 
 /* profile */
@@ -461,7 +506,7 @@
 .profile__footerBtn{
     padding : 3% 3vw;
     margin-top: 10px;
-    border : none ;
+    border: none;
     color : white;
     background-color : #009CB4;
     border-radius: 5px;
@@ -587,7 +632,7 @@
   border : 1px solid #009CB4;
 }
 .userProfile__subBtn{
-  width : 6.3vw;
+  width : 100%;
   text-align: center;
   padding : 2%;
   border-radius: 4px;
@@ -784,8 +829,21 @@
   left : 15px;
  
 }
+.dashboard__container{
+  padding-left: 250px;
+}
+@media screen and (max-width: 1150px){
+  .dashboard__container {
+      padding-left:15px
+      /*rest of the styles*/
+  }
+}
+
 
 /* chart */
+.custom-bar button{
+  line-height: 0px !important;
+}
 .customeChart__select{
   font-size: 0.8em;
   padding-left :1.6vw;
@@ -1180,9 +1238,29 @@ border : 1px solid #009CB4;
 .inquiries{
   margin-top: 120px;
   position: relative;
-  margin-bottom: 8%;
+  margin-bottom: 8%;  
 }
-
+.inquiries-view__body{
+  padding: 1% 6%;
+  color : #707070;
+}
+.inquiries-view__body textarea{
+  resize: none !important;
+  height: 20vh;
+  border :none;
+  background-color: #F1F5F8;
+  border-radius: 8px!important;
+  padding: 1% 2%;
+}
+.inquiries-view__body textarea:focus ,.inquiries-view textarea:active{
+  box-shadow: none;
+  border : 1px solid #009CB4;
+  background: #F1F5F8;
+}
+.inquiries-view__body input[type="checkbox"]{
+  width: 20px;
+  height: 20px;
+}
 
 /* Social Links */
 .social-links{
@@ -1274,6 +1352,7 @@ border : 1px solid #009CB4;
   width: 16vw;
   border: 1px solid rgba(0 ,0,0,0.4);
   border-radius: 5px;
+  min-width: 140px;
 }
 .image-settings__imgAdd{
   position: absolute;
@@ -1290,6 +1369,7 @@ border : 1px solid #009CB4;
   width: 7vw;
   border: 1px solid rgba(0 ,0,0,0.4);
   border-radius: 5px;
+  min-width: 80px;
 }
 .image-settings__imgAdd-profile{
   position: absolute;

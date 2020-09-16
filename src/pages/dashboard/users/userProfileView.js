@@ -12,6 +12,8 @@ import days30 from '../../../assets/30.png'
 import days365 from '../../../assets/365.png'
 import noSubscriptionImg from "../../../assets/no-subscription.png"
 
+import axiosInstance from '../../../axios'
+
 import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 
 const UserProfileView = () => {
@@ -20,23 +22,26 @@ const UserProfileView = () => {
     const context = useContext(UserDetailsContext)
     const {setSubscription} = useContext(SubscriptionContext)
     const [UserInformation, setUserInformation] = useState({
-        image: '',
+        image: null,
         fname: '',
         lname: "",
         email: "",
         phone: "",
-        address: "",
+        address: '',
         zip_code: "",
         conversions: "",
         city: '',
         country: '',
         region: '',
         gender: '',
-        subscription: []
+        subscription: [],
+        lastSubscription : null,
+        lastSubscriptionStatus : null
     })
     const [loading, setLoading] = useState(false)
     const [reload, setReload] = useState(false)
-
+    const [imageFile , setImageFile] = useState(null)
+    const[loadingBtn , setLoadingBtn] = useState(false)
 
     useEffect(() => {
         setLoading(true);
@@ -44,10 +49,24 @@ const UserProfileView = () => {
             setLoading(false);
 
 
-            console.log();
+            console.log("User Details",context.userDetails);
             if (context.userDetails) {
+
+                let shortedPlan = context.userDetails?.subscription.sort((t1 ,t2) =>{
+                    let a= new Date(t1.activateDate);
+                    let b= new Date(t2.activateDate);
+                    if(a < b){
+                        return 1;
+                    }else if(a > b){
+                        return -1
+                    }
+                    else return 0
+                })
+
+
                 setUserInformation({
                     ...UserInformation,
+                    id : context.userDetails._id,
                     fname: context.userDetails.firstName,
                     lname: context.userDetails.lastName,
                     email: context.userDetails.email,
@@ -58,9 +77,11 @@ const UserProfileView = () => {
                     city: context.userDetails.city[0].toUpperCase() + context.userDetails.city.slice(1),
                     zip_code: context.userDetails.zipcode,
                     gender: context.userDetails.gender[0].toUpperCase() + context.userDetails.gender.slice(1),
-                    subscription: context.userDetails.subscription,
-                    address: context.userDetails.location
-
+                    subscription: shortedPlan,
+                    address: context.userDetails.location,
+                    image : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+context.userDetails.profileImage,
+                    lastSubscription : context.userDetails.lastSubscription,
+                    lastSubscriptionStatus : context.userDetails.lastSubscriptionStatus
                 })
             }
 
@@ -77,23 +98,32 @@ const UserProfileView = () => {
         city: false,
         region: false,
         country: false,
-        zip_code: false
-
+        zip_code: false,
+        image : false
 
     })
     const textChange = e => {
         e.preventDefault();
+        if(e.target.name === "phone"){
+            if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
+                setUserInformation({
+                    ...UserInformation,
+                    [e.target.name]: e.target.value
+                })
+            }
+        }else {
         setUserInformation({
             ...UserInformation,
             [e.target.name]: e.target.value
         })
+    }
     }
 
     const checkSubmit = e => {
         e.preventDefault();
 
 
-        if (validator.isEmpty(UserInformation.fname)) {
+        if (UserInformation.fname== undefined || validator.isEmpty(UserInformation.fname)) {
             setError({fname: true})
         } else if (validator.isEmpty(UserInformation.lname)) {
             setError({lname: true})
@@ -106,7 +136,7 @@ const UserProfileView = () => {
             max: 10
         })) {
             setError({phone_length: true})
-        } else if (validator.isEmpty(UserInformation.address)) {
+        } else if (UserInformation.address == undefined || validator.isEmpty(UserInformation.address)  ) {
             setError({address: true})
         } else if (validator.isEmpty(UserInformation.city)) {
             setError({city: true})
@@ -116,13 +146,55 @@ const UserProfileView = () => {
             setError({region: true})
         } else if (validator.isEmpty(UserInformation.zip_code)) {
             setError({zip_code: true})
+        }else if (UserInformation.image == null) {
+            setError({image: true})
         } else {
             submit();
         }
     }
 
+    
+    const handleUpload = async e => {
+        e.preventDefault();
+        let file = e.target.files[0];
+        console.log("Admin Image", file)
+        setImageFile(e.target.files[0])
+        if (file) {            
+            let base64Image = await new Promise((resolve, reject) => {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+
+                fileReader.onload = () => {
+                    resolve(fileReader.result)
+                };
+                fileReader.onerror = err => {
+                    reject(err)
+                }
+            })
+
+            if (base64Image !== undefined) {
+                console.log("Baaase64", base64Image);  
+                setUserInformation({
+                    ...UserInformation,
+                    image: base64Image
+                })             
+            }
+        }
+         else {
+            setError({
+                ...error,
+                image : true
+            })
+            setUserInformation({
+                ...UserInformation,
+                image: null
+            })
+        }
+    }
+
     const submit = () => {
-        setLoading(true);
+        
+        setLoadingBtn(true);
         setError({
             fname: false,
             lname: false,
@@ -133,18 +205,42 @@ const UserProfileView = () => {
             city: false,
             region: false,
             country: false,
-            zip_code: false
+            zip_code: false,
+            image: false, 
+            imageFile : false
         })
 
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000);
+        let useData = new FormData();
+        useData.set("userID", UserInformation.id );
+        useData.set("firstName", UserInformation.fname)
+        useData.set("lastName", UserInformation.lname)
+        useData.set("email", UserInformation.email)
+        useData.set("phoneNumber", UserInformation.phone)
+        useData.append("profileImage", imageFile!==null ? imageFile : UserInformation.image)
+        useData.set("country", UserInformation.country)
+        useData.set("state", UserInformation.region)
+        useData.set("city", UserInformation.city)
+        useData.set("location", UserInformation.address)
+        useData.set("zipcode", UserInformation.zip_code)
+        useData.set("gender", UserInformation.gender)
+        axiosInstance.post("/user/update", useData , {
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(({data}) => {
+                console.log("Result of updated user Data ", data);
+                context.setUserDetails(data?.data);
+                setLoadingBtn(false);
+                setReload(!reload)
+               
+        }).catch(error => {
+            console.log("Error in Posting user Data userProfileView.js" , error);
+        })
     }
+
 
     const onBack = e => {
         e.preventDefault();
 
-        history.goBack("/dashboard/users")
+        history.goBack()
     }
 
     const onCancle = e => {
@@ -178,11 +274,11 @@ const UserProfileView = () => {
                                                     </div>
                                                     <div style={{position : "relative"}}>
                                 <div className="text-center" style={{position : "relative" , width: "180px" , left:"50%" , transform : "translateX(-50%)"}}>
-                                        <img width="100rem" className= "rounded-circle" src={profile} alt="profile" style={{color: "black"}}/>
+                                        <img width="100rem" height="100rem" className= "rounded-circle" src={UserInformation ? UserInformation.image : profile} alt="profile" style={{color: "black"}}/>
                                         <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="15rem" src={camera} alt="add" style={{marginTop : "-5px" }}/></label>
                                 </div>
                                 
-                                <input type="file" id="userImage" style={{display : "none"}} accept="image/*"/> 
+                                <input type="file" id="userImage" style={{display : "none"}} accept="image/*" onChange={handleUpload} /> 
                                 </div>
                             </div>
                         </div>
@@ -265,10 +361,12 @@ const UserProfileView = () => {
                                 <div className="row">
                                 <div className="col">
                    <label htmlFor="gender" style={{lineHeight :"0.4" , color : "#707070"}}>Gender</label><br/>
-                   <select name="gender" className="form-control profile__genderSelct">
+                   <select name="gender" className="form-control profile__genderSelct" value={
+                                                        UserInformation.gender
+                                                    } onChange={textChange}>
                    <option value="Male">Male</option>
-                   <option value="Male">Female</option>
-                   <option value="Male">Other</option>
+                   <option value="Female">Female</option>
+                   <option value="Other">Other</option>
                    </select>
                </div>
                                 </div>
@@ -293,22 +391,22 @@ const UserProfileView = () => {
                     </div>
                     <hr/>
                                        
-                                                     {UserInformation.subscription.length !== 0  ? (
+                  {UserInformation.subscription.length !== 0  ? (
                  <div className="d-flex justify-content-left mb-4" style={{overflowX : "auto"}}>                               
                                           
                  {UserInformation.subscription.map((sub,i) => (
                     <div className="card text-center userProfile__card" key={i}>
-                        <div className="card-body user__card-body">
+                        <div className="card-body user__card-body" style={{position : "relative"}}>
                     
                                 <img className="mb-3 mt-4" width="60%" src={days7} alt="7"/>
-                 <p style={{ color : "#707070" , marginBottom : "10%"}}> {sub.cost}</p>
+                                <p style={{ color : "#707070" , marginBottom : "10%"}}> {sub.cost}</p>
                                 <div style={{marginTop : "1em"}}>
-                                 <button className={sub.status == true ? "userProfile__subBtn userProfile__active" : "userProfile__subBtn userProfile__expired"} disabled>Active</button>
+                                 <button className={ UserInformation.lastSubscription?.name ==  sub.name && UserInformation.lastSubscription?.userStatus == true ? "userProfile__subBtn userProfile__active" : "userProfile__subBtn userProfile__expired"} disabled> {UserInformation.lastSubscriptionStatus && UserInformation.lastSubscription?.name ==  sub.name && UserInformation.lastSubscription?.userStatus == true ? "Active" : "Expired" }</button>
                                 </div>                   
                         
                         </div>
-                        <div style={{marginTop: "-0.4em"}}>
-                             <button className="userProfile__subBtn  userProfile__view-details" onClick={(e) => (
+                        <div style={{marginTop: "-0.4em" ,zIndex: "2"}}>
+                             <button className="userProfile__subBtn  userProfile__view-details" style={{width: "6.6vw"}} onClick={(e) => (
                                  e.preventDefault(),
                                  setSubscription(sub),
                                  history.push(`/dashboard/users/edit/plan/view`
@@ -342,7 +440,7 @@ const UserProfileView = () => {
                                          </div>)}
                                          <hr/>
                                          <div className="d-flex justify-content-center">
-                                                {loading ? (<div className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" onClick={checkSubmit} />
+                                                {loadingBtn ? (<div className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" onClick={checkSubmit} />
                                              <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={onCancle}/></>)}
                                          </div>
                                          

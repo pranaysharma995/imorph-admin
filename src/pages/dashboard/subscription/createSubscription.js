@@ -14,11 +14,13 @@ const CreateSubscription = () => {
     const [image, setImage] = useState('');
     const [imageFile, setImageFile] = useState('');
     const [checked , setChecked] = useState(false);
+    const [validity , setValidity] = useState('')
     const [error , setError] = useState({
         plan_name : false,
         cost : false,
         description : false,
-        image : false        
+        image : false,
+        validity: false        
     })
 
     const handleValidation = e=> {
@@ -31,6 +33,10 @@ const CreateSubscription = () => {
         }else if(cost === ""){
             setError({
                 cost : true
+            })
+        }else if(validity === ''){
+            setError({
+                validity : true
             })
         }else if(description === ""){
             setError({
@@ -82,6 +88,7 @@ const CreateSubscription = () => {
             cost : false,
             description : false,
             image : false, 
+            validity: false
         })
         let data = new FormData();
         data.set("name" , name)
@@ -89,7 +96,10 @@ const CreateSubscription = () => {
         data.set("status" , checked)
         data.set("description" , description)
         data.append("image" , imageFile)
-        axiosInstance.post("/admin/subscription/create" , data
+        data.set('validity',validity)
+        axiosInstance.post("/admin/subscription/create" , data,{
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }
         ).then(() => (
            setLoading(false),
             history.push("/dashboard/subscription")
@@ -125,6 +135,21 @@ const CreateSubscription = () => {
                             <input id="cost" className={error.cost ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={cost} onChange={ e=> setCost(e.target.value)}/>
                         </div>
                 </div>
+                <div className="row mt-4">
+                        <div className="col-md-6 ">
+                        {error.validity && <small className="profile__error">&#9888;&#160;Please enter plan name</small>}
+                        <label htmlFor="validity" style={{lineHeight :"0.4" , color : "#707070"}}>Subscription Plan Validity</label>
+                            <div className="d-flex">
+                            <input id="validity" className={error.validity ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={validity} onChange={ e=> {
+                                if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
+                                    setValidity(e.target.value)
+                                }
+                            }}/>
+                            <p style={{ color : "#707070", marginLeft : "10px"}}>Days</p>
+                            </div>
+                        </div>
+                       
+                </div>
                 <div className="row justify-content-center mt-4">
                         <div className="col-md-12">
                         {error.description && <small className="profile__error">&#9888;&#160;Please enter description</small>}
@@ -138,8 +163,13 @@ const CreateSubscription = () => {
                         <label htmlFor="file" style={{lineHeight :"0.4" , color : "#707070"}}>Subscription Image</label><br/>
                             <input id="file"  type="file" accept="image/*" onChange={handleImage}/>
                             <div className=" d-flex mt-4 ">
-                                <div style={{marginRight : "50px"}}><label htmlFor="radio" style={{color : "#707070"}}>   Subscription Active/Inactive</label></div>
-                                <div className="mt-1"><input id="radio" type="radio" class="form-check-input" checked={checked} onClick={() => setChecked(!checked)}/></div>
+                                <div style={{marginRight : "50px"}}>
+                                    <label htmlFor="radio" style={{color : "#707070"}}>   Subscription Active/Inactive</label></div>
+                                    <div style={{marginTop : "3px"}}><input id="radio" type="checkbox" className="form-check-input"
+                                            checked={checked}
+                                            onChange={
+                                                () => setChecked(!checked)
+                                            }/></div>
                             </div>
                         </div>
                         

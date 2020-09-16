@@ -3,7 +3,7 @@ import danger from '../../../assets/danger.png'
 import axiosInstance from '../../../axios'
 
 
-const UserBlockModal = ({blockvalue ,unblockvalue ,toggle}) => { 
+const UserBlockModal = ({blockvalue ,unblockvalue ,toggle,toggleValue}) => { 
 
     const onYes = e=> {
         e.preventDefault();       
@@ -13,9 +13,11 @@ const UserBlockModal = ({blockvalue ,unblockvalue ,toggle}) => {
             axiosInstance.post("/user/change-status" ,{
                 id : blockvalue._id,
                 block : true
+            },{
+                headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
             }).then((result) =>{
                 console.log("Block Value" , result.data);
-                toggle(!blockvalue.block)   
+                toggle(!toggleValue)   
             }).catch(error => {
                 console.log("Error in userBlock Modal" , error);
             })
@@ -23,9 +25,11 @@ const UserBlockModal = ({blockvalue ,unblockvalue ,toggle}) => {
             axiosInstance.post("/user/change-status" ,{
                 id : unblockvalue._id,
                 block : false
+            },{
+                headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
             }).then((result) =>{
                 console.log("Block Value" , result.data);
-                toggle(!unblockvalue.block)
+                toggle(!toggleValue)
             }).catch(error => {
                 console.log("Error in userBlock Modal" , error);
             })

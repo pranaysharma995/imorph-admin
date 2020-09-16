@@ -50,14 +50,14 @@ function UserSubscriptionPlanView() {
                         </ul>
                     </div>
                     <div className="d-flex justify-content-left">
-                        <div>
+                        <div >
                             <h6>Status: &#160;</h6>
                         </div>
-                        <div>
+                        <div style={{width: "100%"}}>
                             <button className={
                                     subscription.status == true ? "userProfile__subBtn userProfile__active" : "userProfile__subBtn userProfile__expired"
                                 }
-                                disabled>Active</button>
+                                disabled>{subscription.status == true ? "Active" : "Expired"}</button>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ function UserSubscriptionPlanView() {
                 <div className="d-flex justify-content-left">
                     <h6>Duration:&#160;</h6>
                     <ul>
-                        <p>12 Months</p>
+                        <p>{subscription.validity} Days</p>
                     </ul>
                 </div>
                 <div className="d-flex justify-content-left">
@@ -80,22 +80,20 @@ function UserSubscriptionPlanView() {
                     <h6>Active Date:&#160;</h6>
                     <ul>
                         <p>{
-                            new Date(subscription.createdAt).toLocaleDateString()
+                            new Date(subscription.activateDate).toLocaleDateString()
                         }</p>
                     </ul>
                 </div>
                 <div className="d-flex justify-content-left">
                     <h6>Expire Date:&#160;</h6>
                     <ul>
-                        <p>21-12-2020</p>
+                        <p>{new Date(subscription.expiredDate).toLocaleDateString()}</p>
                     </ul>
                 </div>
                 <div className="d-flex justify-content-left">
                     <h6>Description:&#160;</h6>
                     <ul>
-                        <li>Benifits 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolores?</li>
-                        <li>Benifits 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolores?</li>
-                        <li>Benifits 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolores?</li>
+                        <li>{subscription.description}</li>
                     </ul>
                 </div>
             </div>

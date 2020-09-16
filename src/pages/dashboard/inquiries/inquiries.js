@@ -4,7 +4,7 @@ import CustomButton from '../../../customComponents/customButton'
 import CustomTextfield from '../../../customComponents/customTextfield'
 import avatar from '../../../assets/profile.png'
 
-const Inquiries = () => {
+const Inquiries = ({data}) => {
     const history = useHistory();
     const [search, setSearch] = useState('')
     const [filerData, setFilterData] = useState([])
@@ -144,7 +144,10 @@ const Inquiries = () => {
                                         className="fa fa-eye"
                                         aria-hidden="true"></i>
                                         }
-                                        handleClick={()=> history.push("/dashboard/inquiries/view")}/>
+                                        handleClick={()=>{
+                                            data(info)
+                                            history.push("/dashboard/inquiries/view")
+                                        }}/>
                             </td>
                         </tr>
                     ))

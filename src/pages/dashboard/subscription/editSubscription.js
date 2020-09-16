@@ -17,8 +17,9 @@ const EditSubscription = ({plan}) => {
     const [imageFile, setImageFile] = useState(null);
     const [checked, setChecked] = useState(false);
     const [subscriptionID, setSubscriptionID] = useState('')
-    const [error, setError] = useState({plan_name: false, cost: false, description: false, image: false})
+    const [error, setError] = useState({plan_name: false, cost: false, description: false, image: false, validity: false  })
     const [reload, setReload] = useState(false)
+    const [validity , setValidity] = useState('')
     useEffect(() => {
         if (plan) {
             setName(plan.name);
@@ -26,21 +27,10 @@ const EditSubscription = ({plan}) => {
             setDescription(plan.description);
             setChecked(plan.status);
             setImageFile(plan.image);
-            setImageFile(plan.image)
+            setImage("http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/subscription/"+plan.image)
             setSubscriptionID(plan.subscriptionID)
+            setValidity(plan.validity)
             console.log("Plans", plan);
-
-            console.log("Bota", btoa(plan.image));
-            // Base64 converter
-            let blob = new Blob([plan.image], {type: 'image/png'});
-            let fileReader = new FileReader();
-            fileReader.readAsDataURL(blob);
-
-
-            fileReader.onload = () => {
-                setImage(fileReader.result);
-                console.log('Base64', fileReader.result);
-            };
         }
     }, [reload])
 
@@ -51,6 +41,10 @@ const EditSubscription = ({plan}) => {
             setError({plan_name: true})
         } else if (cost === "") {
             setError({cost: true})
+        }else if(validity === ''){
+            setError({
+                validity : true
+            })
         } else if (description === "") {
             setError({description: true})
         } else if (image === '') {
@@ -77,12 +71,8 @@ const EditSubscription = ({plan}) => {
                     reject(err)
                 }
             })
-
-
             if (base64Image !== undefined) {
                 console.log("Baaase64", base64Image);
-
-
                 setImage(base64Image);
             }
         } else {
@@ -91,10 +81,9 @@ const EditSubscription = ({plan}) => {
         }
     }
 
-
     const submit = () => {
         setBtnLoading(true)
-        setError({plan_name: false, cost: false, description: false, image: false})
+        setError({plan_name: false, cost: false, description: false, image: false, validity: false})
         let data = new FormData();
         data.set("name", name)
         data.set("cost", cost)
@@ -102,8 +91,11 @@ const EditSubscription = ({plan}) => {
         data.set("description", description)
         data.append("image", imageFile)
         data.set("id", subscriptionID)
+        data.set('validity', validity)
 
-        axiosInstance.post("/admin/subscription/update", data).then(() => (setBtnLoading(false), history.push('/dashboard/subscription'))).catch(err => {
+        axiosInstance.post("/admin/subscription/update", data ,{
+            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(() => (setBtnLoading(false), history.push('/dashboard/subscription'))).catch(err => {
             console.log("Error in Edit Subscription", err);
         })
 
@@ -199,6 +191,21 @@ const EditSubscription = ({plan}) => {
                                     }/>
                             </div>
                         </div>
+                        <div className="row mt-4">
+                            <div className="col-md-6 ">
+                            {error.validity && <small className="profile__error">&#9888;&#160;Please enter plan name</small>}
+                            <label htmlFor="validity" style={{lineHeight :"0.4" , color : "#707070"}}>Subscription Plan Validity</label>
+                                <div className="d-flex">
+                                <input id="validity" className={error.validity ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={validity} onChange={ e=> {
+                                    if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
+                                        setValidity(e.target.value)
+                                    }
+                                }}/>
+                                 <p style={{ color : "#707070", marginLeft : "10px"}}>Days</p>
+                                </div>
+                            </div>
+                       
+                         </div>
                         <div className="row justify-content-center mt-4">
                             <div className="col-md-12">
                                 {
@@ -222,6 +229,7 @@ const EditSubscription = ({plan}) => {
                                     }/>
                             </div>
                         </div>
+                       
                         <div className="row justify-content-between mt-4 ">
                             <div className="col-md-6">
                                 {
@@ -246,7 +254,7 @@ const EditSubscription = ({plan}) => {
                                         }>
                                             Subscription Active/Inactive</label>
                                     </div>
-                                    <div style={{marginTop : "3px"}}><input id="radio" type="checkbox" class="form-check-input"
+                                    <div style={{marginTop : "3px"}}><input id="radio" type="checkbox" className="form-check-input"
                                             checked={checked}
                                             onChange={
                                                 () => setChecked(!checked)

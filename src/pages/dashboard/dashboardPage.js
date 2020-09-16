@@ -102,22 +102,22 @@ function DashboardPage() {
     return (
         <div className=" container-fluid dashboard" style={{marginTop: "120px",marginBottom: "1%"}}>
             <div >
-                <div className="row text-center mb-3" style={{marginLeft : "-30px" , marginRight : "-30px"}}>
-                    <div className="col-md-4">
+                <div className="row text-center" style={{marginLeft : "-30px" , marginRight : "-30px"}}>
+                    <div className="col-md-4 mb-3">
                         <div className="dashboard__firstGraph p-4" style={{position : "relative"}}>
                                 <i className="fa fa-user-o dashboard__icon fa-lg" aria-hidden="true" style={{color : "#1BCA9B"}}></i>
                                 <p style={{lineHeight :"0.4" , color : "#595959"}}><small>Users</small></p>
                                 <h3 style={{lineHeight :"0.3" , color : "#595959"}}><strong>332</strong></h3>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 mb-3">
                         <div className="dashboard__firstGraph p-4" style={{position : "relative"}}>
                                 <i className="fa fa-cube dashboard__icon fa-lg" aria-hidden="true" style={{color : "#EC4849"}}></i>
                                 <p style={{lineHeight :"0.4" , color : "#595959"}}><small>Conversions</small></p>
                                 <h3 style={{lineHeight :"0.3" , color : "#595959"}}><strong>13232</strong></h3>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 mb-3">
                         <div className="dashboard__firstGraph p-4" style={{position : "relative"}}>
                                 <i className="fa fa-user-o dashboard__icon fa-lg" aria-hidden="true" style={{color : "#3498DB"}}></i>
                                 <p style={{lineHeight :"0.4" , color : "#595959"}}><small>Subscriptions</small></p>
@@ -126,7 +126,7 @@ function DashboardPage() {
                     </div>
                 </div>
             </div>
-           <div className="row mt-4 dashboard__firstGraph" style={{position : "relative"}}>
+           <div className="row mt-2 dashboard__firstGraph" style={{position : "relative"}}>
               {loading && <div className="loader ">
                      <div className="spinner-border text-primary"></div>
                 </div>}                  
@@ -141,7 +141,7 @@ function DashboardPage() {
            <div className="row justify-content-between mt-4">
                <div className="col-md-6 mb-3 ">
                
-                   <div className="row" style={{marginRight :"0px" , position : "relative"}}>
+                   <div className="row "  style={{marginRight :"0px" ,marginLeft : "0px", position : "relative"}}>
                    {loading && <div className="loader mr-3">
                      <div className="spinner-border text-primary"></div>
                     </div> }
@@ -156,7 +156,7 @@ function DashboardPage() {
                      
                </div>
                <div className="col-md-6 mb-3">
-                   <div className="row" style={{marginLeft : "0px" ,position : "relative"}}>
+                   <div className="row" style={{marginLeft : "0px" ,marginRight :"0px",position : "relative"}}>
                     {loading && <div className="loader mr-3">
                         <div className="spinner-border text-primary"></div>
                         </div>} 
