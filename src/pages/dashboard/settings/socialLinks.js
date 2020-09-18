@@ -75,7 +75,7 @@ const SocialLinks = () => {
         </div>) :
         ( <div className="social-links">
                 <div className="d-flex justify-content-between" style={{padding : "0.7% 1.6%"}}>
-                <h3 style={{color : "#707070"}}>Social Media Links</h3> 
+                <h5 style={{color : "#707070"}}>Social Media Links</h5> 
             </div>
             <hr style={{lineHeight: "0.4", marginTop: "-5px"}}/>
             <div className = "social-links__body">

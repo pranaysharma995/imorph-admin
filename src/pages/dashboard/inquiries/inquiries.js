@@ -52,7 +52,8 @@ const Inquiries = ({data}) => {
                             marginTop: "10px",
                             color: "black",
                             marginLeft: "10px",
-                            paddingLeft: "10px"
+                            paddingLeft: "10px",
+                            color : "#707070"
                         }
                     }>Enquiry</h5>
                 </div>
@@ -158,8 +159,8 @@ const Inquiries = ({data}) => {
         {/* {notFound &&<div className="customTable__no-element text-center">
             <p className="mt-3">No user has this subscription plan</p>
         </div>} */}
-        <div className="customTable__footer">
-        </div>
+        {/* <div className="customTable__footer">
+        </div> */}
         </div>
     )
 }

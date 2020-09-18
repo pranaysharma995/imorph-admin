@@ -1,16 +1,18 @@
-import React,{useEffect,useState,useContext} from 'react'
+import React,{useState,useContext} from 'react'
 import logo from '../assets/imoph3d.png'
 import profile from '../assets/profile.png'
-import CustomTextfield from '../customComponents/customTextfield'
 import {Link , useHistory} from 'react-router-dom'
 import LogoutPromtModal from '../pages/dashboard/modal/logoutPromtModal'
 import AdminContext from '.././context/admin/adminDetailsContext'
+
+import ImageSettingsContext from '../context/imageSettings/imageSettingsContext'
 
 
 const Navbar =() =>{
 
     const history = useHistory();
     const {adminData} = useContext(AdminContext)
+    const {imageSettings} = useContext(ImageSettingsContext)
     const [rotate , setRotate] = useState(false)
     
     const logout= e => {
@@ -43,23 +45,22 @@ const Navbar =() =>{
     }
 
     return (
-        <div>
+        <>
                 <nav className="navbar navbar-expand-sm bg-white navbar-light fixed-top navbar__component">
                     <button id="rotatebutton" className="navbar__togglebtn" style={{transform:rotate && "rotate(90deg)"}} onClick={toggleSideBar}><i className="fa fa-bars fa-2x" aria-hidden="true"></i></button>
                     <div className="navbar-brand" style={{marginLeft : "60px"}}>
-                        <img className="" width="90rem" src={logo} alt="logo"/>
+                       <Link to="/dashboard"> <img className="" width="90px" height="40px" src={imageSettings?.appLogo && "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+imageSettings?.appLogo } alt="logo"/></Link>
                     </div>
                     <div className="collapse navbar-collapse justify-content-end">
-                       <div style={{marginTop : "20px" , marginBottom : "-10px" , marginRight : "30px"}}>
+                       <div style={{marginRight : "30px"}}>
+                        
                         <ul className="navbar-nav">
-                                <li className="nav-item" style={{position : "relative" , marginRight : "20px"}}>
-                                    <CustomTextfield customTextfield__input="form-control nav__input" type="text" placeholder="Search" icon_class="fa fa-search nav__searchIcon"/>
-                                </li>
+                                
                                 <li className="nav-item" style={{marginRight : "20px"}}>
 
                                 <div className="dropdown ">
                                     <button type="button" className="dropdown-toggle nav__dropDownBtn nav-link" data-toggle="dropdown">
-                                        <i className="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+                                        <i className="fa fa-bell-o fa-lg mt-2" aria-hidden="true"></i>
                                     </button>
                                             <div className="dropdown-menu nav__notification">
                                                 <div className="nav__notificationHead">
@@ -105,7 +106,7 @@ const Navbar =() =>{
                                                 </div>       
 
                                                 <div className="text-center">
-                                                    <h5 style={{color:"#009CB4" ,textDecoration : "underline"}}>View All</h5>
+                                                    <Link to="/dashboard/inquiries"><h5 style={{color:"#009CB4" ,textDecoration : "underline"}}>View All</h5></Link>
                                                 </div>                         
                     
                                              </div>
@@ -116,7 +117,7 @@ const Navbar =() =>{
                                 <li className="nav-item">              
                                    <div className="dropdown ">
                                             <button type="button" className="dropdown-toggle nav__dropDownBtn nav-link" data-toggle="dropdown">
-                                                <img width="30rem" className= "rounded-circle" src={adminData ? "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/"+adminData.profileImage :profile} alt="profile"/>
+                                                <img width="30rem" height="30px" className= "rounded-circle" src={adminData ? "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/"+adminData.profileImage :profile} alt="profile"/>
                                             </button>
                                                     <div className="dropdown-menu nav__dropdownMenu">
                                                         <div className="dropdown__head"  style={{height : "30px"}}>
@@ -147,7 +148,7 @@ const Navbar =() =>{
                     </div>
                 </nav>
                 <LogoutPromtModal handleClick={logout}/> 
-        </div>
+        </>
     )
 }
 

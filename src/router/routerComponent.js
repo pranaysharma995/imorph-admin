@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect, useContext} from 'react'
 import '../css/style.css'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
@@ -9,6 +9,9 @@ import ResetPassword from '../pages/resetPassword'
 import ResetSuccessfull from '../pages/passwordResetSuccessful'
 import Dashboard from '../pages/dashboard';
 import AfterLoginRoute from '../route/afterLoginRoute'
+import ImageSettingsContext from '../context/imageSettings/imageSettingsContext'
+
+import axiosInstance from '../axios'
 
 const RouterComponent = () => {
 
@@ -23,10 +26,7 @@ const RouterComponent = () => {
 
                 <Route exact path="/"
                     component={LoginPage}/>
-                <Route path="/forgotpassword"
-                    component={
-                        () => <ForgotPassword value={forgotText}/>
-                    }/>
+                <Route path="/forgotpassword"><ForgotPassword value={forgotText}/></Route>
                 <Route path="/verification"
                     component={
                         () => <VerificationPage value={text}/>

@@ -9,12 +9,15 @@ import ChangePasswordModal from './modal/changePasswordModal'
 import axiosInstance from '../../axios'
 import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 import AdminContext from '../../context/admin/adminDetailsContext'
+import CountryCode from './countryCode'
+import ConfirmationUpdateModal from './modal/confirmationUpdateModal'
 
 
 function ProfilePage({refresh , refreshValue}) {
 
     const history = useHistory();
     const {adminData} = useContext(AdminContext);
+    const [modal, setModal] = useState(false);
     const [adminDetails, setAdminDetails] = useState({
         fname: '',
         lname: "",
@@ -27,8 +30,9 @@ function ProfilePage({refresh , refreshValue}) {
         region: '',
         gender: '',
         image: null,
+        countryCode : ""
     })
-    const [modal, setModal] = useState(false)
+    const [successFullpopup, setSuccessfullPopup] = useState(false)
     const [imageFile , setImageFile] = useState(null)
     const [error, setError] = useState({
         image: false,
@@ -42,17 +46,17 @@ function ProfilePage({refresh , refreshValue}) {
         region: false,
         country: false,
         zip_code: false
-
     })
     const [loading, setLoading] = useState(false)
     const [loadingBtn, setLoadingBtn] = useState(false)
     const [reload, setReload] = useState(false)
+    const successfullToggle = () => setSuccessfullPopup(!successFullpopup);
 
     useEffect(() => {
         setLoading(true)
-       setTimeout(() => {
+       if(adminData) {
         setLoading(false)
-        if (adminData) {
+       
             setAdminDetails({
                 ...adminDetails,
                 fname: adminData?.firstName,
@@ -65,10 +69,10 @@ function ProfilePage({refresh , refreshValue}) {
                 country: adminData?.country[0].toUpperCase() + adminData?.country.slice(1),
                 region: adminData?.state[0].toUpperCase() + adminData?.state.slice(1),
                 image: adminData?.profileImage,
-                gender: adminData?.gender[0].toUpperCase() + adminData?.gender.slice(1)
+                gender: adminData?.gender[0].toUpperCase() + adminData?.gender.slice(1),
+                countryCode : adminData?.countryCode
             })
-        }
-       }, 1000);
+       };
             // axiosInstance.get("/admin/profile", {
             //     params: {
             //         id: uid
@@ -78,7 +82,7 @@ function ProfilePage({refresh , refreshValue}) {
                 
             //     setLoading(false)
             // }).catch(err => console.log("Error in admin fetch", err))
-    }, [reload])
+    }, [adminData])
 
 
     const textChange = e => {
@@ -163,14 +167,22 @@ function ProfilePage({refresh , refreshValue}) {
         data.set("location", adminDetails.address)
         data.set("zipcode", adminDetails.zip_code)
         data.set("gender", adminDetails.gender)
+        data.set("countryCode", adminDetails.countryCode)
 
         axiosInstance.post("/admin/update-profile", data ,{
             headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
         }).then(({data}) => {
             console.log("Updated Admin Details", data);
-            setLoadingBtn(false);
-            setReload(!reload)
-            refresh(!refreshValue)
+            
+            setSuccessfullPopup(true)
+            setTimeout(() => {
+                setReload(!reload)
+                refresh(!refreshValue)
+                setSuccessfullPopup(false)
+                setLoadingBtn(false);
+                setImageFile(null)
+            }, 1500);
+            
         }).catch(error => {
             console.log("Error in Admin Update", error);
         })
@@ -252,10 +264,10 @@ function ProfilePage({refresh , refreshValue}) {
                                     <h5 style={
                                         {marginTop: "20px"}
                                     }>Profile</h5>
-                                    <div>
+                                    
                                         <CustomButton customButton__class="btn profile__backbtn" text="Back"
                                             handleClick={onBack}/>
-                                    </div>
+                                
                                 </div>
                                 <hr/>
                                 <div className="row profile__body"
@@ -267,13 +279,14 @@ function ProfilePage({refresh , refreshValue}) {
                                         {
                                         error.image && <small className="profile__error">&#9888;&#160;Please select a image</small>
                                     }
-                                        <div style={
+                                        <div className="text-center" style={
                                             {
                                                 position: "relative",
-                                                width: "180px"
+                                                width: "100%"
                                             }
                                         }>
-                                            <img width="150rem" className="rounded-circle"
+                                            
+                                            <img width="150rem" height="150rem" className="rounded-circle"
                                                 src={
                                                     adminDetails.image != null ? imageFile!=null ?adminDetails.image : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/"+adminDetails.image : profile
                                                 }
@@ -284,7 +297,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                         maxHeight: "150px"
                                                     }
                                                 }/>
-                                            <label htmlFor="userImage" className="profile__imgAdd rounded-circle text-center"><img width="15rem"
+                                            <label htmlFor="adminImage" className="profile__imgAdd rounded-circle text-center"><img width="15rem"
                                                     src={camera}
                                                     alt="add"
                                                     style={
@@ -295,7 +308,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                     }/></label>
                                         </div>
 
-                                        <input type="file" id="userImage"
+                                        <input type="file" id="adminImage"
 
                                             onChange={handleUpload}
                                             style={
@@ -307,7 +320,7 @@ function ProfilePage({refresh , refreshValue}) {
                                     <div className="col-lg-9">
 
                                         <div className="row">
-                                            <div className="col"
+                                            <div className="col-md-6"
                                                 style={
                                                     {position: "relative"}
                                             }>
@@ -332,7 +345,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                     }
                                                     handleChange={textChange}/>
                                             </div>
-                                            <div className="col">
+                                            <div className="col-md-6">
                                                 {
                                                 error.lname && <small className="profile__error">&#9888;&#160;Please enter second name</small>
                                             }
@@ -356,7 +369,7 @@ function ProfilePage({refresh , refreshValue}) {
                                             </div>
                                         </div>
                                         <div className="row">
-                                            <div className="col">
+                                            <div className="col-md-6">
                                                 {
                                                 error.email && <small className="profile__error">&#9888;&#160;Please enter email properly</small>
                                             }
@@ -378,7 +391,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                     }
                                                     handleChange={textChange}/>
                                             </div>
-                                            <div className="col">
+                                            <div className="col-md-6">
                                                 {
                                                 error.phone && <small className="profile__error">&#9888;&#160;Please enter a number</small>
                                             }
@@ -392,8 +405,13 @@ function ProfilePage({refresh , refreshValue}) {
                                                             color: "#707070"
                                                         }
                                                 }>Phone Number</label>
-                                                <CustomTextfield customTextfield__input={
-                                                        error.phone || error.phone_length ? "form-control profile__input profile__errorInput" : "form-control profile__input"
+
+                                                <div className="input-group mb-3">
+                                                    <div className="input-group-prepend" style={{width : "20%"}}>
+                                                    <CountryCode name="countryCode" value={adminDetails.countryCode} handleContryCodeChange={textChange}/>
+                                                    </div>
+                                                    <input className={
+                                                        error.phone || error.phone_length ? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
                                                     }
                                                     type="text"
                                                     placeholder="Phone"
@@ -401,7 +419,9 @@ function ProfilePage({refresh , refreshValue}) {
                                                     value={
                                                         adminDetails.phone
                                                     }
-                                                    handleChange={textChange}/>
+                                                    onChange={textChange} />
+                                                </div>
+                                               
                                             </div>
                                         </div>
 
@@ -588,7 +608,7 @@ function ProfilePage({refresh , refreshValue}) {
                                 <div className="d-flex justify-content-center " style={{display : "inline-block"}}>
                                     {
                                     loadingBtn ? (
-                                        <div class="spinner-border text-primary"></div>
+                                        <div className="spinner-border text-primary"></div>
                                     ) : (
                                         <>
                                             <CustomButton customButton__class=" profile__footerBtn" text="Save" type="submit"/>
@@ -600,9 +620,12 @@ function ProfilePage({refresh , refreshValue}) {
 
                         </div>
                     </form>
-                    <ChangePasswordModal modal={modal}
+                        <ConfirmationUpdateModal modall={successFullpopup} tog={successfullToggle}/>
+                        <ChangePasswordModal modal={modal}
                         toggle={toggle}/>
+                    
                 </div>
+               
         } </>
     )
 }

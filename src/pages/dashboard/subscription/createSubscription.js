@@ -114,11 +114,11 @@ const CreateSubscription = () => {
     return (
         <div className="createSubscription">
              <div className="d-flex justify-content-between" style={{padding : "0.7% 1.6%"}}>
-             <h3 style={{color : "#707070"}}>Create Subscription</h3>
+             <h5 style={{color : "#707070", marginTop : "0.5%"}}>Create Subscription</h5>
 
-             <div>
+             
                 <CustomButton customButton__class="btn subs__back-btn"  text="Back" handleClick={() => history.push("/dashboard/subscription")}/>
-             </div>
+             
           </div>
           <hr style={{lineHeight: "0.4", marginTop: "-5px"}}/>
           <div className = "createSubscription__body">
@@ -132,7 +132,11 @@ const CreateSubscription = () => {
                         <div className="col-md-6">
                              {error.cost && <small className="profile__error">&#9888;&#160;Please enter plan cost</small>}
                             <label htmlFor="cost" style={{lineHeight :"0.4" , color : "#707070"}}>Cost(USD)</label>
-                            <input id="cost" className={error.cost ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={cost} onChange={ e=> setCost(e.target.value)}/>
+                            <input id="cost" className={error.cost ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={cost} onChange={ e=> {
+                                if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
+                                    setCost(e.target.value)
+                                }
+                                }}/>
                         </div>
                 </div>
                 <div className="row mt-4">
@@ -164,7 +168,7 @@ const CreateSubscription = () => {
                             <input id="file"  type="file" accept="image/*" onChange={handleImage}/>
                             <div className=" d-flex mt-4 ">
                                 <div style={{marginRight : "50px"}}>
-                                    <label htmlFor="radio" style={{color : "#707070"}}>   Subscription Active/Inactive</label></div>
+                                    <label htmlFor="radio" style={{color : "#707070"}}>   Subscription Active ?</label></div>
                                     <div style={{marginTop : "3px"}}><input id="radio" type="checkbox" className="form-check-input"
                                             checked={checked}
                                             onChange={
@@ -178,7 +182,9 @@ const CreateSubscription = () => {
                         </div>
                 </div>
                 </form>
+                
           </div>
+          <p className="pl-4 text-danger"><small>**It cannot be changed later !!!</small></p>
           <hr/>
           <div className="d-flex justify-content-center">
                  {loading ? (<div  className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" handleClick={handleValidation} />

@@ -76,7 +76,7 @@ const LoginPage = () => {
 
     }
 
-    if (localStorage.getItem('uid') || sessionStorage.getItem('uid')) {
+    if (localStorage.getItem('token') || sessionStorage.getItem('token')) {
         return <Redirect to="/dashboard"/>
     }
 
@@ -167,7 +167,7 @@ const LoginPage = () => {
                         </div>
                         <label className="form-check-label"
                             style={
-                                {color: "#707070"}
+                                {color: "#009CB4"}
                         }>
                             Remember me
                         </label>

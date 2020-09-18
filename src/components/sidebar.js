@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link , useRouteMatch} from 'react-router-dom'
 
 import enquiries from '../assets/icons/enquiries/color/question.png'
 import enquiriesColor from '../assets/icons/enquiries/question@2x.png'
@@ -18,6 +18,7 @@ function Sidebar() {
 
     const [active , setActive] = useState(false)
     const [activeCms , setActiveCms] = useState(false)
+    const match = useRouteMatch("/dashboard/users/edit/plan/view")
 
 
 
@@ -28,8 +29,7 @@ function Sidebar() {
         }else{
             setActive(false)
             document.getElementById("settings").setAttribute("style" , "display: none")
-        }
-       
+        }       
     }
 
     const changeCmsAttribute = ()=>{
@@ -54,9 +54,9 @@ function Sidebar() {
                     <Link className={/^\/dashboard$/.test(window.location.pathname) ? "sidebar__link" : "sidebar__linkInActive"} to="/dashboard" >Dashboard</Link>
                 </div>
 
-                <div className={/^\/dashboard\/users$/.test(window.location.pathname) || /^\/dashboard\/users\/edit$/.test(window.location.pathname) ? " row mb-4 sildeBar__active" : "row  mb-4 sildeBar__inactive"}  onClick={() => document.getElementById("sidebar").style.marginLeft="-240px"} >
-                    {/^\/dashboard\/users$/.test(window.location.pathname) || /^\/dashboard\/users\/edit$/.test(window.location.pathname) ? <img width="20rem" height="20rem" className="mr-3 " style={{background :"transparent"}} src={userColor} alt="enquaries"/> : <img width="20rem" height="20rem" className="mr-3 " style={{background :"transparent"}} src={user} alt="enquaries"/>}
-                    <Link className={/^\/dashboard\/users$/.test(window.location.pathname) || /^\/dashboard\/users\/edit$/.test(window.location.pathname) ? "sidebar__link" : "sidebar__linkInActive"}  to="/dashboard/users">Users</Link>
+                <div className={/^\/dashboard\/users$/.test(window.location.pathname) || /^\/dashboard\/users\/edit$/.test(window.location.pathname) ||  match ? " row mb-4 sildeBar__active" : "row  mb-4 sildeBar__inactive"}  onClick={() => document.getElementById("sidebar").style.marginLeft="-240px"} >
+                    {/^\/dashboard\/users$/.test(window.location.pathname) || /^\/dashboard\/users\/edit$/.test(window.location.pathname) || match ? <img width="20rem" height="20rem" className="mr-3 " style={{background :"transparent"}} src={userColor} alt="enquaries"/> : <img width="20rem" height="20rem" className="mr-3 " style={{background :"transparent"}} src={user} alt="enquaries"/>}
+                    <Link className={/^\/dashboard\/users$/.test(window.location.pathname) || /^\/dashboard\/users\/edit$/.test(window.location.pathname) || match ? "sidebar__link" : "sidebar__linkInActive"}  to="/dashboard/users">Users</Link>
                 </div>
 
                 <div className={/^\/dashboard\/inquiries$/.test(window.location.pathname) || /^\/dashboard\/inquiries\/view$/.test(window.location.pathname) ? " row mb-4 sildeBar__active" : "row  mb-4 sildeBar__inactive"}  onClick={() => document.getElementById("sidebar").style.marginLeft="-240px"}>

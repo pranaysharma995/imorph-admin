@@ -1,5 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import CustomButton from '../../../customComponents/customButton'
+import axiosInstance from '../../../axios'
+import ConfirmationUpdateModal from '../modal/confirmationUpdateModal'
+import DeleteConfirmation from '../modal/deleteConfirmation'
+
 
 function Faq() {
 
@@ -13,25 +17,69 @@ function Faq() {
     const [editQuestion , setEditQuestion] = useState('');
     const [editAnswer , setEditAnswer] = useState('')
     const [error , setError] = useState(false)
+    const [reload , setReload] = useState(false)
+    const [loadingBtn , setLoadingBtn] = useState(false)
+    const [deleteButtonspinner , setDeleteBtnSpinner] = useState(false)
+    const [deleteId , setDeleteId] = useState(-1)
+ 
+    const [editIndex , setEditIndex] = useState(-1)
 
+    const [successFullpopup, setSuccessfullPopup] = useState(false)
+    const successfullToggle = () => setSuccessfullPopup(!successFullpopup);
+    const [modalMessage, setModalMessage] = useState(null)
+
+
+    useEffect(() => {
+        setLoading(true)
+        axiosInstance.get("/admin/cms-setting/faq/view",{
+          headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        }).then(({data}) => {
+          console.log("Faq us" , data.data[0]?.item);
+         setQA(data.data[0]?.item);
+          setLoading(false)
+        }).catch(error => {
+          console.log("Error in cmsSettings faq.js" , error);
+        })
+
+      },[reload])
 
     const handleSave =(e)=> {
-
-        
+        e.preventDefault();
         setError(false)      
-
+        console.log("Index",editIndex);
         if(editable){
             if(editQuestion!=='' && editAnswer!=='') {
-                setLoading(true);
-               
-                setTimeout(() => {
-    
-                    setLoading(false);
+                setLoadingBtn(true);
+              let data ={
+                question : editQuestion,
+                answer: editAnswer
+              }
+              
+              qa.splice(editIndex,1,data)
+                axiosInstance.post("/admin/cms-setting/faq/update",{
+                    list : qa
+                },{
+                    headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+                  }).then(({data}) => {
+                    console.log("Faq us update editable" , data);
+                    setModalMessage(null)
+                    setSuccessfullPopup(!successFullpopup)
+                    
+                    setQuestion('');
+                    setAnswer('');
                     setVisible(false)
-                    setEditQuestion('');
-                    setEditAnswer('');
+                    
                     setEditableId(false)
-                }, 2000);
+                    setEditable(false)
+
+                    setTimeout(() => {
+                        setReload(!reload)
+                        setSuccessfullPopup(false)
+                        setLoadingBtn(false);
+                    }, 1500);
+                  }).catch(error => {
+                    console.log("Error in cmsSettings faq update faq.js" , error);
+                  })
             }else {
                 if(editQuestion === '' || editAnswer === ''){
                     setError(true)
@@ -40,19 +88,40 @@ function Faq() {
 
         }else{
             if(question!=='' && answer!=='') {
-                setLoading(true);
+                setLoadingBtn(true);
                 let data = {
-                    id : Math.floor(Math.random() * 101),
                     question,
                     answer
                 }
-                setTimeout(() => {
-                    setQA([...qa , data]);
-                    setQuestion('');
-                    setAnswer('');
-                    setLoading(false);
-                    setVisible(false)
-                }, 2000);
+                qa.push(data)               
+            
+                    axiosInstance.post("/admin/cms-setting/faq/update",{
+                        list : qa
+                    },{
+                        headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+                      }).then(({data}) => {
+                        console.log("Faq us update" , data);
+                        setModalMessage("Added Successfully")
+                        setSuccessfullPopup(!successFullpopup)
+                        
+                        setEditable(false)
+                        setQuestion('');
+                        setAnswer('');
+                        setEditAnswer('');
+                        setEditQuestion('');
+                        setVisible(false)
+        
+
+                        setTimeout(() => {
+                            setReload(!reload)
+                            setSuccessfullPopup(false)
+                            setLoadingBtn(false);
+                        }, 1500);
+                      }).catch(error => {
+                        console.log("Error in cmsSettings faq update faq.js" , error);
+                      })
+                   
+                
             }else {
                 if(question === '' || answer === ''){
                     setError(true)
@@ -67,7 +136,7 @@ function Faq() {
             setEditableId(id);
             setEditQuestion(value.question)
             setEditAnswer(value.answer)
-
+            setEditIndex(id);
             setVisible(false)
         
     }
@@ -76,30 +145,43 @@ function Faq() {
         e.preventDefault()
         if(editable){
             setEditableId(false)
+            setEditable(false)
         }
         setVisible(false);
         setQuestion('');
         setAnswer('')
+        setLoading(true)
+        setReload(!reload)
     }
 
-    const handleDelete=(e,v)=> {
+    const handleDelete=(e,index)=> {
         e.preventDefault();
         setVisible(false);
         if(editable){
             setEditableId(false)
+            setEditable(false)
         }
-
-        setQA(qa.filter(value => value.id !== v.id))
-
+       setDeleteId(index)      
     }
 
 
 
     return (
-        <div className ="faq">
+        <>
+        {loading ? (
+            <div className="container text-center"
+                style={
+                    {
+                        marginTop: "400px",
+                        marginBottom: "50%"
+                    }
+            }>
+                <div className="spinner-border text-primary"></div>
+            </div>
+        ): <div className ="faq">
             <form action="#">
             <div className="d-flex justify-content-end">                    
-                    <button className="faq__add-btn" style={{position : 'relative'}} onClick={() => {  setEditableId(false); setVisible(true)}}>
+                    <button className="faq__add-btn" style={{position : 'relative'}} onClick={(e) => { e.preventDefault();  setEditableId(false); setVisible(true)}}>
                         <i className="fa fa-plus faq__plus-icon" aria-hidden="true"></i>
                             Add New
                     </button>
@@ -119,15 +201,15 @@ function Faq() {
 
                         {qa && qa.map((value , i) => (
                              <div className="card faq__card" key={i}>
-                             <div className="card-header faq__card-header" style={{position : "relative"}} href={`#${value.question}${i}`} data-toggle="collapse" >
+                             <div className="card-header faq__card-header" style={{position : "relative"}} href={`#jkfgfjgj${i}`} data-toggle="collapse" >
                              <input type="text" value={!editable ? value.question : editableId === i ? editQuestion : value.question} disabled={editableId!==i ? "disabled" :!editable ? 'disabled' : ''}   onChange={e => setEditQuestion(e.target.value)}/>
                         
                             <div className="faq__btn" >
-                                <button id="delete" className="faq__delete mr-2" onClick={(e) => handleDelete(e,value)}><i id="delete"  className="fa fa-trash-o " aria-hidden="true"></i></button>
+                                {deleteButtonspinner ?  deleteId === i && <div className="spinner-border text-primary mr-2"></div> : <button id="delete" className="faq__delete mr-2" data-toggle="modal" data-target="#confirmDeleteModal" onClick={(e) => handleDelete(e,i)}><i id="delete"  className="fa fa-trash-o " aria-hidden="true"></i></button>}
                                 <button id="edit" className="faq__edit" onClick={(e) => toggle(e,i,value)}><i id="edit" className="fa fa-pencil" aria-hidden="true"  ></i></button>
                             </div>
                             </div>
-                            <div id={`${value.question}${i}`} className="collapse" data-parent="#accordion">
+                            <div id={`jkfgfjgj${i}`} className="collapse" data-parent="#accordion">
                             <div className="card-body faq__card-body">
                                 <textarea type="text" value={!editable ? value.answer : editableId === i ? editAnswer : value.answer} disabled={editableId!==i ? "disabled" :!editable ? 'disabled' : ''} onChange={e => setEditAnswer(e.target.value)}/>
                             </div>
@@ -137,13 +219,16 @@ function Faq() {
 
                         <hr/>
                         <div className="d-flex justify-content-center" style={{paddingBottom: "2%"}}>
-                                {loading ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn aboutus__btn-margin" text="Save" handleClick={handleSave} />
+                                {loadingBtn ? (<div className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn aboutus__btn-margin" text="Save" handleClick={handleSave} />
                                 <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={handleCancel}/></>)}
                         </div>
 
                 </div>
            </form>
-        </div>
+        </div>}
+        <ConfirmationUpdateModal modall={successFullpopup} tog={successfullToggle} message={modalMessage}/>
+        <DeleteConfirmation qa={qa} setQuestion={setQuestion} setAnswer={setAnswer} setEditAnswer={setEditAnswer} setEditQuestion={setEditQuestion} setVisible={setVisible} setReload={setReload} reload={reload} setDeleteBtnSpinner={setDeleteBtnSpinner} deleteId={deleteId}  setDeleteBtnSpinner={setDeleteBtnSpinner}/>
+        </>
     )
 }
 

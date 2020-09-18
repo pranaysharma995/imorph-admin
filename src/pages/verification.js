@@ -107,7 +107,7 @@ const VerificationPage =({value}) => {
     }
 
     if(!value){
-        return <Redirect to="/forgotpassword"/>
+        return <Redirect to="/"/>
     }
 
     return (

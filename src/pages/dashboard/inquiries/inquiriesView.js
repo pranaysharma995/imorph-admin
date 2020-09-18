@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect , useHistory} from 'react-router-dom'
 import CustomButton from '../../../customComponents/customButton'
 import validator from 'validator'
 
@@ -13,6 +13,7 @@ const InquiriesView = ({data}) => {
         inprogress : false
     })
     const [error , setError] = useState(false)
+    const history = useHistory()
 
     useEffect(()=> {
         
@@ -20,22 +21,24 @@ const InquiriesView = ({data}) => {
     },[data])
 
     const handleChange=e=> {
-        if(e.target.id === 'resolved'){
-            setCheck({
-                resolved : true,
+        // if(e.target.id === 'resolved'){
+        //     setCheck({
+        //         resolved : true,
                 
-            })
-        }else if(e.target.id === 'unresolved'){
-            setCheck({
-                unresolved : true,
+        //     })
+        // }else if(e.target.id === 'unresolved'){
+        //     setCheck({
+        //         unresolved : true,
                
-            })
-        }else {
-            setCheck({
-                inprogress : true,
+        //     })
+        // }else {
+        //     setCheck({
+        //         inprogress : true,
                 
-            })
-        }
+        //     })
+        // }
+
+        console.log("Radio option ", e.target.id);
     }
 
     const onSubmit=e=>{
@@ -57,7 +60,7 @@ const InquiriesView = ({data}) => {
             <div className="profile__head d-flex justify-content-between">
              <h3 style={{marginTop: "10px"}}>Enquiry</h3>
                  <div>
-                    <CustomButton customButton__class="btn profile__backbtn" text="Back"/>
+                    <CustomButton customButton__class="btn profile__backbtn" text="Back" handleClick={() => history.goBack()}/>
                  </div>
             </div>
             <hr/>
@@ -88,22 +91,22 @@ const InquiriesView = ({data}) => {
                <textarea id="description"  className="form-control mt-4" type="text" value={reply}  placeholder="Enter your reply here!"
                onChange={e => setReply(e.target.value) }/>
 
-                <div className="mt-5">
+                <div className="mt-5" onChange={handleChange}>
                 <div className="form-group form-check">
-                    <input className="form-check-input" type="checkbox" id="resolved" checked={check.resolved} onChange={handleChange}/>   
-                    <label className="form-check-label pl-4">
+                    <input className="form-check-input" type="radio" name="radio" id="resolved" />   
+                    <label className="form-check-label pl-2">
                      Resolved
                     </label>
                 </div>
                 <div className="form-group form-check">
-                <input className="form-check-input" type="checkbox" id="unresolved" checked={check.unresolved} onChange={handleChange}/>
-                    <label className="form-check-label pl-4">
+                <input className="form-check-input" type="radio" name="radio" id="unresolved" />
+                    <label className="form-check-label pl-2">
                      Unresolved
                     </label>
                 </div>
                 <div className="form-group form-check">
-                <input className="form-check-input" type="checkbox" id="inprogress" checked={check.inprogress} onChange={handleChange}/>
-                    <label className="form-check-label pl-4">
+                <input className="form-check-input" type="radio" name="radio" id="inprogress" />
+                    <label className="form-check-label pl-2">
                      In-progress
                     </label>
                 </div>

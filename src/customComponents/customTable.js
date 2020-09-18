@@ -371,7 +371,8 @@ const CustomTable = ({
             style={
                 {
                     marginTop: "120px",
-                    marginBottom: "8%"
+                    marginBottom: "8%", 
+                    height : "700px"
                 }
         }>
             <div className="d-flex justify-content-between users__tableHeader">
@@ -396,8 +397,9 @@ const CustomTable = ({
                         value={search}
                         handleChange={
                             e => {
+                              
+                                setFilterData(userData.filter(user => (user.email.toLowerCase().includes(e.target.value.toLowerCase()) || ((`${user.firstName} ${user.lastName}`).toLowerCase().search(e.target.value.toLowerCase())) !== -1 )));
                                 setSearch(e.target.value)
-                                setFilterData(userData.filter(user => (user.email.toLocaleLowerCase().includes(e.target.value.toLowerCase()))))
                             }
                         }/>
                 </div>
@@ -546,8 +548,8 @@ const CustomTable = ({
         {notFound &&<div className="customTable__no-element text-center">
             <p className="mt-3">No user has this subscription plan</p>
         </div>}
-        <div className="customTable__footer">
-        </div>
+        {/* <div className="customTable__footer">
+        </div> */}
         <UserBlockModal blockvalue={blockValue}
             unblockvalue={unBlockValue}
             toggle={toggle}

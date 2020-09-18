@@ -43,13 +43,13 @@ function LogoutPromtModal({handleClick}) {
                             style={
                                 {padding: "2.8vh 9vw"}
                         }>
-                            <div>
+                            
                                 <button className=" modal__yes  " data-dismiss="modal"
                                     onClick={handleClick}>Yes</button>
-                            </div>
-                            <div>
+                            
+                         
                                 <button className="modal__no btn-block " data-dismiss="modal">No</button>
-                            </div>
+                          
 
                         </div>
                     </div>

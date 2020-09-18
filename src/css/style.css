@@ -525,13 +525,13 @@
 .profile__imgAdd{
   position: absolute;
   bottom: 10px;
-  right : 30px;
   color : grayscale;
   background : white ;
   border : none;
   border-radius: 6px 6px 6px 6px;
-  padding : 1% 4%;
+  padding: 5px 8px;
   box-shadow: 0px 2px 20px rgba(0 ,0,0,0.2);
+  transform: translate(-130% ,20%);
 }
 .profile__imgAdd:focus{
   outline : none;
@@ -543,6 +543,37 @@
 }
 .profile__errorInput{
   border : 1px solid red;
+}
+.countryCode{
+  height: 40px;
+  border: none;
+  background: #F1F5F8;
+  border-radius: 8px 0px 0px 8px;
+  font-size: 14px;
+  width: 100%;
+}
+.countryCode:focus{
+  background: #F1F5F8;
+  box-shadow: none;
+  border : 1px solid #009CB4;
+  outline: none;
+}
+.profile__phone-input{
+  padding: 20px 17px;
+    border-radius: 0px 8px 8px 0px;
+    border: none;
+    background: #F1F5F8;
+    color: #4C4B4B;
+    margin-bottom: 20px;
+    font-size: 16px;
+    height: 30px;
+    
+}
+.profile__phone-input:focus,.profile__phone-input:active{
+  background: #F1F5F8;
+  box-shadow: none;
+  border : 1px solid #009CB4;
+  outline : none;
 }
 
 /* change password */
@@ -582,6 +613,9 @@
     width : 100%;
     margin-top : 10px
     
+  }
+  .users__tableClass{
+    border-radius: 0px 0px 8px 8px;
   }
   .users__tableClass thead tr th{
     font-weight: bold;
@@ -1096,6 +1130,12 @@
   margin-top: 120px;
   position: relative;
   margin-bottom: 8%;
+  height: 700px;
+  
+}
+.subscription__body{
+  border-radius: 0px 0px 8px 8px;
+  box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
 }
 .subscription__add-btn{
   color : white ;
@@ -1211,8 +1251,9 @@ color : #009CB4;
 margin-top : 10px;
 border-radius : 7px;
 background-color: white;
-width: 10vw;
 height: 47px;
+padding: 0% 20%;
+margin-right: 20px;
 }
 .modal__yes:focus, .modal__yes:active {
   box-shadow: none;
@@ -1225,9 +1266,9 @@ border : none;
 color : white;
 background-color : #009CB4;
 border-radius : 5px;
-width: 10vw;
 height: 47px;
 border : 1px solid #009CB4;
+padding: 0% 20%;
 }
 .modal__no:focus, .modal__no:active {
   box-shadow: none;
@@ -1238,7 +1279,9 @@ border : 1px solid #009CB4;
 .inquiries{
   margin-top: 120px;
   position: relative;
-  margin-bottom: 8%;  
+  margin-bottom: 5%; 
+  height: 700px;
+  border-radius: 0px 0px 8px 8px; 
 }
 .inquiries-view__body{
   padding: 1% 6%;
@@ -1352,7 +1395,9 @@ border : 1px solid #009CB4;
   width: 16vw;
   border: 1px solid rgba(0 ,0,0,0.4);
   border-radius: 5px;
-  min-width: 140px;
+  height: 140px;
+  min-width: 100px;
+  min-height: 100px;
 }
 .image-settings__imgAdd{
   position: absolute;

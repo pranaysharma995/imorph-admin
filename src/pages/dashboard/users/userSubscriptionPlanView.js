@@ -55,9 +55,9 @@ function UserSubscriptionPlanView() {
                         </div>
                         <div style={{width: "100%"}}>
                             <button className={
-                                    subscription.status == true ? "userProfile__subBtn userProfile__active" : "userProfile__subBtn userProfile__expired"
+                                    subscription.userStatus == true ? "userProfile__subBtn userProfile__active" : "userProfile__subBtn userProfile__expired"
                                 }
-                                disabled>{subscription.status == true ? "Active" : "Expired"}</button>
+                                disabled>{subscription.userStatus == true ? "Active" : "Expired"}</button>
                         </div>
                     </div>
                 </div>

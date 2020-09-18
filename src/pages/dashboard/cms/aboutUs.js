@@ -3,6 +3,7 @@ import CKEditor from 'ckeditor4-react';
 import CustomButton from '../../../customComponents/customButton'
 import axiosInstance from '../../../axios'
 import validator from 'validator'
+import ConfirmationUpdateModal from '../modal/confirmationUpdateModal'
 
 function AboutUs() {
 
@@ -11,6 +12,9 @@ function AboutUs() {
   const [loadingBtn , setLoadingBtn] = useState(false)
   const [error ,setError] = useState(false)
   const [reload , setReload] = useState(false)
+
+  const [successFullpopup, setSuccessfullPopup] = useState(false)
+  const successfullToggle = () => setSuccessfullPopup(!successFullpopup);
 
 
   useEffect(() => {
@@ -52,10 +56,16 @@ const submit =e=> {
     },{
       headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
     }).then((result) => {
+
       console.log("After update" , result);
       setError(false)
-      setLoadingBtn(false)
-      setReload(!reload)
+      setSuccessfullPopup(!successFullpopup)
+      setTimeout(() => {
+        setReload(!reload)
+        setSuccessfullPopup(false)
+        setLoadingBtn(false);
+    }, 1500);
+
     }).catch(error => {
       console.log("Error in About us update aboutus.js" , error);
     })
@@ -92,6 +102,7 @@ const onCancle=e=> {
                 setText(e.editor.getData())}} />
           
           <hr/>
+          <ConfirmationUpdateModal modall={successFullpopup} tog={successfullToggle}/>
           <div className="d-flex justify-content-center" style={{paddingBottom: "2%"}}>
                  {loadingBtn ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn aboutus__btn-margin" text="Save" handleClick={submit} />
                   <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={onCancle}/></>)}

@@ -15,6 +15,8 @@ import noSubscriptionImg from "../../../assets/no-subscription.png"
 import axiosInstance from '../../../axios'
 
 import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+import CountryCode from '.././countryCode'
+import ConfirmationUpdateModal from '../modal/confirmationUpdateModal'
 
 const UserProfileView = () => {
 
@@ -36,12 +38,15 @@ const UserProfileView = () => {
         gender: '',
         subscription: [],
         lastSubscription : null,
-        lastSubscriptionStatus : null
+        lastSubscriptionStatus : null,
+        countryCode : ""
     })
     const [loading, setLoading] = useState(false)
     const [reload, setReload] = useState(false)
     const [imageFile , setImageFile] = useState(null)
     const[loadingBtn , setLoadingBtn] = useState(false)
+    const [successFullpopup, setSuccessfullPopup] = useState(false)
+    const successfullToggle = () => setSuccessfullPopup(!successFullpopup);
 
     useEffect(() => {
         setLoading(true);
@@ -81,7 +86,8 @@ const UserProfileView = () => {
                     address: context.userDetails.location,
                     image : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+context.userDetails.profileImage,
                     lastSubscription : context.userDetails.lastSubscription,
-                    lastSubscriptionStatus : context.userDetails.lastSubscriptionStatus
+                    lastSubscriptionStatus : context.userDetails.lastSubscriptionStatus,
+                    countryCode : context.userDetails.countryCode
                 })
             }
 
@@ -223,13 +229,19 @@ const UserProfileView = () => {
         useData.set("location", UserInformation.address)
         useData.set("zipcode", UserInformation.zip_code)
         useData.set("gender", UserInformation.gender)
+        useData.set("countryCode", UserInformation.countryCode)
         axiosInstance.post("/user/update", useData , {
             headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
         }).then(({data}) => {
                 console.log("Result of updated user Data ", data);
                 context.setUserDetails(data?.data);
-                setLoadingBtn(false);
-                setReload(!reload)
+                setSuccessfullPopup(true);
+                setImageFile(null)
+                setTimeout(() => {
+                    setSuccessfullPopup(false)
+                    setLoadingBtn(false);
+                    setReload(!reload)                    
+                }, 1500);
                
         }).catch(error => {
             console.log("Error in Posting user Data userProfileView.js" , error);
@@ -313,7 +325,21 @@ const UserProfileView = () => {
                    {error.phone && <small className="profile__error">&#9888;&#160;Please enter a number</small>}
                    {error.phone_length && <small className="profile__error">&#9888;&#160;Enter a valid number</small>}
                    <label htmlFor="phone" style={{lineHeight :"0.4" , color : "#707070"}}>Phone Number</label>
-                       <CustomTextfield customTextfield__input={error.phone || error.phone_length ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Phone" name="phone" value={UserInformation.phone} handleChange={textChange}/>
+                   <div className="input-group mb-3">
+                            <div className="input-group-prepend" style={{width : "20%"}}>
+                                <CountryCode name="countryCode" value={UserInformation.countryCode} handleContryCodeChange={textChange}/>
+                                    </div>
+                                <input className={
+                                        error.phone || error.phone_length ? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
+                                    }
+                                    type="text"
+                                    placeholder="Phone"
+                                    name="phone"
+                                    value={
+                                        UserInformation.phone
+                                    }
+                                    onChange={textChange} />
+                                </div>
                    </div>
                              </div>
                         <div className="row">
@@ -398,7 +424,7 @@ const UserProfileView = () => {
                     <div className="card text-center userProfile__card" key={i}>
                         <div className="card-body user__card-body" style={{position : "relative"}}>
                     
-                                <img className="mb-3 mt-4" width="60%" src={days7} alt="7"/>
+                                <img className="mb-3 mt-4" width="60%" height="50px" src={"http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/subscription/"+sub.image} alt="7"/>
                                 <p style={{ color : "#707070" , marginBottom : "10%"}}> {sub.cost}</p>
                                 <div style={{marginTop : "1em"}}>
                                  <button className={ UserInformation.lastSubscription?.name ==  sub.name && UserInformation.lastSubscription?.userStatus == true ? "userProfile__subBtn userProfile__active" : "userProfile__subBtn userProfile__expired"} disabled> {UserInformation.lastSubscriptionStatus && UserInformation.lastSubscription?.name ==  sub.name && UserInformation.lastSubscription?.userStatus == true ? "Active" : "Expired" }</button>
@@ -451,6 +477,7 @@ const UserProfileView = () => {
                              </form>
                      </div>
                          )}
+                         <ConfirmationUpdateModal  modall={successFullpopup} tog={successfullToggle}/>
                       </>
     )
 }

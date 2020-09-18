@@ -2,109 +2,29 @@ import React, {useState, useEffect} from 'react'
 import CustomButton from '../../../customComponents/customButton'
 import {useHistory, Redirect} from 'react-router-dom'
 import defaultImage from '../../../assets/subdefault.png'
-import axiosInstance from '../../../axios'
+
 
 
 const EditSubscription = ({plan}) => {
 
     const history = useHistory();
     const [loading, setLoading] = useState(false)
-    const [btnLoading, setBtnLoading] = useState(false)
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    const [imageFile, setImageFile] = useState(null);
-    const [checked, setChecked] = useState(false);
-    const [subscriptionID, setSubscriptionID] = useState('')
     const [error, setError] = useState({plan_name: false, cost: false, description: false, image: false, validity: false  })
-    const [reload, setReload] = useState(false)
     const [validity , setValidity] = useState('')
     useEffect(() => {
         if (plan) {
             setName(plan.name);
             setCost(plan.cost);
             setDescription(plan.description);
-            setChecked(plan.status);
-            setImageFile(plan.image);
             setImage("http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/subscription/"+plan.image)
-            setSubscriptionID(plan.subscriptionID)
             setValidity(plan.validity)
             console.log("Plans", plan);
         }
-    }, [reload])
-
-    const handleValidation = e => {
-        e.preventDefault();
-
-        if (name === '') {
-            setError({plan_name: true})
-        } else if (cost === "") {
-            setError({cost: true})
-        }else if(validity === ''){
-            setError({
-                validity : true
-            })
-        } else if (description === "") {
-            setError({description: true})
-        } else if (image === '') {
-            setError({image: true})
-        } else {
-            submit();
-        }
-    }
-
-    const handleImage = async e => {
-        let file = e.target.files[0]
-        if (file) {
-            setImageFile(e.target.files[0])
-            let base64Image = await new Promise((resolve, reject) => {
-                const fileReader = new FileReader();
-                fileReader.readAsDataURL(file);
-
-                fileReader.onload = () => {
-                    resolve(fileReader.result)
-
-
-                };
-                fileReader.onerror = err => {
-                    reject(err)
-                }
-            })
-            if (base64Image !== undefined) {
-                console.log("Baaase64", base64Image);
-                setImage(base64Image);
-            }
-        } else {
-            setError({image: true})
-            setImage('')
-        }
-    }
-
-    const submit = () => {
-        setBtnLoading(true)
-        setError({plan_name: false, cost: false, description: false, image: false, validity: false})
-        let data = new FormData();
-        data.set("name", name)
-        data.set("cost", cost)
-        data.set("status", checked)
-        data.set("description", description)
-        data.append("image", imageFile)
-        data.set("id", subscriptionID)
-        data.set('validity', validity)
-
-        axiosInstance.post("/admin/subscription/update", data ,{
-            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
-        }).then(() => (setBtnLoading(false), history.push('/dashboard/subscription'))).catch(err => {
-            console.log("Error in Edit Subscription", err);
-        })
-
-    }
-
-    const oncancel = e => {
-        e.preventDefault();
-        setReload(!reload);
-    }
+    }, [])
 
 
     if (!plan) {
@@ -132,10 +52,7 @@ const EditSubscription = ({plan}) => {
                     }>Edit Subscription Plan</h3>
 
                     <div>
-                        <CustomButton customButton__class="btn subs__back-btn" text="Back"
-                            handleClick={
-                                () => history.push("/dashboard/subscription")
-                            }/>
+                        <CustomButton customButton__class="btn subs__back-btn"  text="Back" handleClick={() => history.push("/dashboard/subscription")}/>
                     </div>
                 </div>
                 <hr style={
@@ -145,13 +62,9 @@ const EditSubscription = ({plan}) => {
                     }
                 }/>
                 <div className="createSubscription__body">
-                    <form method="POST" encType="multipart/form-data" action="#"
-                        onSubmit={handleValidation}>
+                    <form action="#">
                         <div className="row justify-content-center">
                             <div className="col-md-6 ">
-                                {
-                                error.plan_name && <small className="profile__error">&#9888;&#160;Please enter plan name</small>
-                            }
                                 <label htmlFor="name"
                                     style={
                                         {
@@ -165,14 +78,10 @@ const EditSubscription = ({plan}) => {
                                     }
                                     type="text"
                                     value={name}
-                                    onChange={
-                                        e => setName(e.target.value)
-                                    }/>
+                                   disabled/>
                             </div>
                             <div className="col-md-6">
-                                {
-                                error.cost && <small className="profile__error">&#9888;&#160;Please enter plan cost</small>
-                            }
+                            
                                 <label htmlFor="cost"
                                     style={
                                         {
@@ -186,21 +95,15 @@ const EditSubscription = ({plan}) => {
                                     }
                                     type="text"
                                     value={cost}
-                                    onChange={
-                                        e => setCost(e.target.value)
-                                    }/>
+                                    disabled/>
                             </div>
                         </div>
                         <div className="row mt-4">
                             <div className="col-md-6 ">
-                            {error.validity && <small className="profile__error">&#9888;&#160;Please enter plan name</small>}
+                            
                             <label htmlFor="validity" style={{lineHeight :"0.4" , color : "#707070"}}>Subscription Plan Validity</label>
                                 <div className="d-flex">
-                                <input id="validity" className={error.validity ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={validity} onChange={ e=> {
-                                    if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
-                                        setValidity(e.target.value)
-                                    }
-                                }}/>
+                                <input id="validity" className={error.validity ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={validity} disabled/>
                                  <p style={{ color : "#707070", marginLeft : "10px"}}>Days</p>
                                 </div>
                             </div>
@@ -208,9 +111,6 @@ const EditSubscription = ({plan}) => {
                          </div>
                         <div className="row justify-content-center mt-4">
                             <div className="col-md-12">
-                                {
-                                error.description && <small className="profile__error">&#9888;&#160;Please enter description</small>
-                            }
                                 <label htmlFor="description"
                                     style={
                                         {
@@ -224,69 +124,31 @@ const EditSubscription = ({plan}) => {
                                     }
                                     type="text"
                                     value={description}
-                                    onChange={
-                                        e => setDescription(e.target.value)
-                                    }/>
+                                    disabled/>
                             </div>
                         </div>
                        
-                        <div className="row justify-content-between mt-4 ">
+                        <div className="row mt-4 ">
                             <div className="col-md-6">
-                                {
-                                error.image && <small className="profile__error">&#9888;&#160;Please enter subscription logo</small>
-                            }
-                                <label htmlFor="file"
+                               
+                                <label htmlFor="image"
                                     style={
                                         {
                                             lineHeight: "0.4",
                                             color: "#707070"
                                         }
                                 }>Subscription Image</label><br/>
-                                <input id="file" type="file" accept="image/*"
-                                    onChange={handleImage}/>
-                                <div className=" d-flex mt-4 ">
-                                    <div style={
-                                        {marginRight: "50px"}
-                                    }>
-                                        <label htmlFor="radio"
-                                            style={
-                                                {color: "#707070"}
-                                        }>
-                                            Subscription Active/Inactive</label>
-                                    </div>
-                                    <div style={{marginTop : "3px"}}><input id="radio" type="checkbox" className="form-check-input"
-                                            checked={checked}
-                                            onChange={
-                                                () => setChecked(!checked)
-                                            }/></div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-6 text-right">
-                                <img width="180rem"
+                              <img id="image" width="180rem"
                                     src={
                                         image !== '' ? image : defaultImage
                                     }
                                     alt="alt"/>
                             </div>
+
+                            
                         </div>
                     </form>
                 </div>
-                <hr/>
-                <div className="d-flex justify-content-center">
-                    {
-                    btnLoading ? (
-                        <div className="spinner-border text-primary"></div>
-                    ) : (
-                        <>
-                            <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit"
-                                handleClick={handleValidation}/>
-                            <CustomButton customButton__class="btn profile__backbtn" text="Cancel"
-                                handleClick={oncancel}/></>
-                    )
-                } </div>
-
-
             </>
         } </div>
     )
