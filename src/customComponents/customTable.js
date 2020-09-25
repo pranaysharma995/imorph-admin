@@ -6,14 +6,12 @@ import UserDetailsContext from '../context/user/userDetailsContext'
 import {useHistory} from 'react-router-dom'
 import UserBlockModal from '../pages/dashboard/modal/userBlockModal'
 import unblockimg from '../assets/unblock.png'
+import ImageSettingsContext from '../context/imageSettings/imageSettingsContext'
 
 const CustomTable = ({
     tableClass,
     tableHeaderText,
     userData,
-    results,
-    searchValue,
-    onHandleChange,
     uri,
     toggle,
     list,
@@ -21,6 +19,7 @@ const CustomTable = ({
 }) => {
 
     const context = useContext(UserDetailsContext);
+    const {imageSettings} = useContext(ImageSettingsContext)
     const history = useHistory();
     const [search, setSearch] = useState('')
     const [blockValue, setBlockValue] = useState(null)
@@ -368,13 +367,7 @@ const CustomTable = ({
 
     return (
         <div className="customTable"
-            style={
-                {
-                    marginTop: "120px",
-                    marginBottom: "8%", 
-                    height : "700px"
-                }
-        }>
+            style={{marginTop: "120px",marginBottom: "8%",height : "700px"}}>
             <div className="d-flex justify-content-between users__tableHeader">
                 <div>
                     <h5 style={
@@ -446,70 +439,36 @@ const CustomTable = ({
             <p>Showing Results :  <strong>{ " " + filerData.length }</strong> </p>
         </div>
 
-        <div style={
-            {
-                overflowX: 'auto',
-                maxHeight: "600px"
-            }
-        }>
+        <div style={{overflowX: 'auto',maxHeight: "600px"}}>
             <table className={tableClass}>
-
                 <thead>
-                    <tr> { tableHeaderText.map((text, i) => ( <th key={i}> <h6 style={  {marginTop: "8px"} }>   {text}</h6> </th>   ))   } </tr>                                 
+                    <tr>{tableHeaderText.map((text, i) => 
+                    (<th key={i}> <h6 style={{marginTop: "8px"} }>{text}</h6> </th>))}</tr>                                 
                 </thead>
-                <tbody> {
-                    filerData.map((info, i) => (
+                <tbody> {filerData.map((info, i) => (
                         <tr key={i}>
-                            <td><img width="70rem" height="70rem" className="rounded-circle p-2"
-                                    alt={i}
-                                    src={
-                                        "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+info.profileImage
-                                    }/></td>
                             <td>
-                                <div className="text-left">
-                                    <h6 style={
-                                        {marginTop: "8px"}
-                                    }>
-                                        {
-                                        info.firstName
-                                    }&#x20;{
-                                        info.lastName
-                                    }</h6>
-                                    <p>{
-                                        info.email
-                                    }</p>
+                                <img width="70rem" height="70rem" className="rounded-circle p-2" alt={i} src={info.profileImage ?  "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+info.profileImage : `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${imageSettings?.userIcon}` }/>
+                            </td>
+                            <td> 
+                                <div className="text-left"> 
+                                   <h6 style={{marginTop: "8px"}}>
+                                        {info.firstName}&#x20;{info.lastName}</h6>
+                                    <p>{info.email}</p>
                                 </div>
                             </td>
-                            <td>{
-                                info.conversion.length
-                            }</td>
-                            <td>{
-                                info.phoneNumber
-                            }</td>
-                                <td>{
-                                info.lastSubscriptionStatus ? (
-                                   <>{info?.lastSubscription?.name}</>
-                                ) : "No Subscription"
-                            }</td>
-                            {}
-                            <td className={
-                                info.lastSubscription?.userStatus === true ? "customTable__statusActive" : "customTable__statusExpired"
-                            }>
-                                {
-                                info.lastSubscription?.userStatus === true ? "Active" : "Expired"
-                            }</td>
+                            <td>{info.conversion.length}</td>
+                            <td>{info.phoneNumber}</td>
+                                <td>{info.lastSubscriptionStatus ? (<>{info?.lastSubscription?.name}</>) : "No Subscription"}</td>
+                    
+                            <td className={info.lastSubscription?.userStatus === true ? "customTable__statusActive" : "customTable__statusExpired"}>
+                                {info.lastSubscription?.userStatus === true ? "Active" : "Expired"}</td>
                             <td>
                                 <div className="d-flex">
 
-                                    {
-                                    info.block === true ? (
+                                    {info.block === true ? (
                                         <button className="customTable__delete "
-                                            style={
-                                                {
-                                                    position: "relative",
-                                                    padding: "13px"
-                                                }
-                                            }
+                                            style={{ position: "relative",padding: "13px"}}
                                             data-toggle="modal"
                                             data-target="#blockModal"
                                             onClick={

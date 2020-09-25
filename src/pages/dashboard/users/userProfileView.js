@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react'
-import profile from '../../../assets/profile.png'
 import CustomTextfield from '../../../customComponents/customTextfield'
 import CustomButton from '../../../customComponents/customButton'
 import {useHistory, Redirect} from 'react-router-dom'
@@ -7,9 +6,6 @@ import camera from '../../../assets/camera.png'
 import validator from 'validator'
 import UserDetailsContext from '../../../context/user/userDetailsContext'
 import SubscriptionContext from '../../../context/user-subscription/userSubcriptionContext'
-import days7 from '../../../assets/7.png'
-import days30 from '../../../assets/30.png'
-import days365 from '../../../assets/365.png'
 import noSubscriptionImg from "../../../assets/no-subscription.png"
 
 import axiosInstance from '../../../axios'
@@ -47,13 +43,10 @@ const UserProfileView = () => {
     const[loadingBtn , setLoadingBtn] = useState(false)
     const [successFullpopup, setSuccessfullPopup] = useState(false)
     const successfullToggle = () => setSuccessfullPopup(!successFullpopup);
+    const [profile , setProfile] = useState(null)
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-
-
+        setLoading(true);           
             console.log("User Details",context.userDetails);
             if (context.userDetails) {
 
@@ -68,30 +61,37 @@ const UserProfileView = () => {
                     else return 0
                 })
 
+                axiosInstance.get("/admin/image-setting/view",{
+                    headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+                }).then(({data}) => {
 
-                setUserInformation({
-                    ...UserInformation,
-                    id : context.userDetails._id,
-                    fname: context.userDetails.firstName,
-                    lname: context.userDetails.lastName,
-                    email: context.userDetails.email,
-                    conversions: context.userDetails.conversion.length,
-                    phone: context.userDetails.phoneNumber,
-                    country: context.userDetails.country[0].toUpperCase() + context.userDetails.country.slice(1),
-                    region: context.userDetails.state[0].toUpperCase() + context.userDetails.state.slice(1),
-                    city: context.userDetails.city[0].toUpperCase() + context.userDetails.city.slice(1),
-                    zip_code: context.userDetails.zipcode,
-                    gender: context.userDetails.gender[0].toUpperCase() + context.userDetails.gender.slice(1),
-                    subscription: shortedPlan,
-                    address: context.userDetails.location,
-                    image : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+context.userDetails.profileImage,
-                    lastSubscription : context.userDetails.lastSubscription,
-                    lastSubscriptionStatus : context.userDetails.lastSubscriptionStatus,
-                    countryCode : context.userDetails.countryCode
-                })
+                    setUserInformation({
+                        ...UserInformation,
+                        id : context.userDetails._id,
+                        fname: context.userDetails.firstName,
+                        lname: context.userDetails.lastName,
+                        email: context.userDetails.email,
+                        conversions: context.userDetails.conversion.length,
+                        phone: context.userDetails.phoneNumber,
+                        country: context.userDetails.country[0].toUpperCase() + context.userDetails.country.slice(1),
+                        region: context.userDetails.state[0].toUpperCase() + context.userDetails.state.slice(1),
+                        city: context.userDetails.city[0].toUpperCase() + context.userDetails.city.slice(1),
+                        zip_code: context.userDetails.zipcode,
+                        gender: context.userDetails.gender[0].toUpperCase() + context.userDetails.gender.slice(1),
+                        subscription: shortedPlan,
+                        address: context.userDetails.location,
+                        image :"http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+context.userDetails.profileImage ,
+                        lastSubscription : context.userDetails.lastSubscription,
+                        lastSubscriptionStatus : context.userDetails.lastSubscriptionStatus,
+                        countryCode : context.userDetails.countryCode
+                    })
+
+                    setProfile(data?.data[0]?.userIcon)
+                    setLoading(false);
+                }).catch(error => {
+                    console.log("Error in routerComponent", error);
+                })              
             }
-
-        }, 1000);
     }, [reload])
 
     const [error, setError] = useState({
@@ -183,7 +183,11 @@ const UserProfileView = () => {
                 setUserInformation({
                     ...UserInformation,
                     image: base64Image
-                })             
+                })     
+                setError({
+                    ...error,
+                    image : false
+                })        
             }
         }
          else {
@@ -241,8 +245,7 @@ const UserProfileView = () => {
                     setSuccessfullPopup(false)
                     setLoadingBtn(false);
                     setReload(!reload)                    
-                }, 1500);
-               
+                }, 1500);               
         }).catch(error => {
             console.log("Error in Posting user Data userProfileView.js" , error);
         })
@@ -257,10 +260,25 @@ const UserProfileView = () => {
 
     const onCancle = e => {
         e.preventDefault();
-        setReload(!reload)
+        setReload(!reload);
+        setImageFile(null)
+        setError({
+            fname: false,
+            lname: false,
+            email: false,
+            phone: false,
+            phone_length: false,
+            address: false,
+            city: false,
+            region: false,
+            country: false,
+            zip_code: false,
+            image: false, 
+            imageFile : false
+        })
     }
 
-    if (! context.userDetails) {
+    if (!context.userDetails) {
         return <Redirect to="/dashboard/users"/>
     }
 
@@ -285,8 +303,11 @@ const UserProfileView = () => {
                                     <p style={{lineHeight :"0.7" , color : "#707070"}}><small>Conversions</small></p>
                                                     </div>
                                                     <div style={{position : "relative"}}>
+                                                    {
+                                        error.image && <small className="text-danger">&#9888;&#160;Please select a image</small>
+                                    }
                                 <div className="text-center" style={{position : "relative" , width: "180px" , left:"50%" , transform : "translateX(-50%)"}}>
-                                        <img width="100rem" height="100rem" className= "rounded-circle" src={UserInformation ? UserInformation.image : profile} alt="profile" style={{color: "black"}}/>
+                                        <img width="100rem" height="100rem" className= "rounded-circle" src={UserInformation.image ? UserInformation.image :  `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${profile}`} alt="profile" style={{color: "black"}}/>
                                         <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="15rem" src={camera} alt="add" style={{marginTop : "-5px" }}/></label>
                                 </div>
                                 
@@ -308,9 +329,9 @@ const UserProfileView = () => {
                                 <label htmlFor="lname" style={{lineHeight :"0.4" , color : "#707070"}}>Second Name</label>
                                     <CustomTextfield customTextfield__input={error.lname ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"} type="text" placeholder="Last Name" name="lname" value={UserInformation.lname} handleChange={textChange}/>
                                 </div>
-                            </div>
-                
-            </div>
+                            </div>                
+                    </div>
+
                         </div>
                 </div>
                  
@@ -467,7 +488,7 @@ const UserProfileView = () => {
                                          <hr/>
                                          <div className="d-flex justify-content-center">
                                                 {loadingBtn ? (<div className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" onClick={checkSubmit} />
-                                             <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={onCancle}/></>)}
+                                             <CustomButton customButton__class="btn profile__canclebtn"  text="Cancel" handleClick={onCancle}/></>)}
                                          </div>
                                          
                                  </div>
@@ -475,7 +496,7 @@ const UserProfileView = () => {
                      
                              </div>
                              </form>
-                     </div>
+                        </div>
                          )}
                          <ConfirmationUpdateModal  modall={successFullpopup} tog={successfullToggle}/>
                       </>

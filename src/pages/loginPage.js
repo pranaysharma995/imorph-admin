@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import imoph3d from '../assets/imoph3d.png'
 import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
@@ -17,6 +17,15 @@ const LoginPage = () => {
 
     const [validation, setValidation] = useState({username: false, password: false, email: false, err_pass: false})
     const [check, setCheck] = useState(false)
+    const [logo , setLogo] = useState(null)
+
+    useEffect(() => {
+        axiosInstance.get("/admin/image-setting/view").then(({data}) => {
+            setLogo(data?.data[0]?.appLogo)
+        }).catch(error => {
+            console.log("Error in login Logo fetch", error);
+        })
+    }, [])
 
 
     const handleSubmit = (e) => {
@@ -81,16 +90,17 @@ const LoginPage = () => {
     }
 
     return (
-        <div className=" login__page">
+        <div className=" login__page container">
             <style>{'body { background-color: #009CB4; }'}</style>
 
             <div className="text-center mb-4 mt-4">
-                <img width="200rem"
-                    src={imoph3d}
+                <img width="200rem" height="100rem"
+                    src={`http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${logo}`}
                     alt="logo"
-                    style={
-                        {marginLeft: "30px"}
-                    }/>
+                    // style={
+                    //     {marginLeft: "30px"}
+                    // }
+                    />
             </div>
             <div className="text-center"
                 style={

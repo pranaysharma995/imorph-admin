@@ -1,11 +1,12 @@
 import React,{useState,useContext} from 'react'
-import logo from '../assets/imoph3d.png'
 import profile from '../assets/profile.png'
 import {Link , useHistory} from 'react-router-dom'
 import LogoutPromtModal from '../pages/dashboard/modal/logoutPromtModal'
-import AdminContext from '.././context/admin/adminDetailsContext'
 
+import AdminContext from '.././context/admin/adminDetailsContext'
 import ImageSettingsContext from '../context/imageSettings/imageSettingsContext'
+
+import axiosInstance from '../axios'
 
 
 const Navbar =() =>{
@@ -18,16 +19,22 @@ const Navbar =() =>{
     const logout= e => {
         e.preventDefault();
 
-        if(localStorage.getItem('uid')){
-            localStorage.removeItem("uid")
-            localStorage.removeItem("token")
-        }
-        if(sessionStorage.getItem("uid")){
-            sessionStorage.removeItem("uid")
-            sessionStorage.removeItem("token")
-        }
+        axiosInstance.get("/admin/sign-out").then(()=> {
+            if(localStorage.getItem('uid')){
+                localStorage.removeItem("uid")
+                localStorage.removeItem("token")
+            }
+            if(sessionStorage.getItem("uid")){
+                sessionStorage.removeItem("uid")
+                sessionStorage.removeItem("token")
+            }
 
-        history.push("/")
+            return history.push("/")
+        }).catch(error => {
+            console.log("Error in sign out nav.js",error );
+        })
+
+        
     }
 
     const toggleSideBar=e=> {
@@ -39,6 +46,7 @@ const Navbar =() =>{
             document.getElementById("sidebar").style.marginLeft="-240px"
             setRotate(false)
         }else{
+            document.getElementById("rotatebutton").style.transform = "rotate(90deg)"
             document.getElementById("sidebar").style.marginLeft="0px"
             setRotate(true)
         }
@@ -54,8 +62,7 @@ const Navbar =() =>{
                     <div className="collapse navbar-collapse justify-content-end">
                        <div style={{marginRight : "30px"}}>
                         
-                        <ul className="navbar-nav">
-                                
+                        <ul className="navbar-nav">                                
                                 <li className="nav-item" style={{marginRight : "20px"}}>
 
                                 <div className="dropdown ">

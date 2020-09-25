@@ -2,7 +2,7 @@ import React, {useState, useEffect,useContext} from 'react'
 import profile from '../../assets/profile.png'
 import CustomTextfield from '../../customComponents/customTextfield'
 import CustomButton from '../../customComponents/customButton'
-import {Link, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import camera from '../../assets/camera.png'
 import validator from 'validator'
 import ChangePasswordModal from './modal/changePasswordModal'
@@ -82,7 +82,7 @@ function ProfilePage({refresh , refreshValue}) {
                 
             //     setLoading(false)
             // }).catch(err => console.log("Error in admin fetch", err))
-    }, [adminData])
+    }, [adminData , reload])
 
 
     const textChange = e => {
@@ -195,6 +195,7 @@ function ProfilePage({refresh , refreshValue}) {
 
     const toggle = () => {
         setModal(!modal);
+       
     }
 
     const handleUpload = async e => {
@@ -220,7 +221,11 @@ function ProfilePage({refresh , refreshValue}) {
                 setAdminDetails({
                     ...adminDetails,
                     image: base64Image
-                })             
+                })  
+                setError({
+                    ...error,
+                    image : false
+                })          
             }
         }
          else {
@@ -238,6 +243,21 @@ function ProfilePage({refresh , refreshValue}) {
     const onCancle = e => {
         e.preventDefault();
         setReload(!reload)
+        setImageFile(null);
+        setError({
+            fname: false,
+            lname: false,
+            email: false,
+            phone: false,
+            phone_length: false,
+            address: false,
+            city: false,
+            region: false,
+            country: false,
+            zip_code: false,
+            image: false, 
+            imageFile : false
+        })
     }
 
     return (
@@ -612,7 +632,7 @@ function ProfilePage({refresh , refreshValue}) {
                                     ) : (
                                         <>
                                             <CustomButton customButton__class=" profile__footerBtn" text="Save" type="submit"/>
-                                            <CustomButton customButton__class="btn profile__backbtn" text="Cancel" handleClick={onCancle}/></>
+                                            <CustomButton customButton__class="btn profile__canclebtn" text="Cancel" handleClick={onCancle}/></>
                                     )
                                 } </div>
                             </div>

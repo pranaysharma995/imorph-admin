@@ -106,7 +106,7 @@ function Tos() {
           <ConfirmationUpdateModal modall={successFullpopup} tog={successfullToggle}/>
           <div className="d-flex justify-content-center" style={{paddingBottom: "2%"}}>
                  {loadingBtn ? (<div class="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn aboutus__btn-margin" text="Save"  handleClick={submit}/>
-                  <CustomButton customButton__class="btn profile__backbtn"  text="Cancel"  handleClick={onCancle}/></>)}
+                  <CustomButton customButton__class="btn profile__canclebtn"  text="Cancel"  handleClick={onCancle}/></>)}
            </div>
             
         </div>}

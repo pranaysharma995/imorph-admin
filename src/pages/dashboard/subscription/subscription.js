@@ -97,7 +97,7 @@ const Subscription = ({plan}) => {
                         >
                         <option value="All Enquiries">All Plans</option>
                         <option value="Active">Active</option>
-                        <option value="InActive">InActive</option>
+                        <option value="InActive">Inactive</option>
                     </select>
                 </label>
 

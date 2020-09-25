@@ -60,13 +60,10 @@ function Dashboard() {
 
 
     useEffect(()=> {
-        axiosInstance.get("/admin/image-setting/view",{
-            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
-        }).then(({data}) => {
+        axiosInstance.get("/admin/image-setting/view").then(({data}) => {
 
-            console.log("Image settings" , data?.data[0]);
-            setImageSettings(data?.data[0])
-
+            console.log("Image settings dashboard" , data?.data[0]);
+            setImageSettings(data?.data[0]);
         }).catch(error => {
             console.log("Error in routerComponent", error);
         })

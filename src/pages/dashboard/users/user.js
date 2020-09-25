@@ -56,8 +56,7 @@ const UsersPage =()=> {
       <>
       {loading ? (<div className="container text-center" style={{marginTop: "400px" , marginBottom : "50%"}}>   
       <div   className="spinner-border text-primary"></div>
-      </div>) : 
-            <CustomTable toggleValue={toggle} toggle={setToggle} tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={userData} results="23456"  uri="/dashboard/users/edit" list={subscriptionList}/>
+      </div>) : <CustomTable toggleValue={toggle} toggle={setToggle} tableClass="users__tableClass table-striped"  tableHeaderText={tableHeaderText} userData={userData} results="23456"  uri="/dashboard/users/edit" list={subscriptionList}/>
           }
         </>
     )

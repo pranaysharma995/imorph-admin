@@ -52,7 +52,7 @@ const ImageSettings = ({setRefresh, refresh}) => {
 
     const handleChange =async e=> {
         let file = e.target.files[0];
-        if(e.target.id === 'favicon'){
+        if(e.target.id === 'faviconn'){
             setImagesFile({
                 ...imagesFile,
                 favicon : file
@@ -196,6 +196,21 @@ const onSubmit=e=> {
     }
 }
 
+    const onCancle=e=> {
+        e.preventDefault();
+        setReload(!reload);
+        setImagesFile({
+            applogo : null,
+            favicon : null,
+            profile : null
+        })
+        setImages({
+            applogo : null,
+            favicon : null,
+            profile : null
+        })
+    }
+
 
     return (
         <>
@@ -242,7 +257,7 @@ const onSubmit=e=> {
                         <div style={{position: 'relative'}}>
                              <img  className="image-settings__logo" src={images.favicon!==null ? imagesFile.favicon!=null ? images.favicon : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+images.favicon : defaultImage} alt="logo"/>                            
                                            
-                                            <label htmlFor="favicon" className="image-settings__imgAdd rounded-circle text-center"><img width="15rem"
+                                            <label htmlFor="faviconn" className="image-settings__imgAdd rounded-circle text-center"><img width="15rem"
                                                     src={camera}
                                                     alt="add"
                                                     style={
@@ -250,7 +265,7 @@ const onSubmit=e=> {
                                                             marginTop: "-5px",
                                                         }
                                                     }/></label>
-                                     <input type="file" id="favicon" style={{display: "none"}} accept="image/*" onChange={handleChange}/>
+                                     <input type="file" id="faviconn" style={{display: "none"}} accept="image/*" onChange={handleChange}/>
 
 
                         </div>
@@ -280,7 +295,7 @@ const onSubmit=e=> {
             <ConfirmationUpdateModal modall={successFullpopup} tog={successfullToggle}/>
             <div className="d-flex justify-content-center">
                     {loadingBtn ? (<div  className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit"  handleClick={onSubmit} />
-                            <CustomButton customButton__class="btn profile__backbtn"  text="Cancel"/></>)}
+                            <CustomButton customButton__class="btn profile__canclebtn"  text="Cancel" handleClick={onCancle}/></>)}
                         </div>
             </div>)}
             

@@ -1,16 +1,13 @@
-
-
-
 /* loginpage */
 .login__page{
   position: absolute;
   left : 50%;
   top : 50%;
   transform : translate(-50% , -50%);
-  width : 450px;
+  max-width : 450px;
   background : #F6F7F9;
-  padding-left : 2vw;
-  padding-right : 2vw;
+  padding-left : 40px;
+  padding-right : 40px;
   border-radius: 15px;
   box-shadow: 2px 4px 10px rgba(0 ,0,0,0.1);
   
@@ -460,6 +457,23 @@
 .profile__backbtn:hover{
   color : #707070;
 }
+
+
+.profile__canclebtn{
+  border : 1px solid #009CB4;
+  padding : 3% 3vw;
+  color : #009CB4;
+  margin-top : 10px;
+  border-radius: 7px;
+  /* box-shadow: 1px 1px 3px rgba(0 ,0,0,0.1); */
+}
+.profile__canclebtn:focus{
+  box-shadow: none;
+  color : #009CB4;
+}
+.profile__canclebtn:hover{
+  color : #009CB4;
+}
 .profile__head{
   padding : 2px 20px;
 }
@@ -602,7 +616,7 @@
 
 .changePassSucc__modal{
   border-radius: 20px;
-  width : 30vw;
+  max-width : 590px;
 }
 /* users */
   .users__tableHeader{
@@ -1097,17 +1111,17 @@
   padding-bottom: 12%;
 }
 .subs__back-btn{
-  border : 1px solid #009CB4;
+  border : 1px solid #707070;
   padding : 3% 3vw;
-  color : #009CB4;
+  color :#707070;
   border-radius: 7px;
 }
 .subs__back-btn:focus{
   box-shadow: none;
-  color : #009CB4;
+  color : #707070;
 }
 .subs__back-btn:hover{
-  color : #009CB4;
+  color : #707070;
 }
 .loader{
   width: 100%;
@@ -1287,15 +1301,15 @@ padding: 0% 20%;
   padding: 1% 6%;
   color : #707070;
 }
-.inquiries-view__body textarea{
+.inquiries-view textarea{
   resize: none !important;
-  height: 20vh;
+  height: 70px;
   border :none;
   background-color: #F1F5F8;
   border-radius: 8px!important;
   padding: 1% 2%;
 }
-.inquiries-view__body textarea:focus ,.inquiries-view textarea:active{
+.inquiries-view textarea:focus ,.inquiries-view textarea:active{
   box-shadow: none;
   border : 1px solid #009CB4;
   background: #F1F5F8;
@@ -1303,6 +1317,48 @@ padding: 0% 20%;
 .inquiries-view__body input[type="checkbox"]{
   width: 20px;
   height: 20px;
+}
+.inquary__chat{
+  overflow: auto;
+  max-height: 350px;
+}
+.inquary__chat .msg img{
+  margin: auto 4px 32px;
+}
+.inquary__chat .msg p {
+  background-color : rgba(241, 209, 209, 0.685);
+  padding: 20px;
+  border-radius: 10px 10px 10px 0px;
+  margin-bottom: 8px;
+  width : fit-content;
+}
+
+.inquary__chat .rply{
+  margin-left: auto;  
+}
+.inquary__chat .rply img{
+  margin: auto 0px auto 10px;
+}
+.inquary__chat .rply p {
+  background-color :#F1F5F8;
+  padding: 20px;
+  border-radius: 10px 10px 0px 10px;
+  margin-bottom: 8px;
+  width : fit-content;
+  
+}
+.inquiries-view .customButton{
+  margin-left: auto;  
+}
+
+.inquiries-view .customButton button{
+  margin-right: 0px !important;
+}
+
+@media screen and (max-width: 500px){
+    .inquary__date{
+      font-size: 12px
+    }
 }
 
 /* Social Links */

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect , useRef} from 'react'
 import CustomButton from '../customComponents/customButton'
 import {useHistory, Redirect} from "react-router-dom"
 import validator from 'validator'
@@ -16,9 +16,10 @@ const VerificationPage =({value}) => {
         empty_error : false ,
         match_error : false
     });
+    const inputRef = useRef()
 
     useEffect(() => {
-        
+        value && inputRef.current.focus()
     }, [otp.input1])
 
     const history = useHistory();
@@ -122,7 +123,7 @@ const VerificationPage =({value}) => {
                 {error.empty_error && <small className="verification__errorMessage">&#9888;&#160;Please enter OTP properly</small>}
                 {error.match_error && <small className="verification__errorMessage">&#9888;&#160;OTP do not match</small>}
                 <div className="text-center " onKeyUp={keyUpFocus}> 
-                    <input style={{boxShadow: "0px 1px 3px rgba(0,0,0,0.1)"}} type="text" className={error.empty_error || error.match_error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input1" value={otp.input1} onChange={handleChange}/>
+                    <input ref={inputRef} style={{boxShadow: "0px 1px 3px rgba(0,0,0,0.1)"}} type="text" className={error.empty_error || error.match_error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input1" value={otp.input1} onChange={handleChange}/>
                     <input style={{boxShadow: "0px 1px 3px rgba(0,0,0,0.1)"}} type="text" className={error.empty_error || error.match_error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input2" value={otp.input2} onChange={handleChange}/>
                     <input style={{boxShadow: "0px 1px 3px rgba(0,0,0,0.1)"}} type="text" className={error.empty_error || error.match_error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input3" value={otp.input3} onChange={handleChange}/>
                     <input style={{boxShadow: "0px 1px 3px rgba(0,0,0,0.1)"}} type="text" className={error.empty_error || error.match_error ? "verification__input verification__errorInput" : "verification__input "} maxLength="1" name="input4" value={otp.input4} onChange={handleChange}/>

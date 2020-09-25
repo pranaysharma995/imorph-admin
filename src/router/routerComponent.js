@@ -9,9 +9,7 @@ import ResetPassword from '../pages/resetPassword'
 import ResetSuccessfull from '../pages/passwordResetSuccessful'
 import Dashboard from '../pages/dashboard';
 import AfterLoginRoute from '../route/afterLoginRoute'
-import ImageSettingsContext from '../context/imageSettings/imageSettingsContext'
-
-import axiosInstance from '../axios'
+import ErrorPage from '../pages/notfound/404'
 
 const RouterComponent = () => {
 
@@ -27,19 +25,13 @@ const RouterComponent = () => {
                 <Route exact path="/"
                     component={LoginPage}/>
                 <Route path="/forgotpassword"><ForgotPassword value={forgotText}/></Route>
-                <Route path="/verification"
-                    component={
-                        () => <VerificationPage value={text}/>
-                    }/>
-                <Route path="/resetpassword"
-                    component={
-                        () => <ResetPassword value={text}/>
-                    }/>
+                <Route path="/verification"> <VerificationPage value={text}/> </Route>
+                <Route path="/resetpassword"> <ResetPassword value={text}/> </Route>
                 <Route path="/resetsuccessfull"
                     component={ResetSuccessfull}/>
                 <AfterLoginRoute path="/dashboard"
                     component={Dashboard}/>
-
+                <Route component={ErrorPage}/>
             </Switch>
 
         </Router>

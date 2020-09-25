@@ -88,6 +88,7 @@ function Faq() {
 
         }else{
             if(question!=='' && answer!=='') {
+                setEditable(false)
                 setLoadingBtn(true);
                 let data = {
                     question,
@@ -132,7 +133,7 @@ function Faq() {
 
     const toggle = (e,id,value)=> {
         e.preventDefault();
-            setEditable(!editable)
+            setEditable(true)
             setEditableId(id);
             setEditQuestion(value.question)
             setEditAnswer(value.answer)
@@ -149,7 +150,9 @@ function Faq() {
         }
         setVisible(false);
         setQuestion('');
-        setAnswer('')
+        setAnswer('');
+        setEditQuestion("")
+        setEditAnswer("")
         setLoading(true)
         setReload(!reload)
     }
@@ -181,7 +184,7 @@ function Faq() {
         ): <div className ="faq">
             <form action="#">
             <div className="d-flex justify-content-end">                    
-                    <button className="faq__add-btn" style={{position : 'relative'}} onClick={(e) => { e.preventDefault();  setEditableId(false); setVisible(true)}}>
+                    <button className="faq__add-btn" style={{position : 'relative'}} onClick={(e) => { e.preventDefault();  setEditableId(false); setVisible(true); setEditable(false)}}>
                         <i className="fa fa-plus faq__plus-icon" aria-hidden="true"></i>
                             Add New
                     </button>
@@ -201,7 +204,7 @@ function Faq() {
 
                         {qa && qa.map((value , i) => (
                              <div className="card faq__card" key={i}>
-                             <div className="card-header faq__card-header" style={{position : "relative"}} href={`#jkfgfjgj${i}`} data-toggle="collapse" >
+                             <div className="card-header faq__card-header" style={{position : "relative"}} href={`#jkfgfjgj${i}`} data-toggle={editableId === i ? "" : "collapse"} >
                              <input type="text" value={!editable ? value.question : editableId === i ? editQuestion : value.question} disabled={editableId!==i ? "disabled" :!editable ? 'disabled' : ''}   onChange={e => setEditQuestion(e.target.value)}/>
                         
                             <div className="faq__btn" >
@@ -209,7 +212,7 @@ function Faq() {
                                 <button id="edit" className="faq__edit" onClick={(e) => toggle(e,i,value)}><i id="edit" className="fa fa-pencil" aria-hidden="true"  ></i></button>
                             </div>
                             </div>
-                            <div id={`jkfgfjgj${i}`} className="collapse" data-parent="#accordion">
+                            <div id={`jkfgfjgj${i}`} className={editableId === i ? "show" : "collapse"} data-parent="#accordion">
                             <div className="card-body faq__card-body">
                                 <textarea type="text" value={!editable ? value.answer : editableId === i ? editAnswer : value.answer} disabled={editableId!==i ? "disabled" :!editable ? 'disabled' : ''} onChange={e => setEditAnswer(e.target.value)}/>
                             </div>
@@ -220,7 +223,7 @@ function Faq() {
                         <hr/>
                         <div className="d-flex justify-content-center" style={{paddingBottom: "2%"}}>
                                 {loadingBtn ? (<div className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class=" profile__footerBtn aboutus__btn-margin" text="Save" handleClick={handleSave} />
-                                <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={handleCancel}/></>)}
+                                <CustomButton customButton__class="btn profile__canclebtn"  text="Cancel" handleClick={handleCancel}/></>)}
                         </div>
 
                 </div>

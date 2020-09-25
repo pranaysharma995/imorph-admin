@@ -9,12 +9,12 @@ const CreateSubscription = () => {
     const history = useHistory();
     const [loading , setLoading] = useState(false)
     const [name, setName] = useState('');
-    const [cost, setCost] = useState('');
+    const [cost, setCost] = useState(0);
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [imageFile, setImageFile] = useState('');
     const [checked , setChecked] = useState(false);
-    const [validity , setValidity] = useState('')
+    const [validity , setValidity] = useState(0)
     const [error , setError] = useState({
         plan_name : false,
         cost : false,
@@ -30,11 +30,11 @@ const CreateSubscription = () => {
             setError({
                 plan_name : true
             })
-        }else if(cost === ""){
+        }else if(cost === 0){
             setError({
                 cost : true
             })
-        }else if(validity === ''){
+        }else if(validity === 0){
             setError({
                 validity : true
             })
@@ -90,6 +90,7 @@ const CreateSubscription = () => {
             image : false, 
             validity: false
         })
+        console.log("Type of Validity ",typeof(validity));
         let data = new FormData();
         data.set("name" , name)
         data.set("cost" , cost)
@@ -121,6 +122,7 @@ const CreateSubscription = () => {
              
           </div>
           <hr style={{lineHeight: "0.4", marginTop: "-5px"}}/>
+          <p className="pl-4 text-danger"><small>**The subscription plan details can't be changed later</small></p>
           <div className = "createSubscription__body">
               <form method="POST" encType="multipart/form-data"  action="#" onSubmit={handleValidation}>
                 <div className="row justify-content-center">
@@ -134,7 +136,7 @@ const CreateSubscription = () => {
                             <label htmlFor="cost" style={{lineHeight :"0.4" , color : "#707070"}}>Cost(USD)</label>
                             <input id="cost" className={error.cost ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={cost} onChange={ e=> {
                                 if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
-                                    setCost(e.target.value)
+                                    setCost(Number(e.target.value))
                                 }
                                 }}/>
                         </div>
@@ -146,7 +148,7 @@ const CreateSubscription = () => {
                             <div className="d-flex">
                             <input id="validity" className={error.validity ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={validity} onChange={ e=> {
                                 if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
-                                    setValidity(e.target.value)
+                                    setValidity(Number(e.target.value))
                                 }
                             }}/>
                             <p style={{ color : "#707070", marginLeft : "10px"}}>Days</p>
@@ -184,11 +186,11 @@ const CreateSubscription = () => {
                 </form>
                 
           </div>
-          <p className="pl-4 text-danger"><small>**It cannot be changed later !!!</small></p>
+          
           <hr/>
           <div className="d-flex justify-content-center">
                  {loading ? (<div  className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" handleClick={handleValidation} />
-                         <CustomButton customButton__class="btn profile__backbtn"  text="Cancel"/></>)}
+                         <CustomButton customButton__class="btn profile__canclebtn"  text="Cancel"/></>)}
                     </div>
                    
 

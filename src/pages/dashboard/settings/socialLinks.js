@@ -132,7 +132,7 @@ const SocialLinks = () => {
             <hr/>
             <div className="d-flex justify-content-center">
                     {loadingBtn ? (<div  className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" handleClick={handleValidation} />
-                            <CustomButton customButton__class="btn profile__backbtn"  text="Cancel" handleClick={onCancle}/></>)}
+                            <CustomButton customButton__class="btn profile__canclebtn"  text="Cancel" handleClick={onCancle}/></>)}
                         </div>
             </div>)}
        </>
