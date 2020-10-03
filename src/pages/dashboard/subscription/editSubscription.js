@@ -47,9 +47,9 @@ const EditSubscription = ({plan}) => {
                     style={
                         {padding: "0.7% 1.6%"}
                 }>
-                    <h3 style={
-                        {color: "#707070"}
-                    }>Edit Subscription Plan</h3>
+                    <h5 style={
+                        {color: "#707070" , marginTop : "7px"}
+                    }>View Subscription Plan</h5>
 
                     <div>
                         <CustomButton customButton__class="btn subs__back-btn"  text="Back" handleClick={() => history.push("/dashboard/subscription")}/>
@@ -64,7 +64,7 @@ const EditSubscription = ({plan}) => {
                 <div className="createSubscription__body">
                     <form action="#">
                         <div className="row justify-content-center">
-                            <div className="col-md-6 ">
+                            <div className="col-md-6 subscription__padding ">
                                 <label htmlFor="name"
                                     style={
                                         {
@@ -80,7 +80,7 @@ const EditSubscription = ({plan}) => {
                                     value={name}
                                    disabled/>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-6 ">
                             
                                 <label htmlFor="cost"
                                     style={

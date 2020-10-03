@@ -60,11 +60,12 @@ const submit =e=> {
       console.log("After update" , result);
       setError(false)
       setSuccessfullPopup(!successFullpopup)
+      
       setTimeout(() => {
-        setReload(!reload)
         setSuccessfullPopup(false)
         setLoadingBtn(false);
-    }, 1500);
+        setReload(!reload)
+    }, 800);
 
     }).catch(error => {
       console.log("Error in About us update aboutus.js" , error);
@@ -93,7 +94,7 @@ const onCancle=e=> {
         </div>
     ) :<div className ="aboutus">
           <div style={{padding : "0.7% 1.6%"}}>
-             <h3 style={{color : "#707070"}}>About Us</h3>
+             <h5 style={{color : "#707070" ,marginTop : "9px"}}>About Us</h5>
           </div>
 
         

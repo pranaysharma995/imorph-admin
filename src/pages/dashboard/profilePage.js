@@ -34,23 +34,31 @@ function ProfilePage({refresh , refreshValue}) {
     })
     const [successFullpopup, setSuccessfullPopup] = useState(false)
     const [imageFile , setImageFile] = useState(null)
-    const [error, setError] = useState({
-        image: false,
-        fname: false,
-        lname: false,
-        email: false,
-        phone: false,
-        phone_length: false,
-        address: false,
-        city: false,
-        region: false,
-        country: false,
-        zip_code: false
-    })
+    //errors 
+    const [imageError , setImageError] = useState(false)
+    const [fNameError , setfNameError] = useState(false)
+    const [lNameError , setlNameError] = useState(false)
+    const [emailError , setEmailError] = useState(false)
+    const [phoneError , setPhoneError] = useState(false)
+    const [phoneLengthError , setPhoneLengthError] = useState(false)
+    const [addressError , setAddressError] = useState(false)
+    const [cityError , setCityError] = useState(false)
+    const [regionError , setRegionError] = useState(false)
+    const [countryError , setCountryError] = useState(false)
+    const [zipCodeError , setZipCodeError] = useState(false)
+
     const [loading, setLoading] = useState(false)
     const [loadingBtn, setLoadingBtn] = useState(false)
     const [reload, setReload] = useState(false)
     const successfullToggle = () => setSuccessfullPopup(!successFullpopup);
+
+    useEffect(() => {
+        if(fNameError||lNameError || emailError || phoneError || phoneLengthError || addressError
+             || cityError || regionError || countryError || zipCodeError || imageError){
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+             }
+        },[imageError , fNameError , lNameError , emailError, phoneError ,  phoneLengthError , addressError , cityError ,regionError ,countryError , zipCodeError  ])
 
     useEffect(() => {
         setLoading(true)
@@ -94,7 +102,15 @@ function ProfilePage({refresh , refreshValue}) {
                     [e.target.name]: e.target.value
                 })
             }
-        }else {
+        }else if(e.target.name === "zip_code"){
+            if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
+                setAdminDetails({
+                    ...adminDetails,
+                    [e.target.name]: e.target.value
+                })
+            }
+        }
+        else {
         setAdminDetails({
             ...adminDetails,
             [e.target.name]: e.target.value
@@ -109,51 +125,318 @@ function ProfilePage({refresh , refreshValue}) {
         //         alert();
         // }
         if (validator.isEmpty(adminDetails.fname)) {
-            setError({fname: true})
-        } else if (validator.isEmpty(adminDetails.lname)) {
-            setError({lname: true})
-        } else if (!validator.isEmail(adminDetails.email) || validator.isEmpty(adminDetails.email)) {
-            setError({email: true})
-        } else if (!validator.isInt(adminDetails.phone) || validator.isEmpty(adminDetails.phone)) {
-            setError({phone: true})
-        } else if (!validator.isLength(adminDetails.phone, {
+            setfNameError(true)
+
+            setImageError(false)
+                setlNameError(false)
+                setEmailError (false)
+                setPhoneError(false)
+                setPhoneLengthError(false)
+                setAddressError(false)
+                setCityError (false)
+                setRegionError (false)
+                setCountryError (false)
+                setZipCodeError(false)
+
+            if (validator.isEmpty(adminDetails.lname)) {
+                setlNameError(true)
+            }  if (!validator.isEmail(adminDetails.email) || validator.isEmpty(adminDetails.email)) {
+                setEmailError(true)
+            }  if (!validator.isInt(adminDetails.phone) || validator.isEmpty(adminDetails.phone)) {
+                setPhoneError(true)
+            }  else if (!validator.isLength(adminDetails.phone, {
+                min: 10,
+                max: 10
+            })) {
+                setPhoneLengthError(true)
+
+            }  if (validator.isEmpty(adminDetails.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(adminDetails.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(adminDetails.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }else if(validator.isEmpty(adminDetails.lname)){
+            setlNameError(true);
+
+            setImageError(false)
+            setfNameError (false)
+            setEmailError (false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (!validator.isEmail(adminDetails.email) || validator.isEmpty(adminDetails.email)) {
+                setEmailError(true)
+            }  if (!validator.isInt(adminDetails.phone) || validator.isEmpty(adminDetails.phone)) {
+                setPhoneError(true)
+            }  else if (!validator.isLength(adminDetails.phone, {
+                min: 10,
+                max: 10
+            })) {
+                setPhoneLengthError(true)
+
+            }  if (validator.isEmpty(adminDetails.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(adminDetails.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(adminDetails.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+
+        }
+        else if(!validator.isEmail(adminDetails.email) || validator.isEmpty(adminDetails.email)){
+            setEmailError(true)
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (!validator.isInt(adminDetails.phone) || validator.isEmpty(adminDetails.phone)) {
+                setPhoneError(true)
+            } else if (!validator.isLength(adminDetails.phone, {
+                min: 10,
+                max: 10
+            })) {
+                setPhoneLengthError(true)
+
+            }  if (validator.isEmpty(adminDetails.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(adminDetails.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(adminDetails.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+
+        else if(!validator.isInt(adminDetails.phone) || validator.isEmpty(adminDetails.phone)){
+            setPhoneError(true);
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (validator.isEmpty(adminDetails.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(adminDetails.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(adminDetails.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+
+        else if(!validator.isLength(adminDetails.phone, {
             min: 10,
             max: 10
-        })) {
-            setError({phone_length: true})
-        } else if (validator.isEmpty(adminDetails.address)) {
-            setError({address: true})
-        } else if (validator.isEmpty(adminDetails.city)) {
-            setError({city: true})
-        } else if (validator.isEmpty(adminDetails.country)) {
-            setError({country: true})
-        } else if (validator.isEmpty(adminDetails.region)) {
-            setError({region: true})
-        } else if (validator.isEmpty(adminDetails.zip_code)) {
-            setError({zip_code: true})
-        } else if (adminDetails.image == null) {
-            setError({image: true})
-        } else {
+        })){
+            setPhoneLengthError(true)
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+
+            if (validator.isEmpty(adminDetails.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(adminDetails.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(adminDetails.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+
+        else if(validator.isEmpty(adminDetails.address)){
+            setAddressError(true)
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (validator.isEmpty(adminDetails.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(adminDetails.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(adminDetails.city)){
+            setCityError(true)
+
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (validator.isEmpty(adminDetails.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(adminDetails.country)){
+            setCountryError(true)
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setZipCodeError(false)
+
+
+            if (validator.isEmpty(adminDetails.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(adminDetails.region)){
+            setRegionError(true)
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (validator.isEmpty(adminDetails.zip_code)) {
+                setZipCodeError(true)
+            } if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(adminDetails.zip_code)){
+            setZipCodeError(true)
+
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+
+            if (adminDetails.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(adminDetails.image == null){
+            setImageError(true)
+        }
+         else {
             submit();
         }
     }
 
     const submit = () => {
         setLoadingBtn(true);
-        setError({
-            fname: false,
-            lname: false,
-            email: false,
-            phone: false,
-            phone_length: false,
-            address: false,
-            city: false,
-            region: false,
-            country: false,
-            zip_code: false,
-            image: false, 
-            imageFile : false
-        })
+       
+        setImageError(false)
+        setfNameError (false)
+        setlNameError(false)
+        setEmailError (false)
+        setPhoneError(false)
+        setPhoneLengthError(false)
+        setAddressError(false)
+        setCityError (false)
+        setRegionError (false)
+        setCountryError (false)
+        setZipCodeError(false)
+
         let data = new FormData();
         data.set("id", localStorage.getItem('uid') ? localStorage.getItem('uid') : sessionStorage.getItem('uid'));
         data.set("firstName", adminDetails.fname)
@@ -181,7 +464,7 @@ function ProfilePage({refresh , refreshValue}) {
                 setSuccessfullPopup(false)
                 setLoadingBtn(false);
                 setImageFile(null)
-            }, 1500);
+            }, 600);
             
         }).catch(error => {
             console.log("Error in Admin Update", error);
@@ -222,17 +505,11 @@ function ProfilePage({refresh , refreshValue}) {
                     ...adminDetails,
                     image: base64Image
                 })  
-                setError({
-                    ...error,
-                    image : false
-                })          
+                setImageError (false)          
             }
         }
          else {
-            setError({
-                ...error,
-                image : true
-            })
+            setImageError (false)   
             setAdminDetails({
                 ...adminDetails,
                 image: null
@@ -244,20 +521,18 @@ function ProfilePage({refresh , refreshValue}) {
         e.preventDefault();
         setReload(!reload)
         setImageFile(null);
-        setError({
-            fname: false,
-            lname: false,
-            email: false,
-            phone: false,
-            phone_length: false,
-            address: false,
-            city: false,
-            region: false,
-            country: false,
-            zip_code: false,
-            image: false, 
-            imageFile : false
-        })
+
+        setImageError(false)
+        setfNameError (false)
+        setlNameError(false)
+        setEmailError (false)
+        setPhoneError(false)
+        setPhoneLengthError(false)
+        setAddressError(false)
+        setCityError (false)
+        setRegionError (false)
+        setCountryError (false)
+        setZipCodeError(false)
     }
 
     return (
@@ -297,7 +572,7 @@ function ProfilePage({refresh , refreshValue}) {
 
                                     <div className="col-lg-3">
                                         {
-                                        error.image && <small className="profile__error">&#9888;&#160;Please select a image</small>
+                                        imageError  && <small className="profile__error">&#9888;&#160;Please select a image</small>
                                     }
                                         <div className="text-center" style={
                                             {
@@ -345,7 +620,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                     {position: "relative"}
                                             }>
                                                 {
-                                                error.fname && <small className="profile__error">&#9888;&#160;Please enter first name</small>
+                                                fNameError  && <small className="profile__error">&#9888;&#160;Please enter first name</small>
                                             }
                                                 <label htmlFor="fname"
                                                     style={
@@ -355,7 +630,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                         }
                                                 }>First Name</label>
                                                 <CustomTextfield customTextfield__input={
-                                                        error.fname ? "form-control profile__input profile__errorInput" : "form-control profile__input"
+                                                        fNameError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"
                                                     }
                                                     type="text"
                                                     placeholder="First Name"
@@ -367,7 +642,7 @@ function ProfilePage({refresh , refreshValue}) {
                                             </div>
                                             <div className="col-md-6">
                                                 {
-                                                error.lname && <small className="profile__error">&#9888;&#160;Please enter second name</small>
+                                                lNameError  && <small className="profile__error">&#9888;&#160;Please enter second name</small>
                                             }
                                                 <label htmlFor="lname"
                                                     style={
@@ -377,7 +652,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                         }
                                                 }>Second Name</label>
                                                 <CustomTextfield customTextfield__input={
-                                                        error.lname ? "form-control profile__input profile__errorInput" : "form-control profile__input"
+                                                        lNameError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"
                                                     }
                                                     type="text"
                                                     placeholder="Last Name"
@@ -391,7 +666,7 @@ function ProfilePage({refresh , refreshValue}) {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 {
-                                                error.email && <small className="profile__error">&#9888;&#160;Please enter email properly</small>
+                                                emailError  && <small className="profile__error">&#9888;&#160;Please enter email properly</small>
                                             }
                                                 <label htmlFor="email"
                                                     style={
@@ -401,7 +676,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                         }
                                                 }>Email</label>
                                                 <CustomTextfield customTextfield__input={
-                                                        error.email ? "form-control profile__input profile__errorInput" : "form-control profile__input"
+                                                        emailError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"
                                                     }
                                                     type="text"
                                                     placeholder="Email"
@@ -413,10 +688,10 @@ function ProfilePage({refresh , refreshValue}) {
                                             </div>
                                             <div className="col-md-6">
                                                 {
-                                                error.phone && <small className="profile__error">&#9888;&#160;Please enter a number</small>
+                                                phoneError  && <small className="profile__error">&#9888;&#160;Please enter a number</small>
                                             }
                                                 {
-                                                error.phone_length && <small className="profile__error">&#9888;&#160;Enter a valid number</small>
+                                               phoneLengthError && <small className="profile__error">&#9888;&#160;Enter a valid number</small>
                                             }
                                                 <label htmlFor="phone"
                                                     style={
@@ -431,7 +706,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                     <CountryCode name="countryCode" value={adminDetails.countryCode} handleContryCodeChange={textChange}/>
                                                     </div>
                                                     <input className={
-                                                        error.phone || error.phone_length ? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
+                                                        phoneError  || phoneLengthError ? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
                                                     }
                                                     type="text"
                                                     placeholder="Phone"
@@ -453,7 +728,7 @@ function ProfilePage({refresh , refreshValue}) {
                                 <div className="row">
                                     <div className="col">
                                         {
-                                        error.address && <small className="profile__error">&#9888;&#160;Phone enter address</small>
+                                        addressError && <small className="profile__error">&#9888;&#160;Phone enter address</small>
                                     }
                                         <label htmlFor="address"
                                             style={
@@ -463,7 +738,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                 }
                                         }>Address</label>
                                         <CustomTextfield customTextfield__input={
-                                                error.address ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"
+                                                addressError ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"
                                             }
                                             type="text"
                                             name="address"
@@ -474,11 +749,10 @@ function ProfilePage({refresh , refreshValue}) {
                                     </div>
                                 </div>
                                 <div className="row mt-2">
-                                    <div className="col-lg-4">
-                                        <div className="row">
-                                            <div className="col">
+                                    <div className="col-md-4">                               
+                                        
                                                 {
-                                                error.city && <small className="profile__error">&#9888;&#160;Please enter city</small>
+                                                cityError && <small className="profile__error">&#9888;&#160;Please enter city</small>
                                             }
                                                 <label htmlFor="city"
                                                     style={
@@ -488,7 +762,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                         }
                                                 }>City</label><br/>
                                                 <CustomTextfield customTextfield__input={
-                                                        error.city ? "form-control profile__input profile__errorInput" : "form-control profile__input"
+                                                        cityError ? "form-control profile__input profile__errorInput" : "form-control profile__input"
                                                     }
                                                     type="text"
                                                     name="city"
@@ -496,15 +770,12 @@ function ProfilePage({refresh , refreshValue}) {
                                                         adminDetails.city
                                                     }
                                                     handleChange={textChange}/>
-                                            </div>
-                                        </div>
+                                           
                                     </div>
-                                    <div className="col-lg-4">
-                                        <div className="row">
-                                            <div className="col">
-
+                                    <div className="col-md-4 mb-4">
+                                       
                                                 {
-                                                error.region && <small className="profile__error">&#9888;&#160;please select your state</small>
+                                                regionError && <small className="profile__error">&#9888;&#160;please select your state</small>
                                             }
                                                 <label htmlFor="state"
                                                     style={
@@ -526,14 +797,12 @@ function ProfilePage({refresh , refreshValue}) {
                                                             region: val
                                                         })
                                                     }/>
-                                            </div>
-                                        </div>
+                                            
                                     </div>
-                                    <div className="col-lg-4">
-                                        <div className="row">
-                                            <div className="col">
+                                    <div className="col-md-4">
+                                        
                                                 {
-                                                error.country && <small className="profile__error">&#9888;&#160;please select your country</small>
+                                                countryError  && <small className="profile__error">&#9888;&#160;please select your country</small>
                                             }
                                                 <label htmlFor="country"
                                                     style={
@@ -552,18 +821,16 @@ function ProfilePage({refresh , refreshValue}) {
                                                             country: val
                                                         })
                                                     }/>
-                                            </div>
-                                        </div>
+                                            
                                     </div>
 
                                 </div>
 
 
-                                <div className="row mt-4">
+                                <div className="row mt-3 profile__grnderPadding">
 
-                                    <div className="col-lg-6">
-                                        <div className="row">
-                                            <div className="col">
+                                    <div className="col-md-6 mb-4">
+                    
                                                 <label htmlFor="gender"
                                                     style={
                                                         {
@@ -580,14 +847,13 @@ function ProfilePage({refresh , refreshValue}) {
                                                     <option value="Female">Female</option>
                                                     <option value="Other">Other</option>
                                                 </select>
-                                            </div>
-                                           </div>
+                                          
                                     </div>
-                                    <div className="col-lg-6">
+                                    <div className="col-md-6">
                                         <div className="row">
                                             <div className="col">
                                                 {
-                                                error.zip_code && <small className="profile__error">&#9888;&#160;Phone enter zip code</small>
+                                                zipCodeError && <small className="profile__error">&#9888;&#160;Phone enter zip code</small>
                                             }
                                                 <label htmlFor="zip_code"
                                                     style={
@@ -597,7 +863,7 @@ function ProfilePage({refresh , refreshValue}) {
                                                         }
                                                 }>Zip Code</label>
                                                 <CustomTextfield customTextfield__input={
-                                                        error.zip_code ? "form-control profile__input profile__errorInput" : "form-control profile__input"
+                                                        zipCodeError ? "form-control profile__input profile__errorInput" : "form-control profile__input"
                                                     }
                                                     type="text"
                                                     placeholder="Enter zip code"
@@ -615,7 +881,7 @@ function ProfilePage({refresh , refreshValue}) {
                                     {
                                         lineHeight: "0.4",
                                         color: "#009CB4",
-                                        marginBottom: "60px",
+                                        marginBottom: "45px",
                                         textDecoration: "underline"
                                     }
                                 }>

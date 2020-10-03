@@ -94,20 +94,29 @@ const UserProfileView = () => {
             }
     }, [reload])
 
-    const [error, setError] = useState({
-        fname: false,
-        lname: false,
-        email: false,
-        phone: false,
-        phone_length: false,
-        address: false,
-        city: false,
-        region: false,
-        country: false,
-        zip_code: false,
-        image : false
 
-    })
+    const [imageError , setImageError] = useState(false)
+    const [fNameError , setfNameError] = useState(false)
+    const [lNameError , setlNameError] = useState(false)
+    const [emailError , setEmailError] = useState(false)
+    const [phoneError , setPhoneError] = useState(false)
+    const [phoneLengthError , setPhoneLengthError] = useState(false)
+    const [addressError , setAddressError] = useState(false)
+    const [cityError , setCityError] = useState(false)
+    const [regionError , setRegionError] = useState(false)
+    const [countryError , setCountryError] = useState(false)
+    const [zipCodeError , setZipCodeError] = useState(false)
+
+    useEffect(() => {
+        if(fNameError||lNameError || emailError || phoneError || phoneLengthError || addressError
+             || cityError || regionError || countryError || zipCodeError || imageError){
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+             }
+        },[imageError , fNameError , lNameError , emailError, phoneError ,  phoneLengthError , addressError , cityError ,regionError ,countryError , zipCodeError  ])
+
+
+
     const textChange = e => {
         e.preventDefault();
         if(e.target.name === "phone"){
@@ -117,7 +126,15 @@ const UserProfileView = () => {
                     [e.target.name]: e.target.value
                 })
             }
-        }else {
+        }else if(e.target.name === "zip_code"){
+            if(e.target.value === '' || /^[0-9\b]+$/.test(e.target.value)){
+                setUserInformation({
+                    ...UserInformation,
+                    [e.target.name]: e.target.value
+                })
+            }
+        }
+        else {
         setUserInformation({
             ...UserInformation,
             [e.target.name]: e.target.value
@@ -129,32 +146,312 @@ const UserProfileView = () => {
         e.preventDefault();
 
 
-        if (UserInformation.fname== undefined || validator.isEmpty(UserInformation.fname)) {
-            setError({fname: true})
-        } else if (validator.isEmpty(UserInformation.lname)) {
-            setError({lname: true})
-        } else if (!validator.isEmail(UserInformation.email) || validator.isEmpty(UserInformation.email)) {
-            setError({email: true})
-        } else if (!validator.isInt(UserInformation.phone) || validator.isEmpty(UserInformation.phone)) {
-            setError({phone: true})
-        } else if (!validator.isLength(UserInformation.phone, {
+        if (validator.isEmpty(UserInformation.fname)) {
+            setfNameError(true)
+            
+                setImageError(false)
+                setlNameError(false)
+                setEmailError (false)
+                setPhoneError(false)
+                setPhoneLengthError(false)
+                setAddressError(false)
+                setCityError (false)
+                setRegionError (false)
+                setCountryError (false)
+                setZipCodeError(false)
+            if (validator.isEmpty(UserInformation.lname)) {
+                setlNameError(true)
+            }  if (!validator.isEmail(UserInformation.email) || validator.isEmpty(UserInformation.email)) {
+                setEmailError(true)
+                
+            }  if (!validator.isInt(UserInformation.phone) || validator.isEmpty(UserInformation.phone)) {
+                setPhoneError(true)
+            } else if (!validator.isLength(UserInformation.phone, {
+                min: 10,
+                max: 10
+            })) {
+                setPhoneLengthError(true)
+
+            }  if (validator.isEmpty(UserInformation.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(UserInformation.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(UserInformation.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }else if(validator.isEmpty(UserInformation.lname)){
+            setlNameError(true);
+            
+         setImageError(false)
+         setfNameError (false)
+         setEmailError (false)
+         setPhoneError(false)
+         setPhoneLengthError(false)
+         setAddressError(false)
+         setCityError (false)
+         setRegionError (false)
+         setCountryError (false)
+         setZipCodeError(false)
+
+
+            if (!validator.isEmail(UserInformation.email) || validator.isEmpty(UserInformation.email)) {
+                setEmailError(true)
+            }  if (!validator.isInt(UserInformation.phone) || validator.isEmpty(UserInformation.phone)) {
+                setPhoneError(true)
+            } else if (!validator.isLength(UserInformation.phone, {
+                min: 10,
+                max: 10
+            })) {
+                setPhoneLengthError(true)
+
+            }  if (validator.isEmpty(UserInformation.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(UserInformation.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(UserInformation.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+
+        }
+        else if(!validator.isEmail(UserInformation.email) || validator.isEmpty(UserInformation.email)){
+            setEmailError(true)
+            
+         setImageError(false)
+         setfNameError (false)
+         setlNameError(false)
+         setPhoneError(false)
+         setPhoneLengthError(false)
+         setAddressError(false)
+         setCityError (false)
+         setRegionError (false)
+         setCountryError (false)
+         setZipCodeError(false)
+
+            if (!validator.isInt(UserInformation.phone) || validator.isEmpty(UserInformation.phone)) {
+                setPhoneError(true)
+            } else if (!validator.isLength(UserInformation.phone, {
+                min: 10,
+                max: 10
+            })) {
+                setPhoneLengthError(true)
+
+            }  if (validator.isEmpty(UserInformation.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(UserInformation.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(UserInformation.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }
+
+        else if(!validator.isInt(UserInformation.phone) || validator.isEmpty(UserInformation.phone)){
+            setPhoneError(true);
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+             if (validator.isEmpty(UserInformation.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(UserInformation.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(UserInformation.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }
+
+        else if(!validator.isLength(UserInformation.phone, {
             min: 10,
             max: 10
-        })) {
-            setError({phone_length: true})
-        } else if (UserInformation.address == undefined || validator.isEmpty(UserInformation.address)  ) {
-            setError({address: true})
-        } else if (validator.isEmpty(UserInformation.city)) {
-            setError({city: true})
-        } else if (validator.isEmpty(UserInformation.country)) {
-            setError({country: true})
-        } else if (validator.isEmpty(UserInformation.region)) {
-            setError({region: true})
-        } else if (validator.isEmpty(UserInformation.zip_code)) {
-            setError({zip_code: true})
-        }else if (UserInformation.image == null) {
-            setError({image: true})
-        } else {
+        })){
+            setPhoneLengthError(true)
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setAddressError(false)
+            setCityError (false)
+            setRegionError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (validator.isEmpty(UserInformation.address)) {
+                setAddressError(true)
+            }  if (validator.isEmpty(UserInformation.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(UserInformation.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }
+
+        else if(validator.isEmpty(UserInformation.address)){
+            setAddressError(true)
+
+            
+         setImageError(false)
+         setfNameError (false)
+         setlNameError(false)
+         setEmailError (false)
+         setPhoneError(false)
+         setPhoneLengthError(false)
+         setCityError (false)
+         setRegionError (false)
+         setCountryError (false)
+         setZipCodeError(false)
+
+            if (validator.isEmpty(UserInformation.city)) {
+                setCityError(true)
+            } if (validator.isEmpty(UserInformation.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(UserInformation.city)){
+            setCityError(true)
+
+            
+         setImageError(false)
+         setfNameError (false)
+         setlNameError(false)
+         setEmailError (false)
+         setPhoneError(false)
+         setPhoneLengthError(false)
+         setAddressError(false)
+         setRegionError (false)
+         setCountryError (false)
+         setZipCodeError(false)
+
+            if (validator.isEmpty(UserInformation.country)) {
+                setCountryError(true)
+            }  if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(UserInformation.country)){
+            setCountryError(true)
+
+            
+         setImageError(false)
+         setfNameError (false)
+         setlNameError(false)
+         setEmailError (false)
+         setPhoneError(false)
+         setPhoneLengthError(false)
+         setAddressError(false)
+         setCityError (false)
+         setRegionError (false)
+         setZipCodeError(false)
+
+            if (validator.isEmpty(UserInformation.region)) {
+                setRegionError(true)
+            }  if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(UserInformation.region)){
+            setRegionError(true)
+
+            setImageError(false)
+            setfNameError (false)
+            setlNameError(false)
+            setEmailError (false)
+            setPhoneError(false)
+            setPhoneLengthError(false)
+            setAddressError(false)
+            setCityError (false)
+            setCountryError (false)
+            setZipCodeError(false)
+
+            if (validator.isEmpty(UserInformation.zip_code)) {
+                setZipCodeError(true)
+            } if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }
+        else if(validator.isEmpty(UserInformation.zip_code)){
+            setZipCodeError(true)
+
+            
+         setImageError(false)
+         setfNameError (false)
+         setlNameError(false)
+         setEmailError (false)
+         setPhoneError(false)
+         setPhoneLengthError(false)
+         setAddressError(false)
+         setCityError (false)
+         setRegionError (false)
+         setCountryError (false)
+
+            if (UserInformation.image == null) {
+                setImageError(true)
+            }
+        }else if(UserInformation.image == null){
+            setImageError(true)
+
+            
+         setfNameError (false)
+         setlNameError(false)
+         setEmailError (false)
+         setPhoneError(false)
+         setPhoneLengthError(false)
+         setAddressError(false)
+         setCityError (false)
+         setRegionError (false)
+         setCountryError (false)
+         setZipCodeError(false)
+        }
+         else {
             submit();
         }
     }
@@ -184,17 +481,11 @@ const UserProfileView = () => {
                     ...UserInformation,
                     image: base64Image
                 })     
-                setError({
-                    ...error,
-                    image : false
-                })        
+                setImageError (false)          
             }
         }
          else {
-            setError({
-                ...error,
-                image : true
-            })
+            setImageError (false)   
             setUserInformation({
                 ...UserInformation,
                 image: null
@@ -205,20 +496,18 @@ const UserProfileView = () => {
     const submit = () => {
         
         setLoadingBtn(true);
-        setError({
-            fname: false,
-            lname: false,
-            email: false,
-            phone: false,
-            phone_length: false,
-            address: false,
-            city: false,
-            region: false,
-            country: false,
-            zip_code: false,
-            image: false, 
-            imageFile : false
-        })
+
+        setImageError(false)
+        setfNameError (false)
+        setlNameError(false)
+        setEmailError (false)
+        setPhoneError(false)
+        setPhoneLengthError(false)
+        setAddressError(false)
+        setCityError (false)
+        setRegionError (false)
+        setCountryError (false)
+        setZipCodeError(false)
 
         let useData = new FormData();
         useData.set("userID", UserInformation.id );
@@ -245,7 +534,7 @@ const UserProfileView = () => {
                     setSuccessfullPopup(false)
                     setLoadingBtn(false);
                     setReload(!reload)                    
-                }, 1500);               
+                }, 650);               
         }).catch(error => {
             console.log("Error in Posting user Data userProfileView.js" , error);
         })
@@ -262,20 +551,19 @@ const UserProfileView = () => {
         e.preventDefault();
         setReload(!reload);
         setImageFile(null)
-        setError({
-            fname: false,
-            lname: false,
-            email: false,
-            phone: false,
-            phone_length: false,
-            address: false,
-            city: false,
-            region: false,
-            country: false,
-            zip_code: false,
-            image: false, 
-            imageFile : false
-        })
+
+
+         setImageError(false)
+        setfNameError (false)
+        setlNameError(false)
+        setEmailError (false)
+        setPhoneError(false)
+        setPhoneLengthError(false)
+        setAddressError(false)
+        setCityError (false)
+        setRegionError (false)
+        setCountryError (false)
+        setZipCodeError(false)
     }
 
     if (!context.userDetails) {
@@ -304,10 +592,10 @@ const UserProfileView = () => {
                                                     </div>
                                                     <div style={{position : "relative"}}>
                                                     {
-                                        error.image && <small className="text-danger">&#9888;&#160;Please select a image</small>
+                                        imageError  && <small className="text-danger">&#9888;&#160;Please select a image</small>
                                     }
                                 <div className="text-center" style={{position : "relative" , width: "180px" , left:"50%" , transform : "translateX(-50%)"}}>
-                                        <img width="100rem" height="100rem" className= "rounded-circle" src={UserInformation.image ? UserInformation.image :  `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${profile}`} alt="profile" style={{color: "black"}}/>
+                                        <img style={{objectFit :'cover'}} width="100rem" height="100rem" className= "rounded-circle" src={UserInformation.image ? UserInformation.image :  `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${profile}`} alt="profile" style={{color: "black"}}/>
                                         <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="15rem" src={camera} alt="add" style={{marginTop : "-5px" }}/></label>
                                 </div>
                                 
@@ -320,14 +608,14 @@ const UserProfileView = () => {
                             
                             <div className="row">
                                 <div className="col" style={{position : "relative"}}>
-                                {error.fname && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter first name</small>}
+                                {fNameError  && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter first name</small>}
                                 <label htmlFor="fname" style={{lineHeight :"0.4" , color : "#707070"}}>First Name</label>
-                                    <CustomTextfield customTextfield__input={error.fname ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"}  type="text" placeholder="First Name" name="fname" value={UserInformation.fname} handleChange={textChange}/>
+                                    <CustomTextfield customTextfield__input={fNameError  ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"}  type="text" placeholder="First Name" name="fname" value={UserInformation.fname} handleChange={textChange}/>
                                 </div>
                                 <div className="col">
-                                {error.lname && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter second name</small>}
+                                {lNameError  && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter second name</small>}
                                 <label htmlFor="lname" style={{lineHeight :"0.4" , color : "#707070"}}>Second Name</label>
-                                    <CustomTextfield customTextfield__input={error.lname ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"} type="text" placeholder="Last Name" name="lname" value={UserInformation.lname} handleChange={textChange}/>
+                                    <CustomTextfield customTextfield__input={lNameError  ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"} type="text" placeholder="Last Name" name="lname" value={UserInformation.lname} handleChange={textChange}/>
                                 </div>
                             </div>                
                     </div>
@@ -335,23 +623,23 @@ const UserProfileView = () => {
                         </div>
                 </div>
                  
-                <div className="col-md-12 profile__first p-4 mt-3">
+                <div className="col-md-12 profile__first p-4 mt-4 pt-4">
                             <div className="row">
-                   <div className="col">
-                   {error.email && <small className="profile__error">&#9888;&#160;Please enter a valid email</small>}
+                   <div className="col-md-6">
+                   {emailError  && <small className="profile__error">&#9888;&#160;Please enter a valid email</small>}
                    <label htmlFor="email" style={{lineHeight :"0.4" , color : "#707070"}}>Email</label>
-                       <CustomTextfield customTextfield__input={error.email ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Email" name="email" value={UserInformation.email} handleChange={textChange}/>
+                       <CustomTextfield customTextfield__input={emailError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Email" name="email" value={UserInformation.email} handleChange={textChange}/>
                    </div>
-                   <div className="col">
-                   {error.phone && <small className="profile__error">&#9888;&#160;Please enter a number</small>}
-                   {error.phone_length && <small className="profile__error">&#9888;&#160;Enter a valid number</small>}
+                   <div className="col-md-6">
+                   {phoneError  && <small className="profile__error">&#9888;&#160;Please enter a number</small>}
+                   {phoneLengthError  && <small className="profile__error">&#9888;&#160;Enter a valid number</small>}
                    <label htmlFor="phone" style={{lineHeight :"0.4" , color : "#707070"}}>Phone Number</label>
                    <div className="input-group mb-3">
                             <div className="input-group-prepend" style={{width : "20%"}}>
                                 <CountryCode name="countryCode" value={UserInformation.countryCode} handleContryCodeChange={textChange}/>
                                     </div>
                                 <input className={
-                                        error.phone || error.phone_length ? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
+                                       phoneError|| phoneLengthError? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
                                     }
                                     type="text"
                                     placeholder="Phone"
@@ -363,69 +651,68 @@ const UserProfileView = () => {
                                 </div>
                    </div>
                              </div>
-                        <div className="row">
-                            <div className="col">
-                {error.address && <small className="profile__error">&#9888;&#160;Please enter address</small>}
+                        <div className="row mt-2">
+                            <div className="col-md-12">
+                {addressError  && <small className="profile__error">&#9888;&#160;Please enter address</small>}
                <label htmlFor="address" style={{lineHeight :"0.4" , color : "#707070"}}>Address</label>
-               <CustomTextfield customTextfield__input={error.address ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"} type="text"  name="address" value={UserInformation.address} handleChange={textChange}/>
+               <CustomTextfield customTextfield__input={addressError  ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"} type="text"  name="address" value={UserInformation.address} handleChange={textChange}/>
                             </div>
                         </div>
                         <div className="row mt-2">
-                        <div className="col-md-4">
+                         <div className="col-md-4">
                             <div className="row">
-               <div className="col">
-                   {error.city && <small className="profile__error">&#9888;&#160;Please enter city</small>}
-                   <label htmlFor="city" style={{lineHeight :"0.4" , color : "#707070"}}>City</label>
-                   <CustomTextfield customTextfield__input={error.city ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="text"  name="city" value={UserInformation.city} handleChange={textChange}/>
-               </div>
+                                <div className="col mb-1">
+                                    {cityError  && <small className="profile__error">&#9888;&#160;Please enter city</small>}
+                                    <label htmlFor="city" style={{lineHeight :"0.4" , color : "#707070"}}>City</label>
+                                    <CustomTextfield customTextfield__input={cityError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="text"  name="city" value={UserInformation.city} handleChange={textChange}/>
                                 </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="row">
-                   <div className="col">
-                       {error.region && <small className="profile__error">&#9888;&#160;please select your state</small>}
-                       <label htmlFor="state" style={{lineHeight :"0.4" , color : "#707070"}}>State</label><br/>
-                       <RegionDropdown className="form-control profile__select" country={UserInformation.country}  value={UserInformation.region}  onChange={(val) => setUserInformation({...UserInformation , region: val})} />
-                   </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="row">
-               <div className="col">
-                   {error.country && <small className="profile__error">&#9888;&#160;please select your country</small>}
-                   <label htmlFor="country" style={{lineHeight :"0.4" , color : "#707070"}}>Country</label>
-                   <CountryDropdown className="form-control profile__select" value={UserInformation.country}   onChange={(val) => setUserInformation({...UserInformation , country: val})} />
-               </div>
-                                </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <div className="row">
+                                                <div className="col mb-4">
+                                                    {regionError  && <small className="profile__error">&#9888;&#160;please select your state</small>}
+                                                    <label htmlFor="state" style={{lineHeight :"0.4" , color : "#707070"}}>State</label><br/>
+                                                    <RegionDropdown className="form-control profile__select" country={UserInformation.country}  value={UserInformation.region}  onChange={(val) => setUserInformation({...UserInformation , region: val})} />
+                                                </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <div className="row">
+                                                <div className="col">
+                                                    {countryError  && <small className="profile__error">&#9888;&#160;please select your country</small>}
+                                                    <label htmlFor="country" style={{lineHeight :"0.4" , color : "#707070"}}>Country</label>
+                                                    <CountryDropdown className="form-control profile__select" value={UserInformation.country}   onChange={(val) => setUserInformation({...UserInformation , country: val})} />
+                                                </div>
+                                                </div>
                             </div>           
                             
                         </div>
                          
                          
-                        <div className="row mt-4">
+                        <div className="row mt-3 ">
                             
-                            <div className="col-md-6">
+                            <div className="col-md-6 mb-4" >
                                 <div className="row">
                                 <div className="col">
-                   <label htmlFor="gender" style={{lineHeight :"0.4" , color : "#707070"}}>Gender</label><br/>
-                   <select name="gender" className="form-control profile__genderSelct" value={
-                                                        UserInformation.gender
-                                                    } onChange={textChange}>
-                   <option value="Male">Male</option>
-                   <option value="Female">Female</option>
-                   <option value="Other">Other</option>
-                   </select>
-               </div>
+                                    <label htmlFor="gender" style={{lineHeight :"0.4" , color : "#707070"}}>Gender</label><br/>
+                                    <select name="gender" className="form-control profile__genderSelct" 
+                                    value={ UserInformation.gender} onChange={textChange}>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                    </select>
+                                </div>
                                 </div>
                             </div>
                             <div className="col-md-6">
                             <div className="row">
-               <div className="col">
-                   {error.zip_code && <small className="profile__error">&#9888;&#160;Phone enter zip code</small>}
-                   <label htmlFor="zip_code" style={{lineHeight :"0.4" , color : "#707070"}}>Zip Code</label>
-                   <CustomTextfield customTextfield__input={error.zip_code ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Enter zip code" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
-             
-               </div>
+                                <div className="col">
+                                    {zipCodeError  && <small className="profile__error">&#9888;&#160;Phone enter zip code</small>}
+                                    <label htmlFor="zip_code" style={{lineHeight :"0.4" , color : "#707070"}}>Zip Code</label>
+                                    <CustomTextfield customTextfield__input={zipCodeError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Enter zip code" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
+                                
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -453,7 +740,7 @@ const UserProfileView = () => {
                         
                         </div>
                         <div style={{marginTop: "-0.4em" ,zIndex: "2"}}>
-                             <button className="userProfile__subBtn  userProfile__view-details" style={{width: "6.6vw"}} onClick={(e) => (
+                             <button className="userProfile__subBtn  userProfile__view-details responsiveView__button" style={{width: "120px"}} onClick={(e) => (
                                  e.preventDefault(),
                                  setSubscription(sub),
                                  history.push(`/dashboard/users/edit/plan/view`
@@ -482,7 +769,7 @@ const UserProfileView = () => {
                                                      </div>
                                         
                                          ) : (<div className="text-center" style={{marginBottom: "120px" , marginTop : "70px"}}>
-                                             <img width="180px" style={{marginBottom : "40px"}} src={noSubscriptionImg} alt="nosubscription"/>
+                                             <img  width="180px" style={{marginBottom : "40px" , objectFit : 'cover'}} src={noSubscriptionImg} alt="nosubscription"/>
                                                  <h6 style={{ color : "#707070" , }}>Didn't choose any subscription yet</h6>
                                          </div>)}
                                          <hr/>

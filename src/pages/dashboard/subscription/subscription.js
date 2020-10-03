@@ -84,7 +84,7 @@ const Subscription = ({plan}) => {
                     <div>
                         <h5 style={
                             {
-                                marginTop: "10px",
+                                marginTop: "9px",
                                 color: "#707070",
                                 marginLeft: "10px",
                                 paddingLeft: "10px"

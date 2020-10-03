@@ -76,7 +76,7 @@ function Faq() {
                         setReload(!reload)
                         setSuccessfullPopup(false)
                         setLoadingBtn(false);
-                    }, 1500);
+                    }, 800);
                   }).catch(error => {
                     console.log("Error in cmsSettings faq update faq.js" , error);
                   })
@@ -117,7 +117,7 @@ function Faq() {
                             setReload(!reload)
                             setSuccessfullPopup(false)
                             setLoadingBtn(false);
-                        }, 1500);
+                        }, 800);
                       }).catch(error => {
                         console.log("Error in cmsSettings faq update faq.js" , error);
                       })
@@ -191,8 +191,8 @@ function Faq() {
             </div>
             
            <div className="faq__body">
-                <div style={{padding : "0.7% 1.6%"}}>
-                    <h3 style={{color : "#707070"}}>FAQ</h3>
+                <div style={{padding : "0.6% 1.6% 0px 1.6%"}}>
+                    <h5 style={{color : "#707070",marginTop : "9px"}}>FAQ</h5>
                 </div>
                 <hr/>
                 {error && <p className="error__message" style={{paddingLeft: "1%"}}>*Please fill all details</p>}

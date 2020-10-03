@@ -448,7 +448,7 @@ const CustomTable = ({
                 <tbody> {filerData.map((info, i) => (
                         <tr key={i}>
                             <td>
-                                <img width="70rem" height="70rem" className="rounded-circle p-2" alt={i} src={info.profileImage ?  "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+info.profileImage : `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${imageSettings?.userIcon}` }/>
+                                <img style={{objectFit :'cover'}} width="70rem" height="70rem" className="rounded-circle p-2" alt={i} src={info.profileImage ?  "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+info.profileImage : `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${imageSettings?.userIcon}` }/>
                             </td>
                             <td> 
                                 <div className="text-left"> 

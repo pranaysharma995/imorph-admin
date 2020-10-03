@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import imoph3d from '../assets/imoph3d.png'
 import CustomTextfield from '../customComponents/customTextfield'
 import CustomButton from '../customComponents/customButton'
 import {Link} from 'react-router-dom'
@@ -97,9 +96,9 @@ const LoginPage = () => {
                 <img width="200rem" height="100rem"
                     src={`http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${logo}`}
                     alt="logo"
-                    // style={
-                    //     {marginLeft: "30px"}
-                    // }
+                    style={
+                        {objectFit : 'cover'}
+                    }
                     />
             </div>
             <div className="text-center"

@@ -14,8 +14,6 @@ const Inquiries = ({data}) => {
     const [loading , setLoading] = useState(false)
 
     useEffect(() => {
-
-
         setLoading(true)
         axiosInstance.get("/admin/inquiry/list",{
             headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
@@ -53,12 +51,7 @@ const Inquiries = ({data}) => {
     return (
        <> {loading ? (
         <div className="container text-center"
-            style={
-                {
-                    marginTop: "400px",
-                    marginBottom: "50%"
-                }
-        }>
+            style={{marginTop: "400px",marginBottom: "50%"}}>
             <div className="spinner-border text-primary"></div>
         </div>
     )  : (
@@ -69,7 +62,6 @@ const Inquiries = ({data}) => {
                     {
                         marginTop: "10px",
                         color: "black",
-                        marginLeft: "10px",
                         paddingLeft: "10px",
                         color : "#707070"
                     }
@@ -87,7 +79,7 @@ const Inquiries = ({data}) => {
                     handleChange={
                         e => {
                             setSearch(e.target.value)
-                            setFilterData(userData.filter(user => (user.email.toLocaleLowerCase().includes(e.target.value.toLowerCase()))))
+                            setFilterData(userData.filter(user => (user.userEmail.toLowerCase().includes(e.target.value.toLowerCase()))))
                         }
                     }/>
             </div>
@@ -101,7 +93,7 @@ const Inquiries = ({data}) => {
                     >
                     <option value="All Enquiries">All Enquiries</option>
                     <option value="Resolved">Resolved</option>
-                    <option value="UnResolved">UnResolved</option>
+                    <option value="UnResolved">Unresolved</option>
                     <option value="In-progress">In-progress</option>
                 </select>
             </label>
@@ -129,7 +121,7 @@ const Inquiries = ({data}) => {
             <tbody> {
                 filerData.map((info, i) => (
                     <tr key={i}>
-                        <td><img width="70rem" className="rounded-circle p-2"
+                        <td><img style={{objectFit :'cover'}} width="70rem" className="rounded-circle p-2"
                                 alt={i}
                                 src={info.userImage ?  "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/"+info.userImage : `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${imageSettings?.userIcon}`}/></td>
                         <td>

@@ -57,7 +57,7 @@ const Navbar =() =>{
                 <nav className="navbar navbar-expand-sm bg-white navbar-light fixed-top navbar__component">
                     <button id="rotatebutton" className="navbar__togglebtn" style={{transform:rotate && "rotate(90deg)"}} onClick={toggleSideBar}><i className="fa fa-bars fa-2x" aria-hidden="true"></i></button>
                     <div className="navbar-brand" style={{marginLeft : "60px"}}>
-                       <Link to="/dashboard"> <img className="" width="90px" height="40px" src={imageSettings?.appLogo && "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+imageSettings?.appLogo } alt="logo"/></Link>
+                       <Link to="/dashboard"> <img style={{objectFit :'cover'}} width="90px" height="40px" src={imageSettings?.appLogo && "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+imageSettings?.appLogo } alt="logo"/></Link>
                     </div>
                     <div className="collapse navbar-collapse justify-content-end">
                        <div style={{marginRight : "30px"}}>
@@ -70,49 +70,49 @@ const Navbar =() =>{
                                         <i className="fa fa-bell-o fa-lg mt-2" aria-hidden="true"></i>
                                     </button>
                                             <div className="dropdown-menu nav__notification">
-                                                <div className="nav__notificationHead">
+                                                <div className="nav__notificationHead mb-3">
                                                     <h5 style={{ color :"#707070" , marginBottom : "-8px"}}>Notifications</h5>
                                                 </div>  
-                                                <hr/>
+            
                                                 {/* loop */}
-                                                <div>
-                                                    <div className="d-flex">
+                                                
+                                                    <div className="d-flex " style={{borderTop: "1px solid rgba(0,0,0,0.1" , paddingTop : "10px" , paddingBottom : "10px"}}>
                                                         <div style={{padding : "1px 20px"}}>
                                                             <img width="40rem" height="40rem" className= "rounded-circle" src={profile} alt="profile"/>
                                                         </div>
                                                         <div className="text-left">
-                                                            <p style={{lineHeight : "0.5", color :"black"}}>Ldsbfjbsdjfbjsdbjsdbjfsdjfsj</p>
-                                                            <p style={{lineHeight : "0.5", color :"#707070"}}>10:00AM</p>
+                                                            <p style={{marginBottom:"0px", color :"black"}}>Ldsbfjbsdjfbjsdbjsdbjfsdjfsj</p>
+                                                            <p style={{marginBottom:"0px", color :"#707070"}}>10:00AM</p>
                                                         </div>
-                                                    </div>   
-                                                    <hr/>       
-                                                </div>    
-                                                <div>
-                                                    <div className="d-flex">
-                                                        <div style={{padding : "1px 20px"}}>
-                                                            <img width="40rem" className= "rounded-circle" src={profile} alt="profile"/>
-                                                        </div>
-                                                        <div className="text-left">
-                                                            <p style={{lineHeight : "0.5", color :"black"}}>Ldsbfjbsdjfbjsdbjsdbjfsdjfsj</p>
-                                                            <p style={{lineHeight : "0.5", color :"#707070"}}>10:00AM</p>
-                                                        </div>
-                                                    </div>   
-                                                    <hr/>       
-                                                </div>    
-                                                <div>
-                                                    <div className="d-flex">
-                                                        <div style={{padding : "1px 20px"}}>
-                                                            <img width="40rem" className= "rounded-circle" src={profile} alt="profile"/>
-                                                        </div>
-                                                        <div className="text-left">
-                                                            <p style={{lineHeight : "0.5", color :"black"}}>Ldsbfjbsdjfbjsdbjsdbjfsdjfsj</p>
-                                                            <p style={{lineHeight : "0.5", color :"#707070"}}>10:00AM</p>
-                                                        </div>
-                                                    </div>   
-                                                    <hr/>       
-                                                </div>       
+                                                        
+                                                    </div>  
 
-                                                <div className="text-center">
+                                                    <div className="d-flex " style={{borderTop: "1px solid rgba(0,0,0,0.1" , paddingTop : "10px" , paddingBottom : "10px"}}>
+                                                        <div style={{padding : "1px 20px"}}>
+                                                            <img width="40rem" height="40rem" className= "rounded-circle" src={profile} alt="profile"/>
+                                                        </div>
+                                                        <div className="text-left">
+                                                            <p style={{marginBottom:"0px", color :"black"}}>Ldsbfjbsdjfbjsdbjsdbjfsdjfsj</p>
+                                                            <p style={{marginBottom:"0px", color :"#707070"}}>10:00AM</p>
+                                                        </div>
+                                                        
+                                                    </div>  
+
+                                                    <div className="d-flex " style={{borderTop: "1px solid rgba(0,0,0,0.1" , paddingTop : "10px" , paddingBottom : "10px"}}>
+                                                        <div style={{padding : "1px 20px"}}>
+                                                            <img width="40rem" height="40rem" className= "rounded-circle" src={profile} alt="profile"/>
+                                                        </div>
+                                                        <div className="text-left">
+                                                            <p style={{marginBottom:"0px", color :"black"}}>Ldsbfjbsdjfbjsdbjsdbjfsdjfsj</p>
+                                                            <p style={{marginBottom:"0px", color :"#707070"}}>10:00AM</p>
+                                                        </div>                                                        
+                                                    </div>  
+
+                                                    
+                                                  
+                                                                              
+
+                                                <div className="text-center pt-2 " style={{borderTop: "1px solid rgba(0,0,0,0.1"}}>
                                                     <Link to="/dashboard/inquiries"><h5 style={{color:"#009CB4" ,textDecoration : "underline"}}>View All</h5></Link>
                                                 </div>                         
                     

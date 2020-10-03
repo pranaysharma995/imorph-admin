@@ -219,7 +219,7 @@ const onSubmit=e=> {
         </div>) :
         ( <div className="image-settings">
                 <div className="d-flex justify-content-between" style={{padding : "0.7% 1.6%"}}>
-                <h5 style={{color : "#707070"}}>Image Settings</h5> 
+                <h5 style={{color : "#707070",marginTop : "5px"}}>Image Settings</h5> 
             </div>
             <hr style={{lineHeight: "0.4", marginTop: "-5px"}}/>
             
@@ -237,7 +237,7 @@ const onSubmit=e=> {
                     <div className="d-flex mt-5">
                         <label htmlFor="" className=" mt-2" style={{marginRight:"70px"}}>App Logo:</label>
                         <div style={{position: 'relative'}}>
-                             <img  className="image-settings__logo" src={images.applogo!==null ? imagesFile.applogo!=null ? images.applogo :  "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+images.applogo : logo} alt="logo"/>                            
+                             <img style={{objectFit :'cover'}}  className="image-settings__logo" src={images.applogo!==null ? imagesFile.applogo!=null ? images.applogo :  "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+images.applogo : logo} alt="logo"/>                            
                                            
                                             <label htmlFor="applogo" className="image-settings__imgAdd rounded-circle text-center"><img width="15rem"
                                                     src={camera}
@@ -255,7 +255,7 @@ const onSubmit=e=> {
                     <div className="d-flex mt-5">
                         <label htmlFor="" className=" mt-2" style={{marginRight:"85px"}}>Fevicon:</label>
                         <div style={{position: 'relative'}}>
-                             <img  className="image-settings__logo" src={images.favicon!==null ? imagesFile.favicon!=null ? images.favicon : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+images.favicon : defaultImage} alt="logo"/>                            
+                             <img style={{objectFit :'cover'}}  className="image-settings__logo" src={images.favicon!==null ? imagesFile.favicon!=null ? images.favicon : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+images.favicon : defaultImage} alt="logo"/>                            
                                            
                                             <label htmlFor="faviconn" className="image-settings__imgAdd rounded-circle text-center"><img width="15rem"
                                                     src={camera}
@@ -273,7 +273,7 @@ const onSubmit=e=> {
                     <div className="d-flex mt-5">
                         <label htmlFor="" className=" mt-2" style={{marginRight:"85px"}}>User Icon:</label>
                         <div style={{position: 'relative'}}>
-                             <img  className="image-settings__profile" src={images.profile!==null ? imagesFile.profile!=null ? images.profile : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+images.profile  : profile} alt="logo"/>                            
+                             <img  style={{objectFit :'cover'}} className="image-settings__profile" src={images.profile!==null ? imagesFile.profile!=null ? images.profile : "http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/"+images.profile  : profile} alt="logo"/>                            
                                            
                                             <label htmlFor="profile" className="image-settings__imgAdd-profile rounded-circle text-center"><img width="15rem"
                                                     src={camera}

@@ -81,16 +81,16 @@ import {Bar} from 'react-chartjs-2'
 
     return (
             <>
-            <div className="custom-bar text-left d-flex justify-content-between" style={{lineHeight: "0.9" , padding:"20px"}}>
-               <div>
+            <div className="custom-bar text-left d-flex justify-content-between" style={{lineHeight: "0.9" , padding:"10px 0px 10px 0px"}}>
+               <div className="barchart__header">
                     <h5 style={{color : backColor}}><strong>{totalNumber}</strong></h5>
                     <p>{headerLabel}</p>
                </div>
                <div className="d-flex" onClick={styleAdd}>
-                    <button id={id1} className="btn btn-primary mr-2 customeChart__select" style={{lineHeight : "0px" , paddingTop :"0px",paddingBottom : "0px"}} onClick={handleClickDay}>Day</button>
-                    <button id={id2} className="btn btn-primary mr-2 customeChart__select" style={{lineHeight : "0px",paddingTop :"0px",paddingBottom : "0px"}} onClick={handleClickWeek}>Week</button>
-                    <button id={id3} className="btn btn-primary mr-3 customeChart__select"  style={{backgroundColor: '#009CB4' , color : "white" , border : "none",lineHeight : "0px",paddingTop :"0px",paddingBottom : "0px"}} onClick={handleClickYear}>Year</button>
-                   <i className="fa fa-download mt-2" aria-hidden="true" style={{color : backColor}}></i>
+                    <button id={id1} className=" mr-2 customeChart__select" style={{lineHeight : "0px" , paddingTop :"0px",paddingBottom : "0px"}} onClick={handleClickDay}>Day</button>
+                    <button id={id2} className=" mr-2 customeChart__select" style={{lineHeight : "0px",paddingTop :"0px",paddingBottom : "0px"}} onClick={handleClickWeek}>Week</button>
+                    <button id={id3} className="  customeChart__select"  style={{backgroundColor: '#009CB4' , color : "white" , border : "none",lineHeight : "0px",paddingTop :"0px",paddingBottom : "0px"}} onClick={handleClickYear}>Year</button>
+                   {/* <i className="fa fa-download mt-2" aria-hidden="true" style={{color : backColor}}></i> */}
                </div>
             </div>
             <Bar height={chartHeight} data={data} options= {{

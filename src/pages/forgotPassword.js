@@ -64,7 +64,7 @@ const ForgotPassword =({value}) => {
 
 
     return (
-        <div className="forgotPass__page">
+        <div className="forgotPass__page container">
             <style>{'body { background-color: #009CB4; }'}</style>
             
            <div className="text-center forgotPass__header">

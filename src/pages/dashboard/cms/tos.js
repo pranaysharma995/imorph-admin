@@ -65,7 +65,7 @@ function Tos() {
             setReload(!reload)
             setSuccessfullPopup(false)
             setLoadingBtn(false);
-        }, 1500);
+        }, 700);
 
         }).catch(error => {
           console.log("Error in About us update aboutus.js" , error);
@@ -94,7 +94,7 @@ function Tos() {
     ) :
         <div className ="aboutus">
           <div style={{padding : "0.7% 1.6%"}}>
-             <h3 style={{color : "#707070"}}>Terms of Service</h3>
+             <h5 style={{color : "#707070",marginTop : "9px"}}>Terms of Service</h5>
           </div>
 
       

@@ -114,10 +114,11 @@ function ChangePasswordModal({modal, toggle}) {
         <>
             <Modal isOpen={modal}
                 toggle={toggle}
-                className="changePass__modal changePass__modalDialog"
+                className="changePass__modal"
+                style={{maxWidth : "600px"}}
                 centered={true}
                 size="lg">
-                <ModalBody className="changePass__modalDialog">
+                <ModalBody  className="changePass__modalDialog">
                     <div className="text-center changePass__header">
                         <h1 style={
                             {fontWeight: "450"}

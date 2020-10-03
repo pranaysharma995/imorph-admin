@@ -84,7 +84,7 @@ const InquiriesView = ({data}) => {
                     setSuccessfullPopup(false)
                     setLoadingBtn(false);
                     return history.goBack()
-                }, 1500);
+                }, 600);
           }).catch( error => {
             console.log("Error in inquary view inquiryview.js" , error);
           })
@@ -97,7 +97,7 @@ const InquiriesView = ({data}) => {
     return (
         <div className="inquiries-view">
             <div className="profile__head d-flex justify-content-between">
-             <h3 style={{marginTop: "10px"}}>Enquiry</h3>
+             <h5 style={{marginTop: "20px"}}>Enquiry</h5>
                  <div>
                     <CustomButton customButton__class="btn profile__backbtn" text="Back" handleClick={() => history.goBack()}/>
                  </div>
@@ -127,7 +127,7 @@ const InquiriesView = ({data}) => {
 
                 <div className="inquary__chat mt-3">
                           <div className="msg d-flex mt-3">
-                                <img className="mr-3" width="40px" height="40px" src={profile} alt="profilr"/>
+                                <img style={{objectFit :'cover'}} className="mr-3 rounded-circle" width="40px" height="40px" src={`http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/user/${data.userImage}`} alt="profilr"/>
                                 <div>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                         Quia sunt ex quam dolore nulla vitae nemo obcaecati vel eius quos. Adipisci sunt quaerat dicta!
@@ -142,7 +142,7 @@ const InquiriesView = ({data}) => {
                                     </p>
                                     <div className="text-right" style={{color : "rgba(0, 0, 0, 0.4)" , width : "100%"}}>11:00 PM | Thursday</div>
                                 </div>
-                                <img className="rounded-circle" width="40px" height="40px" src={`http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/`+adminData.profileImage} alt="profilr"/>
+                                <img style={{objectFit :'cover'}} className="rounded-circle" width="40px" height="40px" src={`http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/`+adminData.profileImage} alt="profilr"/>
                          </div> 
                          
                 </div>
@@ -177,7 +177,7 @@ const InquiriesView = ({data}) => {
             {error && <small style={{color : "red"}}>&#9888;&#160;Please insert some value</small>}
                <textarea id="description"  className="form-control mt-4" type="text" value={reply}  placeholder="Enter your reply here!"
                onChange={e => setReply(e.target.value) }/>
-                <div className="d-flex justify-content-end ">
+                <div className="d-flex justify-content-end pt-2 ">
                     {
                       loadingBtn ? (
                          <div className="spinner-border text-primary"></div>

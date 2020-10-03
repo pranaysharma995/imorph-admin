@@ -126,7 +126,7 @@ const CreateSubscription = () => {
           <div className = "createSubscription__body">
               <form method="POST" encType="multipart/form-data"  action="#" onSubmit={handleValidation}>
                 <div className="row justify-content-center">
-                        <div className="col-md-6 ">
+                        <div className="col-md-6 subscription__padding ">
                         {error.plan_name && <small className="profile__error">&#9888;&#160;Please enter plan name</small>}
                         <label htmlFor="name" style={{lineHeight :"0.4" , color : "#707070"}}>Subscription Plan Name</label>
                             <input id="name" className={error.plan_name ? "form-control createSubscription__errorInput" :"form-control"} type="text" value={name} onChange={ e=> setName(e.target.value)}/>
