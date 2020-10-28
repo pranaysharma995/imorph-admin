@@ -596,7 +596,7 @@ const UserProfileView = () => {
                                     }
                                 <div className="text-center" style={{position : "relative" , width: "180px" , left:"50%" , transform : "translateX(-50%)"}}>
                                         <img style={{objectFit :'cover'}} width="100rem" height="100rem" className= "rounded-circle" src={UserInformation.image ? UserInformation.image :  `http://ec2-34-209-115-216.us-west-2.compute.amazonaws.com/imorph-api/public/image-setting/${profile}`} alt="profile" style={{color: "black"}}/>
-                                        <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="15rem" src={camera} alt="add" style={{marginTop : "-5px" }}/></label>
+                                        {/* <label htmlFor="userImage" className="userProfile__imgAdd rounded-circle text-center"><img width="15rem" src={camera} alt="add" style={{marginTop : "-5px" }}/></label> */}
                                 </div>
                                 
                                 <input type="file" id="userImage" style={{display : "none"}} accept="image/*" onChange={handleUpload} /> 
@@ -610,12 +610,12 @@ const UserProfileView = () => {
                                 <div className="col" style={{position : "relative"}}>
                                 {fNameError  && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter first name</small>}
                                 <label htmlFor="fname" style={{lineHeight :"0.4" , color : "#707070"}}>First Name</label>
-                                    <CustomTextfield customTextfield__input={fNameError  ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"}  type="text" placeholder="First Name" name="fname" value={UserInformation.fname} handleChange={textChange}/>
+                                    <CustomTextfield disabled={true} customTextfield__input={fNameError  ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"}  type="text" placeholder="First Name" name="fname" value={UserInformation.fname} handleChange={textChange}/>
                                 </div>
                                 <div className="col">
                                 {lNameError  && <small className="profile__error" style={{marginRight :"60px"}}>&#9888;&#160;Please enter second name</small>}
                                 <label htmlFor="lname" style={{lineHeight :"0.4" , color : "#707070"}}>Second Name</label>
-                                    <CustomTextfield customTextfield__input={lNameError  ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"} type="text" placeholder="Last Name" name="lname" value={UserInformation.lname} handleChange={textChange}/>
+                                    <CustomTextfield disabled={true} customTextfield__input={lNameError  ? "form-control userProfile__firstTextField userProfile__errorInput" : "form-control userProfile__firstTextField"} type="text" placeholder="Last Name" name="lname" value={UserInformation.lname} handleChange={textChange}/>
                                 </div>
                             </div>                
                     </div>
@@ -628,7 +628,7 @@ const UserProfileView = () => {
                    <div className="col-md-6">
                    {emailError  && <small className="profile__error">&#9888;&#160;Please enter a valid email</small>}
                    <label htmlFor="email" style={{lineHeight :"0.4" , color : "#707070"}}>Email</label>
-                       <CustomTextfield customTextfield__input={emailError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Email" name="email" value={UserInformation.email} handleChange={textChange}/>
+                       <CustomTextfield disabled={true} customTextfield__input={emailError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Email" name="email" value={UserInformation.email} handleChange={textChange}/>
                    </div>
                    <div className="col-md-6">
                    {phoneError  && <small className="profile__error">&#9888;&#160;Please enter a number</small>}
@@ -636,9 +636,9 @@ const UserProfileView = () => {
                    <label htmlFor="phone" style={{lineHeight :"0.4" , color : "#707070"}}>Phone Number</label>
                    <div className="input-group mb-3">
                             <div className="input-group-prepend" style={{width : "20%"}}>
-                                <CountryCode name="countryCode" value={UserInformation.countryCode} handleContryCodeChange={textChange}/>
+                                <CountryCode disabled={true} name="countryCode" value={UserInformation.countryCode} handleContryCodeChange={textChange}/>
                                     </div>
-                                <input className={
+                                <input disabled={true} className={
                                        phoneError|| phoneLengthError? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
                                     }
                                     type="text"
@@ -655,7 +655,7 @@ const UserProfileView = () => {
                             <div className="col-md-12">
                 {addressError  && <small className="profile__error">&#9888;&#160;Please enter address</small>}
                <label htmlFor="address" style={{lineHeight :"0.4" , color : "#707070"}}>Address</label>
-               <CustomTextfield customTextfield__input={addressError  ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"} type="text"  name="address" value={UserInformation.address} handleChange={textChange}/>
+               <CustomTextfield disabled={true} customTextfield__input={addressError  ? "form-control profile__locationInput profile__errorInput" : "form-control profile__locationInput"} type="text"  name="address" value={UserInformation.address} handleChange={textChange}/>
                             </div>
                         </div>
                         <div className="row mt-2">
@@ -664,7 +664,7 @@ const UserProfileView = () => {
                                 <div className="col mb-1">
                                     {cityError  && <small className="profile__error">&#9888;&#160;Please enter city</small>}
                                     <label htmlFor="city" style={{lineHeight :"0.4" , color : "#707070"}}>City</label>
-                                    <CustomTextfield customTextfield__input={cityError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="text"  name="city" value={UserInformation.city} handleChange={textChange}/>
+                                    <CustomTextfield disabled={true} customTextfield__input={cityError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"} type="text"  name="city" value={UserInformation.city} handleChange={textChange}/>
                                 </div>
                                                     </div>
                                                 </div>
@@ -673,7 +673,7 @@ const UserProfileView = () => {
                                                 <div className="col mb-4">
                                                     {regionError  && <small className="profile__error">&#9888;&#160;please select your state</small>}
                                                     <label htmlFor="state" style={{lineHeight :"0.4" , color : "#707070"}}>State</label><br/>
-                                                    <RegionDropdown className="form-control profile__select" country={UserInformation.country}  value={UserInformation.region}  onChange={(val) => setUserInformation({...UserInformation , region: val})} />
+                                                    <RegionDropdown disabled className="form-control profile__select" country={UserInformation.country}  value={UserInformation.region}  onChange={(val) => setUserInformation({...UserInformation , region: val})} />
                                                 </div>
                                                     </div>
                                                 </div>
@@ -682,7 +682,7 @@ const UserProfileView = () => {
                                                 <div className="col">
                                                     {countryError  && <small className="profile__error">&#9888;&#160;please select your country</small>}
                                                     <label htmlFor="country" style={{lineHeight :"0.4" , color : "#707070"}}>Country</label>
-                                                    <CountryDropdown className="form-control profile__select" value={UserInformation.country}   onChange={(val) => setUserInformation({...UserInformation , country: val})} />
+                                                    <CountryDropdown disabled className="form-control profile__select" value={UserInformation.country}   onChange={(val) => setUserInformation({...UserInformation , country: val})} />
                                                 </div>
                                                 </div>
                             </div>           
@@ -696,7 +696,7 @@ const UserProfileView = () => {
                                 <div className="row">
                                 <div className="col">
                                     <label htmlFor="gender" style={{lineHeight :"0.4" , color : "#707070"}}>Gender</label><br/>
-                                    <select name="gender" className="form-control profile__genderSelct" 
+                                    <select disabled name="gender" className="form-control profile__genderSelct" 
                                     value={ UserInformation.gender} onChange={textChange}>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -710,7 +710,7 @@ const UserProfileView = () => {
                                 <div className="col">
                                     {zipCodeError  && <small className="profile__error">&#9888;&#160;Phone enter zip code</small>}
                                     <label htmlFor="zip_code" style={{lineHeight :"0.4" , color : "#707070"}}>Zip Code</label>
-                                    <CustomTextfield customTextfield__input={zipCodeError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Enter zip code" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
+                                    <CustomTextfield disabled={true} customTextfield__input={zipCodeError  ? "form-control profile__input profile__errorInput" : "form-control profile__input"}  type="text" placeholder="Enter zip code" name="zip_code" value={UserInformation.zip_code} handleChange={textChange}/>
                                 
                                 </div>
                                 </div>
@@ -772,11 +772,7 @@ const UserProfileView = () => {
                                              <img  width="180px" style={{marginBottom : "40px" , objectFit : 'cover'}} src={noSubscriptionImg} alt="nosubscription"/>
                                                  <h6 style={{ color : "#707070" , }}>Didn't choose any subscription yet</h6>
                                          </div>)}
-                                         <hr/>
-                                         <div className="d-flex justify-content-center">
-                                                {loadingBtn ? (<div className="spinner-border text-primary"></div>) : (<> <CustomButton customButton__class="btn profile__footerBtn" text="Save" type="submit" onClick={checkSubmit} />
-                                             <CustomButton customButton__class="btn profile__canclebtn"  text="Cancel" handleClick={onCancle}/></>)}
-                                         </div>
+                                        
                                          
                                  </div>
                      

@@ -1,8 +1,8 @@
 import React from 'react'
 
-const CountryCode = ({handleContryCodeChange , value, name}) => {
+const CountryCode = ({handleContryCodeChange , value, name , disabled}) => {
     return (
-        <select name={name} className="countryCode" value={value} onChange={handleContryCodeChange} >
+        <select disabled={disabled} name={name} className="countryCode" value={value} onChange={handleContryCodeChange} >
                         <option data="IN" value="91"> (+91)</option>
                         <option data="CA" value="1"> (+1)</option>
                         

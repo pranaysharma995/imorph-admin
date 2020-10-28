@@ -2,18 +2,7 @@ import React,{useState,useContext} from 'react'
 import {Link , useRouteMatch} from 'react-router-dom'
 import profile from '../assets/profile.png'
 
-import enquiries from '../assets/icons/enquiries/color/question.png'
-import enquiriesColor from '../assets/icons/enquiries/question@2x.png'
-import userColor from '../assets/icons/user/sidebar/user (5)@2x.png'
-import user from '../assets/icons/user/whitecolor/user (5).png'
-import settings from '../assets/icons/setting/settings.png'
-import settingsColor from '../assets/icons/setting/color/settings.png'
-import sunscription from '../assets/icons/subscription/white-color/medal.png'
-import sunscriptionColor from '../assets/icons/subscription/sidebarcolor/medal.png'
-import cmsSettings from '../assets/icons/cms-setting/cms.svg'
-import cmsSettingsColor from '../assets/icons/cms-setting/color/icons8-window-settings-100.png'
-import home from '../assets/icons/home/whitecolor/home-run (2).png'
-import homeColor from '../assets/icons/home/home-run (2).png'
+
 import AdminContext from '.././context/admin/adminDetailsContext'
 
 

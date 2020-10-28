@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CustomTextfield=({type , placeholder , value ,handleChange,customTextfield__input , name ,icon_class , handleIconClick})=> {
+const CustomTextfield=({type , placeholder , value ,handleChange,customTextfield__input , name ,icon_class , handleIconClick , disabled})=> {
     return (
         <div className="customTextfield" style={{position : 'relative'}}>
-                <input className={customTextfield__input} type={type} placeholder={placeholder} value={value} name={name} onChange={handleChange}/>
+                <input className={customTextfield__input} type={type} placeholder={placeholder} value={value} name={name} onChange={handleChange} disabled={disabled}/>
                 {icon_class ? (<i  style={{color :"#707070"}} className={icon_class} onClick={handleIconClick}></i>)  : null}
         </div>
     )

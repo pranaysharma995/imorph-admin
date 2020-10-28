@@ -218,7 +218,7 @@ function Faq() {
                             </div>
                             </div>
                         </div>))}
-                        </div>
+                </div>
 
                         <hr/>
                         <div className="d-flex justify-content-center" style={{paddingBottom: "2%"}}>

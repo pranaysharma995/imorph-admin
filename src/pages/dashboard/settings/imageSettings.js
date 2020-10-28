@@ -226,9 +226,7 @@ const onSubmit=e=> {
             <div className = "image-settings__body">
                 <form method="POST" encType="multipart/form-data"  action="#" onSubmit={onSubmit}>
                         
-                {
-                          error && <small style={{color : "red", paddingLeft: "8%"}}>&#9888;&#160;Please enter company name</small>
-                        }
+                { error && <small style={{color : "red", paddingLeft: "8%"}}>&#9888;&#160;Please enter company name</small>}
                     <div className="d-flex">
                         <label htmlFor="" className="mr-4 mt-2">Company Name:</label>
                         

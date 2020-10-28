@@ -110,11 +110,20 @@ function ProfilePage({refresh , refreshValue}) {
                 })
             }
         }
+
+        else if(e.target.name === 'city'){
+            if(!e.target.value.match(/[0-9\b]+$/gi) || e.target.value === ''){
+                setAdminDetails({
+                    ...adminDetails,
+                    [e.target.name]: e.target.value
+                })
+            }
+        }
         else {
-        setAdminDetails({
-            ...adminDetails,
-            [e.target.name]: e.target.value
-        })
+            setAdminDetails({
+                ...adminDetails,
+                [e.target.name]: e.target.value
+            })
     }
     }
 
@@ -703,7 +712,7 @@ function ProfilePage({refresh , refreshValue}) {
 
                                                 <div className="input-group mb-3">
                                                     <div className="input-group-prepend" style={{width : "20%"}}>
-                                                    <CountryCode name="countryCode" value={adminDetails.countryCode} handleContryCodeChange={textChange}/>
+                                                        <CountryCode name="countryCode" value={adminDetails.countryCode} handleContryCodeChange={textChange}/>
                                                     </div>
                                                     <input className={
                                                         phoneError  || phoneLengthError ? "form-control profile__phone-input profile__errorInput" : "form-control profile__phone-input"
