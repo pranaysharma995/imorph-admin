@@ -2,8 +2,9 @@ import React,{useState,useEffect,useContext} from 'react'
 import {useHistory} from 'react-router-dom'
 import CustomButton from '../../../customComponents/customButton'
 import CustomTextfield from '../../../customComponents/customTextfield'
-import axiosInstance from '../../../axios'
+import axios from 'axios';
 import ImageSettingsContext from '../../../context/imageSettings/imageSettingsContext'
+const token="cHJhbmF5Lmt1bWFyQGFjcm9wb2xpc2dsb2JhbC5jb20vdG9rZW46aG1rVFVvTUNVV2hFZXl4aWZ6WjI1QzlDUGFUbEt3TWhMSXhEVEdXUw=="
 
 const Inquiries = ({data}) => {
     const history = useHistory();
@@ -15,11 +16,28 @@ const Inquiries = ({data}) => {
 
     useEffect(() => {
         setLoading(true)
-        axiosInstance.get("/admin/inquiry/list",{
-            headers : {authorization : `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token")}`}
+        axios.get("https://acropolisglobal.zendesk.com/api/v2/tickets.json",{
+            headers:{
+                'Authorization':`Basic ${token}`,
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+        .then((res)=>
+        {
+            setLoading(false)
+            console.log(res);
+        })
+        .catch((err)=>
+        {
+            setLoading(false)
+            console.log(err)
+        })
+        /*
+        axiosInstance.get(process.env.REACT_APP_ZENDESK_URL+"/tickets.json",{
+            headers : {authorization : process.send.REACT_APP_ZENDESK_TOKEN}
           }).then(({data})=> {
 
-            console.log("List Enquiries" , data.data);
+            console.log("List Enquiries" , data);
             let temp=[]
             Object.entries(data.data).map(inquiries => {
               temp.push(inquiries[1])
@@ -30,6 +48,7 @@ const Inquiries = ({data}) => {
           }).catch( error => {
             console.log("Error in user List" , error);
           })
+          */
        
         
     }, [])
